@@ -1984,7 +1984,7 @@ class DpsApp {
     const storedMainPlayerDpsBold = mainPlayerDpsBoldSetting !== "false";
     const storedDefaultMeterMode = this.safeGetSetting(this.storageKeys.defaultMeterMode) || "bossTargets";
     const storedTargetSelection = this.safeGetStorage(this.storageKeys.targetSelection);
-    const storedLanguage = this.safeGetStorage(this.storageKeys.language);
+    const storedLanguage = this.safeGetSetting(this.storageKeys.language);
     const storedTheme = this.safeGetSetting(this.storageKeys.theme);
 
     this.setUserName(storedName, { persist: false, syncBackend: true });
@@ -2661,6 +2661,9 @@ class DpsApp {
         if (!value) return;
         this.settingsSelections.language = value;
         this.safeSetStorage(this.storageKeys.language, value);
+        // persist goes through javaBridge.setSetting: that reloads the backend's
+        // NPC/skill names (set_language) and broadcasts to the other windows,
+        // which apply it in applyRemoteSettingChange.
         this.i18n?.setLanguage?.(value, { persist: true });
       }
     );
@@ -3973,6 +3976,36 @@ class DpsApp {
   // dropdowns (theme, layout, player limit) are not native inputs and need
   // their own handling, so they are deliberately absent.
   applyRemoteSettingChange(key, value) {
+    // Settings with no form control on this window (dropdowns, sliders that
+    // only exist in the Settings window): apply them directly. None of these
+    // persist, so there is no echo back to the backend.
+    const k = this.storageKeys;
+    const directHandlers = {
+      [k.theme]: () => this.applyTheme(value),
+      [k.meterFillOpacity]: () => this.applyMeterFillOpacity(value),
+      [k.windowOpacity]: () => this.applyWindowOpacity(value),
+      [k.slimMode]: () => this.setSlimMode(value === "true"),
+      [k.betaUi]: () => this.setBetaUi(value !== "false"),
+      [k.showSuspendBtn]: () => this._applySuspendBtnVisibility(value !== "false"),
+      [k.language]: () => {
+        if (this.i18n?.getLanguage?.() !== value) {
+          // No persist: the sender already saved it and reloaded the backend;
+          // persisting again would re-run set_language once per window.
+          this.i18n?.setLanguage?.(value, { persist: false });
+        }
+      },
+      [k.playerLimit]: () => {
+        const limit = parseInt(value, 10);
+        if (!Number.isFinite(limit) || limit < 1 || limit === this.playerLimit) return;
+        this.playerLimit = limit;
+        this.renderCurrentRows();
+      },
+    };
+    if (directHandlers[key]) {
+      directHandlers[key]();
+      return;
+    }
+
     const selector = REMOTE_APPLIED_SETTING_CONTROLS[key];
     if (!selector) return;
     const control = document.querySelector(selector);
