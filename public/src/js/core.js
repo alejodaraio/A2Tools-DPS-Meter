@@ -484,7 +484,10 @@ class DpsApp {
       this.updateSupportPrimaryAction(lang);
       this.updateSupportQrImage(this.supportPrimaryButton?.dataset.support || "afdian");
     });
-    window.ReleaseChecker?.start?.();
+    // Update check disabled: checkRelease.js polls the upstream project's
+    // manifest, and accepting its prompt installs upstream's MSI over this fork.
+    // Re-enable with window.ReleaseChecker?.start?.() once CDN_MANIFEST points
+    // at this fork's releases.
     this.setupConsoleDebugging();
     this.bindNativeHotkeyBridge();
 
