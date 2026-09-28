@@ -332,6 +332,8 @@
     "loopback": "Local Loopback"
   },
   "target": {
+    "unknown": "Unknown target",
+    "unknownHint": "This mob was already in view when the meter started. Teleport, change zone, or move away and back to identify it.",
     "all": "All Targets",
     "identifying": "Identifying you...",
     "train": "Training Scarecrow",

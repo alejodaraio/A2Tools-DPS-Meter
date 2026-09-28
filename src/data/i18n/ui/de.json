@@ -332,6 +332,8 @@
     "loopback": "Lokales Loopback"
   },
   "target": {
+    "unknown": "Unbekanntes Ziel",
+    "unknownHint": "Dieses Monster war schon sichtbar, als das Meter startete. Teleportiere dich, wechsle die Zone oder entferne dich kurz, um es zu erkennen.",
     "all": "Alle Ziele",
     "identifying": "Identifiziere dich...",
     "train": "Trainingspuppe",

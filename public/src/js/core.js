@@ -1029,6 +1029,19 @@ class DpsApp {
         this.elBossName.textContent = nextTargetLabel;
         this.fitBossName();
       }
+      // A target with an id but no name: its spawn record came before the meter
+      // was listening, and the game never resends it until the mob re-enters view.
+      const unknownTarget =
+        Number(targetId) > 0 &&
+        !String(targetName || "").trim() &&
+        targetMode !== "allTargets" &&
+        targetMode !== "trainTargets";
+      this.elBossName.title = unknownTarget
+        ? (this.i18n?.t(
+            "target.unknownHint",
+            "This mob was already in view when the meter started. Teleport, change zone, or move away and back to identify it."
+          ) ?? "")
+        : "";
       this.elBossName.classList.toggle("isAllTargets", targetMode === "allTargets");
     }
     this.updateBossHpBar(targetMaxHp, targetTotalDamage, targetCurrentHp);
@@ -4418,7 +4431,9 @@ class DpsApp {
     const cleanTargetName = typeof targetName === "string" ? targetName.trim() : "";
     if (Number.isFinite(numericTargetId) && numericTargetId > 0) {
       const localizedName = this.i18n?.getNpcName?.(numericTargetId, cleanTargetName) ?? cleanTargetName;
-      return localizedName || `Mob #${numericTargetId}`;
+      // No name means the mob's spawn record was never seen (it was already in
+      // view when the meter started); the title tooltip explains how to fix it.
+      return localizedName || (this.i18n?.t("target.unknown", "Unknown target") ?? "Unknown target");
     }
     if (cleanTargetName) {
       return cleanTargetName;

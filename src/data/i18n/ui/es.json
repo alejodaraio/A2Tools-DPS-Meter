@@ -332,6 +332,8 @@
     "loopback": "Bucle local"
   },
   "target": {
+    "unknown": "Objetivo desconocido",
+    "unknownHint": "Este mob ya estaba a la vista cuando se abrió el meter. Teletranspórtate, cambia de zona o aléjate y vuelve para identificarlo.",
     "all": "Todos los objetivos",
     "identifying": "Identificándote...",
     "train": "Muñeco de entrenamiento",

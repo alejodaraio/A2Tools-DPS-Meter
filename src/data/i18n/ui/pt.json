@@ -332,6 +332,8 @@
     "loopback": "Loopback local"
   },
   "target": {
+    "unknown": "Alvo desconhecido",
+    "unknownHint": "Este mob já estava à vista quando o medidor iniciou. Teleporte-se, mude de zona ou afaste-se e volte para identificá-lo.",
     "all": "Todos os alvos",
     "identifying": "Identificando você...",
     "train": "Boneco de treino",

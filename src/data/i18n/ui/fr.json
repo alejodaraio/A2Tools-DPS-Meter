@@ -332,6 +332,8 @@
     "loopback": "Boucle locale"
   },
   "target": {
+    "unknown": "Cible inconnue",
+    "unknownHint": "Ce monstre était déjà visible au démarrage du compteur. Téléportez-vous, changez de zone ou éloignez-vous puis revenez pour l’identifier.",
     "all": "Toutes les cibles",
     "identifying": "Identification en cours...",
     "train": "Mannequin d'entraînement",

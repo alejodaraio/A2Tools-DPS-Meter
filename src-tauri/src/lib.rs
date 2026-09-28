@@ -1606,6 +1606,7 @@ pub fn run() {
 
             // Periodic DPS update emission (every 500ms)
             let handle = app.handle().clone();
+            let mut mob_cache = combat::mob_cache::MobCache::new(&app_data_dir);
             tauri::async_runtime::spawn(async move {
                 let mut interval = tokio::time::interval(Duration::from_millis(500));
                 let mut tick_count: u64 = 0;
@@ -1615,6 +1616,14 @@ pub fn run() {
                     tick_count += 1;
 
                     if let Some(state) = handle.try_state::<AppState>() {
+                        // Mob identities survive a meter restart (every 2 s).
+                        if tick_count % 4 == 0 {
+                            mob_cache.tick(
+                                &state.data_storage,
+                                &state.npc_lookup,
+                                state.port_detector.current_port(),
+                            );
+                        }
                         let t0 = std::time::Instant::now();
                         let lock_guard = state.dps_calculator.lock();
                         let lock_ms = t0.elapsed().as_millis();
