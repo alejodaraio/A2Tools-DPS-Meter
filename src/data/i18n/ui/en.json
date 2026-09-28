@@ -9,6 +9,12 @@
     }
   },
   "details": {
+    "buffs": {
+      "title": "Buffs",
+      "selectPlayer": "Select a player to see their buffs.",
+      "none": "No buffs recorded for this player.",
+      "multiplier": "Damage multiplier"
+    },
     "header": "Details",
     "title": "{name} Details",
     "tooltip": "Damage over time hits are not included in total crit, double, perfect, back attack, or parry ratios.",
@@ -91,6 +97,9 @@
       "pauses": "Pauses",
       "combatPower": "Combat Power",
       "dpsPerCp": "DPS / 1k CP",
+      "buffs": "Buffs",
+      "avgMultiplier": "Avg. Multiplier",
+      "multiplierSplit": "Multiplier Uptime",
       "selfHealing": "Self-Healing",
       "multiHitDamage": "Multi-Hit Damage",
       "multiHitHits": "Multi-Hits",

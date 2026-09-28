@@ -28,6 +28,9 @@ pub struct ParsedDamagePacket {
     heal_amount: i32,
     hex_payload: String,
     spec_flags: [bool; 5],
+    /// The actor's damage multiplier on this hit, in hundredths of a percent
+    /// (0 = not carried). Rises and falls with buffs; see `active_scalar_ms`.
+    power_scalar: i32,
 }
 
 impl ParsedDamagePacket {
@@ -47,6 +50,7 @@ impl ParsedDamagePacket {
             heal_amount: 0,
             hex_payload: String::new(),
             spec_flags: [false; 5],
+            power_scalar: 0,
         }
     }
 
@@ -64,6 +68,7 @@ impl ParsedDamagePacket {
     pub fn set_hex_payload(&mut self, h: String) { self.hex_payload = h; }
     pub fn set_spec_flags(&mut self, f: [bool; 5]) { self.spec_flags = f; }
     pub fn set_timestamp(&mut self, ts: i64) { self.timestamp = ts; }
+    pub fn set_power_scalar(&mut self, s: i32) { self.power_scalar = s; }
 
     // Getters
     pub fn id(&self) -> i64 { self.id }
@@ -78,6 +83,7 @@ impl ParsedDamagePacket {
     pub fn multi_hit_count(&self) -> i32 { self.multi_hit_count }
     pub fn multi_hit_damage(&self) -> i32 { self.multi_hit_damage }
     pub fn heal_amount(&self) -> i32 { self.heal_amount }
+    pub fn power_scalar(&self) -> i32 { self.power_scalar }
     pub fn hex_payload(&self) -> &str { &self.hex_payload }
     pub fn spec_flags(&self) -> &[bool; 5] { &self.spec_flags }
 

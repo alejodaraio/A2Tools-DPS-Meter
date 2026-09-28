@@ -1,7 +1,7 @@
 use std::collections::{HashMap, HashSet};
 use std::sync::Arc;
 
-use crate::combat::data_storage::{active_ms, DataStorage, TargetCombatData};
+use crate::combat::data_storage::{active_ms, scalar_time_ms, DataStorage, TargetCombatData};
 use crate::combat::ping_tracker::PingTracker;
 use crate::entity::details_context::*;
 use crate::entity::dps_data::DpsData;
@@ -679,6 +679,31 @@ impl DpsCalculator {
         }
     }
 
+    /// Buffs on `actor` over its active `spans`, named and as a share of the
+    /// active time. Proc markers and buffs up for under 1% are left out.
+    fn buff_uptimes(&self, actor: i32, spans: &[(i64, i64)]) -> Vec<BuffUptime> {
+        let mut sorted = spans.to_vec();
+        sorted.sort_unstable();
+        let active = active_ms(&sorted);
+        if active <= 0 {
+            return Vec::new();
+        }
+        self.data_storage
+            .buff_uptime(actor, &sorted)
+            .into_iter()
+            .map(|(effect, ms)| {
+                let code = crate::combat::buffs::effect_code(effect);
+                let mut name = self.skill_lookup.lookup_skill_name(code);
+                if name.is_empty() {
+                    // Rank/level variants share the family's name.
+                    name = self.skill_lookup.lookup_skill_name(code - code % 10_000);
+                }
+                BuffUptime { effect, name, uptime_pct: (ms as f64 * 100.0 / active as f64).min(100.0) }
+            })
+            .filter(|b| b.uptime_pct >= 1.0)
+            .collect()
+    }
+
     fn resolve_target_name(&self, target_id: i32) -> String {
         let mob_data = self.data_storage.get_mob_data();
         if let Some(&code) = mob_data.get(&target_id) {
@@ -831,6 +856,16 @@ impl DpsCalculator {
                         level: party.get(nick).map(|m| m.level).unwrap_or(0),
                         gear_score: party.get(nick).map(|m| m.gear_score).unwrap_or(0),
                         combat_power: party.get(nick).map(|m| m.combat_power).unwrap_or(0),
+                        power_scalar_ms: target_data
+                            .actors
+                            .get(&id)
+                            .map(|ad| scalar_time_ms(&ad.active_spans, &ad.scalar_changes))
+                            .unwrap_or_default(),
+                        buffs: target_data
+                            .actors
+                            .get(&id)
+                            .map(|ad| self.buff_uptimes(id, &ad.active_spans))
+                            .unwrap_or_default(),
                     }
                 })
                 .collect();
@@ -1026,6 +1061,21 @@ impl DpsCalculator {
                     level: party.get(nick).map(|m| m.level).unwrap_or(0),
                     gear_score: party.get(nick).map(|m| m.gear_score).unwrap_or(0),
                     combat_power: party.get(nick).map(|m| m.combat_power).unwrap_or(0),
+                    power_scalar_ms: {
+                        let (mut spans, mut changes) = (Vec::new(), Vec::new());
+                        for ad in combat_data.values().filter_map(|td| td.actors.get(&id)) {
+                            spans.extend_from_slice(&ad.active_spans);
+                            changes.extend_from_slice(&ad.scalar_changes);
+                        }
+                        scalar_time_ms(&spans, &changes)
+                    },
+                    buffs: {
+                        let spans: Vec<(i64, i64)> = combat_data.values()
+                            .filter_map(|td| td.actors.get(&id))
+                            .flat_map(|ad| ad.active_spans.iter().copied())
+                            .collect();
+                        self.buff_uptimes(id, &spans)
+                    },
                 }
             })
             .collect();

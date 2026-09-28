@@ -279,12 +279,76 @@ impl StreamProcessor {
         self.parse_death_packet(packet);
         self.parse_zone_change_packet(packet);
         self.parse_self_status_packet(packet);
+        self.parse_buff_packet(packet);
 
         if !parsed_damage && !parsed_name && !parsed_summon && !parsed_ownership && !parsed_hp {
             self.parse_dot_packet(packet);
         }
 
         parsed_damage || parsed_name
+    }
+
+    // ===== BUFFS (2A 38 add / 2C 38 remove) =====
+
+    /// Buff add and remove records; layout and evidence in `combat::buffs`.
+    /// The four zero bytes after the duration are checked as a shape guard,
+    /// and only the short, single-entry form of the remove is read (a longer
+    /// batched `2C 38` exists; its adds still lapse by duration).
+    fn parse_buff_packet(&self, packet: &[u8]) {
+        let length_info = read_varint(packet, 0);
+        if length_info.length <= 0 {
+            return;
+        }
+        let mut o = length_info.length as usize;
+        if o + 2 >= packet.len() || packet[o + 1] != 0x38 {
+            return;
+        }
+        let op = packet[o];
+        if op != 0x2A && op != 0x2C {
+            return;
+        }
+        o += 2;
+        let mut next = || -> Option<i32> {
+            let v = read_varint(packet, o);
+            if v.length <= 0 {
+                return None;
+            }
+            o += v.length as usize;
+            Some(v.value)
+        };
+        let ts = self.override_timestamp.unwrap_or_else(|| {
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .map(|d| d.as_millis() as i64)
+                .unwrap_or(0)
+        });
+
+        if op == 0x2A {
+            let (Some(target), Some(_), Some(_), Some(seq)) = (next(), next(), next(), next()) else { return };
+            if target <= 0 || seq < 0 {
+                return;
+            }
+            let Some(b) = packet.get(o..o + 12) else { return };
+            if b[8..12] != [0, 0, 0, 0] {
+                return;
+            }
+            let effect = u32::from_le_bytes([b[0], b[1], b[2], b[3]]);
+            let duration_ms = u32::from_le_bytes([b[4], b[5], b[6], b[7]]);
+            // Effect ids are skill/item codes x10; a day-long buff is the cap.
+            if !(1_000_000..=3_000_000_000).contains(&effect) || duration_ms > 86_400_000 {
+                return;
+            }
+            self.data_storage.note_buff_add(target, seq as u32, effect, duration_ms, ts);
+        } else {
+            if packet.len() > 16 {
+                return;
+            }
+            let (Some(target), Some(one), Some(zero), Some(seq)) = (next(), next(), next(), next()) else { return };
+            if target <= 0 || one != 1 || zero != 0 || seq < 0 {
+                return;
+            }
+            self.data_storage.note_buff_remove(target, seq as u32, ts);
+        }
     }
 
     // ===== SELF STATUS (4A 36) =====
@@ -1956,9 +2020,12 @@ impl StreamProcessor {
             // When the damage is in `second_value`, `first_value` is the actor's
             // power scalar (see above). Recorded per actor so a summon whose spawn
             // packet never arrived can still be tied to its owner.
-            if !first_is_damage && (1_000..=200_000).contains(&first_value) {
+            let hit_power_scalar = if !first_is_damage && (1_000..=200_000).contains(&first_value) {
                 self.data_storage.note_power_scalar(actor_value, first_value);
-            }
+                first_value
+            } else {
+                0
+            };
 
             let mut final_damage = if first_is_damage {
                 offset = after_first_offset;
@@ -2130,6 +2197,7 @@ impl StreamProcessor {
                 pdp.set_multi_hit_damage(multi_hit_damage);
                 pdp.set_heal_amount(heal_amount);
                 pdp.set_damage(final_damage);
+                pdp.set_power_scalar(hit_power_scalar);
                 pdp.set_hex_payload(to_hex(packet));
 
                 self.data_storage.append_damage(pdp);

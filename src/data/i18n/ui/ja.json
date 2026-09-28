@@ -9,6 +9,12 @@
     }
   },
   "details": {
+    "buffs": {
+      "title": "バフ",
+      "selectPlayer": "プレイヤーを選択するとバフが表示されます。",
+      "none": "このプレイヤーのバフは記録されていません。",
+      "multiplier": "ダメージ倍率"
+    },
     "header": "詳細",
     "title": "{name} の詳細",
     "tooltip": "継続ダメージは、クリティカル・ダブル・パーフェクト・バックアタック・パリィの合計率には含まれません。",
@@ -91,6 +97,9 @@
       "pauses": "中断",
       "combatPower": "戦闘力",
       "dpsPerCp": "DPS / 戦闘力1k",
+      "buffs": "バフ",
+      "avgMultiplier": "平均倍率",
+      "multiplierSplit": "倍率別の時間",
       "selfHealing": "自己回復",
       "multiHitDamage": "多段ヒットのダメージ",
       "multiHitHits": "多段ヒット",

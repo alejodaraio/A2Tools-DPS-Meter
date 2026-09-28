@@ -9,6 +9,12 @@
     }
   },
   "details": {
+    "buffs": {
+      "title": "Buffs",
+      "selectPlayer": "Selecciona un jugador para ver sus buffs.",
+      "none": "No hay buffs registrados para este jugador.",
+      "multiplier": "Multiplicador de daño"
+    },
     "header": "Detalles",
     "title": "Detalles de {name}",
     "tooltip": "El daño por tiempo no se incluye en los porcentajes totales de crítico, doble, perfecto, ataque por la espalda ni parada.",
@@ -91,6 +97,9 @@
       "pauses": "Pausas",
       "combatPower": "Poder de combate",
       "dpsPerCp": "DPS / 1k PC",
+      "buffs": "Buffs",
+      "avgMultiplier": "Multiplicador medio",
+      "multiplierSplit": "Tiempo por multiplicador",
       "selfHealing": "Autocuración",
       "multiHitDamage": "Daño de golpes múltiples",
       "multiHitHits": "Golpes múltiples",

@@ -50,6 +50,20 @@ fn spans_split_on_pauses_and_union_overlaps() {
 }
 
 #[test]
+fn multiplier_time_follows_changes_within_active_spans_and_drops_noise() {
+    use a2tools_dps_meter_lib::combat::data_storage::scalar_time_ms;
+    // Active 0-10 s and 20-30 s; base 12520, +20% from 5 s, back at 25 s, and
+    // one nonsense reading (4426, like a real Gladiator hit) at 8 s.
+    let spans = vec![(0, 10_000), (20_000, 30_000)];
+    let changes = vec![(0, 12_520), (5_000, 14_520), (8_000, 4_426), (8_500, 14_520), (25_000, 12_520)];
+    assert_eq!(
+        scalar_time_ms(&spans, &changes),
+        vec![(12_520, 5_000 + 5_000), (14_520, 5_000 + 5_000)],
+        "the pause between spans counts for nothing, the noise value is ignored"
+    );
+}
+
+#[test]
 fn a_pause_mid_fight_does_not_dilute_dps() {
     let storage = Arc::new(DataStorage::new());
     storage.set_local_player_id(Some(ME as i64));

@@ -9,6 +9,12 @@
     }
   },
   "details": {
+    "buffs": {
+      "title": "버프",
+      "selectPlayer": "플레이어를 선택하면 버프가 표시됩니다.",
+      "none": "이 플레이어의 버프 기록이 없습니다.",
+      "multiplier": "피해 배율"
+    },
     "header": "상세",
     "title": "{name} 상세",
     "tooltip": "지속 피해(DOT) 타격은 총 치명타, 더블, 퍼펙트, 백어택, 패리 비율에 포함되지 않습니다.",
@@ -90,6 +96,9 @@
       "pauses": "공백",
       "combatPower": "전투력",
       "dpsPerCp": "DPS / 전투력 1k",
+      "buffs": "버프",
+      "avgMultiplier": "평균 배율",
+      "multiplierSplit": "배율별 시간",
       "multiHitDamage": "다중타 피해",
       "multiHitHits": "다중타",
       "maxHp": "최대 HP",

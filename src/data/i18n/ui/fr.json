@@ -9,6 +9,12 @@
     }
   },
   "details": {
+    "buffs": {
+      "title": "Buffs",
+      "selectPlayer": "Sélectionnez un joueur pour voir ses buffs.",
+      "none": "Aucun buff enregistré pour ce joueur.",
+      "multiplier": "Multiplicateur de dégâts"
+    },
     "header": "Détails",
     "title": "Détails de {name}",
     "tooltip": "Les dégâts sur la durée ne sont pas comptés dans les taux globaux de critique, double, parfait, attaque dans le dos ou parade.",
@@ -91,6 +97,9 @@
       "pauses": "Pauses",
       "combatPower": "Puissance de combat",
       "dpsPerCp": "DPS / 1k PC",
+      "buffs": "Buffs",
+      "avgMultiplier": "Multiplicateur moyen",
+      "multiplierSplit": "Temps par multiplicateur",
       "selfHealing": "Auto-soin",
       "multiHitDamage": "Dégâts des coups multiples",
       "multiHitHits": "Coups multiples",

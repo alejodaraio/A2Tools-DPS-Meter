@@ -9,6 +9,12 @@
     }
   },
   "details": {
+    "buffs": {
+      "title": "Buffs",
+      "selectPlayer": "Wähle einen Spieler, um seine Buffs zu sehen.",
+      "none": "Keine Buffs für diesen Spieler erfasst.",
+      "multiplier": "Schadensmultiplikator"
+    },
     "header": "Details",
     "title": "Details zu {name}",
     "tooltip": "Schaden über Zeit wird in den Gesamtquoten für Kritisch, Doppelt, Perfekt, Rückenangriff und Parade nicht mitgezählt.",
@@ -91,6 +97,9 @@
       "pauses": "Pausen",
       "combatPower": "Kampfkraft",
       "dpsPerCp": "DPS / 1k KK",
+      "buffs": "Buffs",
+      "avgMultiplier": "Ø Multiplikator",
+      "multiplierSplit": "Zeit pro Multiplikator",
       "selfHealing": "Selbstheilung",
       "multiHitDamage": "Mehrfachtreffer-Schaden",
       "multiHitHits": "Mehrfachtreffer",

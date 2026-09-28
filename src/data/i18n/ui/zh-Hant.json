@@ -9,6 +9,12 @@
     }
   },
   "details": {
+    "buffs": {
+      "title": "增益",
+      "selectPlayer": "選擇一名玩家以查看其增益。",
+      "none": "沒有該玩家的增益記錄。",
+      "multiplier": "傷害倍率"
+    },
     "header": "詳細",
     "title": "{name} 詳細",
     "tooltip": "持續傷害（DOT）不包含在總暴擊、雙重、完美、背擊或格擋比率中。",
@@ -90,6 +96,9 @@
       "pauses": "停頓",
       "combatPower": "戰鬥力",
       "dpsPerCp": "DPS / 1k戰力",
+      "buffs": "增益",
+      "avgMultiplier": "平均倍率",
+      "multiplierSplit": "各倍率時長",
       "multiHitDamage": "額外傷害",
       "multiHitHits": "多段打擊",
       "maxHp": "最大HP",

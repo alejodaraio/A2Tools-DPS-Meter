@@ -26,6 +26,24 @@ pub struct DetailsActorSummary {
     pub gear_score: i32,
     #[serde(default)]
     pub combat_power: i64,
+    /// Active time per damage-multiplier level, `[scalar, ms]` ascending by
+    /// scalar (hundredths of a percent). See `data_storage::scalar_time_ms`.
+    #[serde(default)]
+    pub power_scalar_ms: Vec<(i32, i64)>,
+    /// Buffs on this actor while they were attacking, longest first.
+    #[serde(default)]
+    pub buffs: Vec<BuffUptime>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BuffUptime {
+    /// Raw effect id (skill/item code x10 + a digit; see `combat::buffs`).
+    pub effect: u32,
+    /// Localized skill/item name, empty when unknown.
+    pub name: String,
+    /// Share of the actor's active time the buff was up, 0-100.
+    pub uptime_pct: f64,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

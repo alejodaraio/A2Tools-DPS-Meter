@@ -137,6 +137,86 @@ const createDetailsUI = ({
     detailsFightTitleEl.innerHTML = `${fightVs} <span class="fightTitleBossName">${bossName}</span>${suffix}`;
   };
 
+  // Damage multiplier over the fight (DetailsActorSummary.powerScalarMs:
+  // [[scalar, ms], ...], scalar in hundredths of a percent). It rises and falls
+  // with buffs, so the time-weighted split shows how long they were up.
+  const scalarLevels = (actor) =>
+    (Array.isArray(actor?.powerScalarMs) ? actor.powerScalarMs : [])
+      .map(([s, ms]) => [Number(s), Number(ms)])
+      .filter(([s, ms]) => s > 0 && ms > 0);
+  const avgMultiplierPct = (actor) => {
+    const levels = scalarLevels(actor);
+    const total = levels.reduce((sum, [, ms]) => sum + ms, 0);
+    return total > 0 ? levels.reduce((sum, [s, ms]) => sum + s * ms, 0) / total / 100 : null;
+  };
+
+  // Buffs on an actor while attacking (DetailsActorSummary.buffs), one entry
+  // per name: rank variants of a skill arrive as separate effects, and the
+  // longest-held one is what "how long was it up" means.
+  const actorBuffs = (actor) => {
+    const byName = new Map();
+    (Array.isArray(actor?.buffs) ? actor.buffs : []).forEach((b) => {
+      const name = (b?.name || "").trim() || `#${b?.effect}`;
+      const pct = Number(b?.uptimePct) || 0;
+      if (pct > (byName.get(name) ?? -1)) byName.set(name, pct);
+    });
+    return [...byName.entries()].sort((a, b) => b[1] - a[1]);
+  };
+
+  // ── Buffs section ── bars for each buff's uptime and for the time spent at
+  // each damage-multiplier level, for the one selected player.
+  const buffsHintEl = detailsPanel?.querySelector?.(".buffsHint");
+  const buffsListEl = detailsPanel?.querySelector?.(".buffsList");
+  const buffsMultTitleEl = detailsPanel?.querySelector?.(".buffsMultTitle");
+  const buffsMultListEl = detailsPanel?.querySelector?.(".buffsMultList");
+
+  const buffRow = (label, pct, tip = "") => {
+    const row = document.createElement("div");
+    row.className = "buffRow";
+    if (tip) row.title = tip;
+    const name = document.createElement("span");
+    name.className = "buffName";
+    name.textContent = label;
+    const value = document.createElement("span");
+    value.className = "buffPct";
+    value.textContent = `${Math.round(pct)}%`;
+    const track = document.createElement("div");
+    track.className = "buffTrack";
+    const fill = document.createElement("div");
+    fill.className = "buffFill";
+    fill.style.width = `${Math.max(0, Math.min(100, pct))}%`;
+    track.appendChild(fill);
+    row.append(name, value, track);
+    return row;
+  };
+
+  const renderBuffsSection = () => {
+    if (!buffsListEl || !buffsMultListEl) return;
+    buffsListEl.innerHTML = "";
+    buffsMultListEl.innerHTML = "";
+    const actor = getSingleSelectedActor();
+    const buffs = actor ? actorBuffs(actor) : [];
+    const levels = actor ? scalarLevels(actor) : [];
+    if (buffsHintEl) {
+      buffsHintEl.style.display = actor && (buffs.length || levels.length) ? "none" : "";
+      buffsHintEl.textContent = actor
+        ? labelText("details.buffs.none", "No buffs recorded for this player.")
+        : labelText("details.buffs.selectPlayer", "Select a player to see their buffs.");
+    }
+    buffs.forEach(([name, pct]) => buffsListEl.appendChild(buffRow(name, pct, `${name}: ${pct.toFixed(1)}%`)));
+
+    const totalMs = levels.reduce((sum, [, ms]) => sum + ms, 0);
+    if (buffsMultTitleEl) buffsMultTitleEl.style.display = totalMs > 0 ? "" : "none";
+    levels
+      .sort((a, b) => a[0] - b[0])
+      .forEach(([scalar, ms]) => {
+        const pct = (ms / totalMs) * 100;
+        buffsMultListEl.appendChild(
+          buffRow(`${(scalar / 100).toFixed(1)}%`, pct, `${(ms / 1000).toFixed(1)}s`)
+        );
+      });
+  };
+
   // The one player the Details view is focused on, or null for "All" / several.
   const getSingleSelectedActor = () =>
     Array.isArray(selectedAttackerIds) && selectedAttackerIds.length === 1
@@ -204,6 +284,14 @@ const createDetailsUI = ({
         const cp = Number(getSingleSelectedActor()?.combatPower) || 0;
         if (cp <= 0 || !(Number(d?.activeMs) > 0)) return "-";
         return (window.activeTime.dps(d.totalDmg, d.activeMs) / (cp / 1000)).toFixed(1);
+      },
+    },
+    {
+      key: "details.stats.avgMultiplier",
+      fallback: "Avg. Multiplier",
+      getValue: () => {
+        const avg = avgMultiplierPct(getSingleSelectedActor());
+        return avg === null ? "-" : `${avg.toFixed(1)}%`;
       },
     },
     { key: "details.skills.hits", fallback: "Hits", getValue: (d) => formatCount(d?.totalHits) },
@@ -449,6 +537,8 @@ const createDetailsUI = ({
       slot.labelEl.textContent = labelText(def.key, def.fallback);
 
       slot.valueEl.innerHTML = "";
+      // Optional hover text for stats that only fit a summary in the cell.
+      slot.statEl.title = typeof def.getTitle === "function" ? def.getTitle(details) || "" : "";
       slot.valueEl.style.display = "";
       slot.valueEl.style.flexWrap = "";
       slot.valueEl.style.gap = "";
@@ -632,15 +722,17 @@ const createDetailsUI = ({
         : (btMs > 0 ? dmg / btMs * 1000 : null);
       dpsEl.textContent = perSec !== null ? `${formatDamageCompact(perSec)}${dpsSuffix}` : "-";
 
-      // Roster details on hover (party members only).
+      // Roster details (party members only) and average multiplier on hover.
       const rosterActor = detailsActors.get(actorId);
       const cp = Number(rosterActor?.combatPower) || 0;
-      if (cp > 0) {
+      const avgMult = detailsMode !== "heal" ? avgMultiplierPct(rosterActor) : null;
+      if (cp > 0 || avgMult !== null) {
         bar.title = [
-          Number(rosterActor.level) > 0 ? `Lv ${rosterActor.level}` : "",
-          Number(rosterActor.gearScore) > 0 ? `GS ${rosterActor.gearScore}` : "",
-          `CP ${cp.toLocaleString()}`,
-          perSec !== null && detailsMode !== "heal"
+          avgMult !== null ? `×${avgMult.toFixed(0)}%` : "",
+          Number(rosterActor?.level) > 0 ? `Lv ${rosterActor.level}` : "",
+          Number(rosterActor?.gearScore) > 0 ? `GS ${rosterActor.gearScore}` : "",
+          cp > 0 ? `CP ${cp.toLocaleString()}` : "",
+          cp > 0 && perSec !== null && detailsMode !== "heal"
             ? `${(perSec / (cp / 1000)).toFixed(1)} ${labelText("details.stats.dpsPerCp", "DPS / 1k CP")}`
             : "",
         ].filter(Boolean).join(" · ");
@@ -2248,6 +2340,7 @@ const createDetailsUI = ({
     const partyBarCtx = buildPartyBarStats();
     renderPartyBars(partyBarCtx?.stats || details?.perActorStats, partyBarCtx?.battleTimeMs || details?.battleTimeMs);
     renderStats(details, { compact: activeCompactMode });
+    renderBuffsSection();
     renderSkills(details, { compact: activeCompactMode });
     renderDpsChart(details);
     renderTimeline(details);
@@ -2513,6 +2606,7 @@ const createDetailsUI = ({
     const ctx = buildPartyBarStats();
     renderPartyBars(ctx?.stats || lastDetails?.perActorStats, ctx?.battleTimeMs || lastDetails?.battleTimeMs);
     renderStats(lastDetails, { compact: activeCompactMode });
+    renderBuffsSection();
     renderSkills(lastDetails, { compact: activeCompactMode });
     renderTimeline(lastDetails);
   };

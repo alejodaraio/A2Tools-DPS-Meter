@@ -153,6 +153,9 @@ pub struct ActorCombatData {
     /// dividing by first-to-last hit counted every pause and read ~25% low.
     /// One entry per pause, so it stays small where per-hit timestamps don't.
     pub active_spans: Vec<(i64, i64)>,
+    /// The actor's damage multiplier over time, as `(first_hit_ms, scalar)`
+    /// recorded only when it changes. See `scalar_time_ms`.
+    pub scalar_changes: Vec<(i64, i32)>,
 }
 
 /// A pause between two hits at least this long doesn't count as fighting.
@@ -203,6 +206,73 @@ pub fn active_ms<'a>(spans: impl IntoIterator<Item = &'a (i64, i64)>) -> i64 {
     total
 }
 
+/// How an actor's active time splits across damage-multiplier levels, as
+/// `scalar -> ms`. `spans` are active spans and `changes` scalar change points
+/// (`ActorCombatData::scalar_changes`), each possibly pooled from several
+/// targets — the scalar is actor state, so change points from any target
+/// apply to all of them.
+///
+/// Measured on live captures (2026-09-27): the scalar is time-contiguous, not
+/// per skill — every skill appears at every level, with only a few changes per
+/// fight — and moves in steps of 1000 (10%) as buffs come and go: a Chanter
+/// read 12520 / 13520 / 14520, a Gladiator 15595 / 17595 (and 14595 briefly).
+/// A lone value far from the rest (one Gladiator hit read 4426) is noise and
+/// is dropped: anything under half or over double the median change value.
+pub fn scalar_time_ms(spans: &[(i64, i64)], changes: &[(i64, i32)]) -> Vec<(i32, i64)> {
+    let mut values: Vec<i32> = changes.iter().map(|&(_, s)| s).collect();
+    if values.is_empty() {
+        return Vec::new();
+    }
+    values.sort_unstable();
+    let median = values[values.len() / 2];
+    let mut points: Vec<(i64, i32)> = changes
+        .iter()
+        .copied()
+        .filter(|&(_, s)| s * 2 >= median && s <= median * 2)
+        .collect();
+    points.sort_unstable();
+    if points.is_empty() {
+        return Vec::new();
+    }
+
+    // The scalar in effect at t: the last change at or before t (the first
+    // one covers anything earlier).
+    let at = |t: i64| -> i32 {
+        match points.partition_point(|&(ts, _)| ts <= t) {
+            0 => points[0].1,
+            i => points[i - 1].1,
+        }
+    };
+
+    let mut merged: Vec<(i64, i64)> = spans.to_vec();
+    merged.sort_unstable();
+    let mut out: std::collections::BTreeMap<i32, i64> = std::collections::BTreeMap::new();
+    let mut cur: Option<(i64, i64)> = None;
+    let flush = |(s, e): (i64, i64), out: &mut std::collections::BTreeMap<i32, i64>| {
+        // Split [s, e] at every change point inside it.
+        let mut t = s;
+        for &(ts, _) in points.iter().filter(|&&(ts, _)| ts > s && ts < e) {
+            *out.entry(at(t)).or_default() += ts - t;
+            t = ts;
+        }
+        *out.entry(at(t)).or_default() += e - t;
+    };
+    for (s, e) in merged {
+        match cur {
+            Some((cs, ce)) if s <= ce => cur = Some((cs, ce.max(e))),
+            Some(c) => {
+                flush(c, &mut out);
+                cur = Some((s, e));
+            }
+            None => cur = Some((s, e)),
+        }
+    }
+    if let Some(c) = cur {
+        flush(c, &mut out);
+    }
+    out.into_iter().filter(|&(_, ms)| ms > 0).collect()
+}
+
 impl ActorCombatData {
     fn new() -> Self {
         Self {
@@ -215,6 +285,7 @@ impl ActorCombatData {
             job: None,
             skills: HashMap::new(),
             active_spans: Vec::new(),
+            scalar_changes: Vec::new(),
         }
     }
 }
@@ -270,6 +341,9 @@ struct Inner {
     mob_storage: HashMap<i32, i32>,
     /// Healing done per (healer actor) -> (skill_code, is_hot) -> aggregate.
     heal_storage: HashMap<i32, HashMap<(i32, bool), HealSkillData>>,
+    /// Buff intervals per entity (2A 38 / 2C 38). Time-based, so not cleared
+    /// with the combat segment; the tracker prunes old intervals itself.
+    buffs: crate::combat::buffs::BuffTracker,
     /// Spawn-time / observed-peak MAX HP per entity (denominator for the HP bar).
     mob_hp_data: HashMap<i32, i32>,
     /// Live CURRENT HP per entity, from the in-place `8D <id> 02 01 00 <u32>` feed.
@@ -329,6 +403,7 @@ impl DataStorage {
                 summon_storage: HashMap::new(),
                 mob_storage: HashMap::new(),
                 heal_storage: HashMap::new(),
+                buffs: Default::default(),
                 mob_hp_data: HashMap::new(),
                 mob_current_hp: HashMap::new(),
                 known_player_ids: HashSet::new(),
@@ -532,6 +607,10 @@ impl DataStorage {
             actor_data.last_damage_time = timestamp;
         }
         note_active_hit(&mut actor_data.active_spans, timestamp);
+        let scalar = pdp.power_scalar();
+        if scalar > 0 && actor_data.scalar_changes.last().is_none_or(|&(t, s)| s != scalar && timestamp >= t) {
+            actor_data.scalar_changes.push((timestamp, scalar));
+        }
         if actor_data.job.is_none() {
             actor_data.job = JobClass::convert_from_skill(skill_code);
         }
@@ -613,6 +692,19 @@ impl DataStorage {
 
     pub fn get_dead_entities(&self) -> HashSet<i32> {
         self.inner.read().dead_entity_ids.clone()
+    }
+
+    pub fn note_buff_add(&self, target: i32, seq: u32, effect: u32, duration_ms: u32, ts: i64) {
+        self.inner.write().buffs.add(target, seq, effect, duration_ms, ts);
+    }
+
+    pub fn note_buff_remove(&self, target: i32, seq: u32, ts: i64) {
+        self.inner.write().buffs.remove(target, seq, ts);
+    }
+
+    /// Buff uptime on `target` within its active `spans`: `(effect, ms)`.
+    pub fn buff_uptime(&self, target: i32, spans: &[(i64, i64)]) -> Vec<(u32, i64)> {
+        self.inner.read().buffs.uptime(target, spans)
     }
 
     pub fn register_boss(&self, entity_id: i32) {
@@ -939,6 +1031,7 @@ impl DataStorage {
                                 job: ad.job,
                                 skills,
                                 active_spans: ad.active_spans.clone(),
+                                scalar_changes: ad.scalar_changes.clone(),
                             },
                         )
                     })
