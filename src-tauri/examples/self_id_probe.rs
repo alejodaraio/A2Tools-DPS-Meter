@@ -305,6 +305,34 @@ fn main() {
                 }
             }
         }
+        "findval" => {
+            // Where does a value (e.g. an NPC code) appear, as varint or u32 LE,
+            // and which entity varints sit near it? `findval <value> [near_id]`.
+            let val: u32 = args[3].parse().unwrap();
+            let near: Option<u32> = args.get(4).and_then(|s| s.parse().ok());
+            let pats = [("varint", enc_varint(val)), ("u32le", val.to_le_bytes().to_vec())];
+            let mut by_op: BTreeMap<(String, u8, u8, &str), (usize, usize, String)> = BTreeMap::new();
+            for p in &pk {
+                let Some((a, b, _)) = opcode(&p.data) else { continue };
+                for (enc, pat) in &pats {
+                    if let Some(pos) = p.data.windows(pat.len()).position(|w| w == pat.as_slice()) {
+                        let e = by_op.entry((p.key.clone(), a, b, *enc)).or_insert((0, 0, String::new()));
+                        e.0 += 1;
+                        if let Some(id) = near {
+                            let idb = enc_varint(id);
+                            if p.data.windows(idb.len()).any(|w| w == idb.as_slice()) { e.1 += 1; }
+                        }
+                        if e.2.is_empty() {
+                            let s = pos.saturating_sub(12);
+                            e.2 = format!("@{pos}: {}", p.data[s..p.data.len().min(pos + 16)].iter().map(|x| format!("{:02X}", x)).collect::<Vec<_>>().join(" "));
+                        }
+                    }
+                }
+            }
+            for ((key, a, b, enc), (n, with_id, sample)) in by_op {
+                println!("{key} {a:02X} {b:02X} {enc:<6} x{n:<5} with_id={with_id:<5} {sample}");
+            }
+        }
         _ => eprintln!("unknown mode"),
     }
 }

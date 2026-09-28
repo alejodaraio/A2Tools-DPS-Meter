@@ -75,6 +75,23 @@ fn main() {
         }
     }
 
+    // Title check: every target that took damage, whether its NPC code is
+    // known (spawn seen) and whether that code has a name.
+    let npcs = NpcLookup::new();
+    if let Ok(t) = std::fs::read_to_string("../src/data/i18n/npcs/en.json") {
+        npcs.load_from_json(&t);
+    }
+    let mobs_now = storage.get_mob_data();
+    let mut all_targets: Vec<_> = fights.keys().map(|(id, _)| *id).collect::<std::collections::BTreeSet<_>>().into_iter().collect();
+    all_targets.sort();
+    for id in all_targets {
+        let code = mobs_now.get(&id);
+        let name = code.map(|&c| npcs.get_npc_name(c)).unwrap_or_default();
+        let dmg: i64 = fights.iter().filter(|((t, _), _)| *t == id).map(|(_, f)| f.total_damage).sum();
+        println!("title-check target {id:>6} code={:<10} name={:<30} dmg={dmg}",
+            code.map(|c| c.to_string()).unwrap_or("-".into()), format!("{name:?}"));
+    }
+
     let local = storage.local_player_id().map(|v| v as i32);
     println!("local player: {:?}  name: {:?}", local, storage.local_character_name());
     let Some(local) = local else { return };
