@@ -278,12 +278,49 @@ impl StreamProcessor {
         let parsed_hp = self.parse_hp_mp_update_packet(packet);
         self.parse_death_packet(packet);
         self.parse_zone_change_packet(packet);
+        self.parse_self_status_packet(packet);
 
         if !parsed_damage && !parsed_name && !parsed_summon && !parsed_ownership && !parsed_hp {
             self.parse_dot_packet(packet);
         }
 
         parsed_damage || parsed_name
+    }
+
+    // ===== SELF STATUS (4A 36) =====
+
+    /// `<len varint> 4A 36 <entity_id varint> ...` — a status record the server
+    /// sends only about the character you are playing, about once a second (the
+    /// common shape is a 14-byte tick with nine zero bytes after the id).
+    ///
+    /// The `33 36` self record names the local player, but it only arrives on a
+    /// zone load, so a meter started mid-zone had no idea who you were until
+    /// your next teleport — and the "only me / party" filter showed everyone.
+    /// Measured against a live capture with other players fighting nearby
+    /// (2026-09-27): 240 of 240 `4A 36` packets carried the local player's id and
+    /// never another's, while `2B 38`, the other frequent candidate, also carried
+    /// other players' ids.
+    ///
+    /// It only fills in a missing binding. The `33 36` record stays authoritative:
+    /// it carries the name, and on a zone change it rebinds to the new id itself.
+    fn parse_self_status_packet(&self, packet: &[u8]) {
+        let length_info = read_varint(packet, 0);
+        if length_info.length <= 0 {
+            return;
+        }
+        let offset = length_info.length as usize;
+        if offset + 2 >= packet.len() || packet[offset] != 0x4A || packet[offset + 1] != 0x36 {
+            return;
+        }
+        let id = read_varint(packet, offset + 2);
+        if id.length <= 0 || !(1..=9_999_999).contains(&id.value) {
+            return;
+        }
+        if self.data_storage.local_player_id().is_some() {
+            return;
+        }
+        tracing::info!("self status (4A 36): local player -> entity {}", id.value);
+        self.data_storage.set_local_player_id(Some(id.value as i64));
     }
 
     // ===== ZONE CHANGE (23 36) =====

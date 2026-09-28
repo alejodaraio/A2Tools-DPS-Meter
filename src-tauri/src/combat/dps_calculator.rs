@@ -52,6 +52,43 @@ impl TargetSelectionMode {
     }
 }
 
+/// Whose damage the meter lists. Target selection decides *which mob* is shown;
+/// this decides *which players* hitting it are shown — without it, every
+/// stranger on a world boss fills the meter.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ActorFilterMode {
+    All,
+    Party,
+    SelfOnly,
+}
+
+impl ActorFilterMode {
+    pub const SETTING_KEY: &'static str = "dpsMeter.actorFilter";
+
+    pub fn from_id(id: &str) -> Self {
+        match id {
+            "all" => Self::All,
+            "self" => Self::SelfOnly,
+            _ => Self::Party,
+        }
+    }
+}
+
+/// Resolved allow-list for one calculation. Players are matched by canonical
+/// entity id (you and your summons) or by character name: the party roster
+/// carries an account dbid, not the session entity id, so the name is the only
+/// join to the entities in the damage log.
+struct ActorFilter {
+    ids: HashSet<i32>,
+    names: HashSet<String>,
+}
+
+impl ActorFilter {
+    fn allows(&self, uid: i32, nickname: &str) -> bool {
+        self.ids.contains(&uid) || self.names.contains(nickname.trim())
+    }
+}
+
 pub struct DpsCalculator {
     data_storage: Arc<DataStorage>,
     skill_lookup: Arc<SkillLookup>,
@@ -65,6 +102,8 @@ pub struct DpsCalculator {
     all_targets_window_ms: i64,
     nickname_job_cache: HashMap<String, String>,
     saved_boss_targets: HashSet<i32>,
+    actor_filter_mode: ActorFilterMode,
+    last_filter_log: String,
 }
 
 impl DpsCalculator {
@@ -87,11 +126,66 @@ impl DpsCalculator {
             all_targets_window_ms: 120_000,
             nickname_job_cache: HashMap::new(),
             saved_boss_targets: HashSet::new(),
+            actor_filter_mode: ActorFilterMode::Party,
+            last_filter_log: String::new(),
         }
     }
 
     pub fn set_target_selection_mode(&mut self, id: &str) {
         self.target_selection_mode = TargetSelectionMode::from_id(id);
+    }
+
+    pub fn set_actor_filter_mode(&mut self, id: &str) {
+        let mode = ActorFilterMode::from_id(id);
+        if mode != self.actor_filter_mode {
+            tracing::info!("Actor filter mode: {:?} -> {:?}", self.actor_filter_mode, mode);
+            self.actor_filter_mode = mode;
+            // The cached snapshot was built under the old filter.
+            self.last_damage_gen = -1;
+        }
+    }
+
+    /// Build the allow-list for the current filter mode, or `None` to show
+    /// everyone. Also `None` until we can actually recognise you in the damage
+    /// log — by your entity id, or by an entity carrying your character name.
+    /// A configured name alone is not enough: when the session started before
+    /// the meter did, every row can still be a bare `#id`, and filtering then
+    /// would blank the meter instead of just waiting for detection.
+    fn actor_filter(&self, summon_data: &HashMap<i32, i32>) -> Option<ActorFilter> {
+        if self.actor_filter_mode == ActorFilterMode::All {
+            return None;
+        }
+        let mut ids = self.resolve_local_ids(summon_data).unwrap_or_default();
+        let mut names = HashSet::new();
+        if let Some(name) = self.data_storage.local_character_name() {
+            let name = name.trim();
+            if !name.is_empty() {
+                names.insert(name.to_string());
+            }
+        }
+        let recognised = !ids.is_empty()
+            || self
+                .data_storage
+                .get_nicknames()
+                .values()
+                .any(|n| names.contains(n.trim()));
+        if !recognised {
+            return None;
+        }
+        if self.actor_filter_mode == ActorFilterMode::Party {
+            names.extend(
+                self.data_storage
+                    .get_party_members()
+                    .into_keys()
+                    .map(|n| n.trim().to_string())
+                    .filter(|n| !n.is_empty()),
+            );
+        }
+        if ids.is_empty() && names.is_empty() {
+            return None;
+        }
+        ids.retain(|&id| id > 0);
+        Some(ActorFilter { ids, names })
     }
 
     pub fn set_all_targets_window_ms(&mut self, ms: i64) {
@@ -357,6 +451,33 @@ impl DpsCalculator {
             }
         }
 
+        // Drop players outside the actor filter (you / your party). Done after the
+        // orphan merge so a summon's damage has already joined its owner's row.
+        // `total_damage` stays the unfiltered sum: it feeds the boss HP bar, which
+        // must count everyone's hits. Contribution % uses the shown rows only.
+        let filter = self.actor_filter(&summon_data);
+        let filter_state = format!(
+            "mode={:?} local_id={:?} char_name={:?} party={:?} active={} rows={:?}",
+            self.actor_filter_mode,
+            self.data_storage.local_player_id(),
+            self.data_storage.local_character_name(),
+            self.data_storage.get_party_members().keys().collect::<Vec<_>>(),
+            filter.is_some(),
+            {
+                let mut r: Vec<_> = dps_data.map.iter().map(|(id, d)| format!("{}={}", id, d.nickname)).collect();
+                r.sort();
+                r
+            },
+        );
+        if filter_state != self.last_filter_log {
+            tracing::debug!("Actor filter: {}", filter_state);
+            self.last_filter_log = filter_state;
+        }
+        if let Some(filter) = filter {
+            dps_data.map.retain(|&uid, data| filter.allows(uid, &data.nickname));
+        }
+        let shown_damage: f64 = dps_data.map.values().map(|d| d.amount).sum();
+
         // Filter and compute DPS
         let local_ids = self.resolve_local_ids(&summon_data);
         let party_members = self.data_storage.get_party_members();
@@ -378,7 +499,7 @@ impl DpsCalculator {
                 }
             }
             data.dps = data.amount / bt as f64 * 1000.0;
-            data.damage_contribution = data.amount / total_damage * 100.0;
+            data.damage_contribution = data.amount / shown_damage.max(1.0) * 100.0;
         }
         for uid in to_remove {
             dps_data.map.remove(&uid);
@@ -719,6 +840,8 @@ impl DpsCalculator {
         let mob_hp_data = self.data_storage.get_mob_hp_data();
         let mob_data = self.data_storage.get_mob_data();
 
+        let actor_filter = self.actor_filter(&summon_data);
+
         let mut actor_meta: HashMap<i32, (String, String)> = HashMap::new();
         let mut targets = Vec::new();
 
@@ -787,6 +910,12 @@ impl DpsCalculator {
                 actor_damage.remove(&id);
                 actor_meta.remove(&id);
             }
+            if let Some(ref filter) = actor_filter {
+                actor_damage.retain(|id, _| {
+                    let nick = actor_meta.get(id).map(|(n, _)| n.as_str()).unwrap_or("");
+                    filter.allows(*id, nick)
+                });
+            }
 
             let target_name = if let Some(&code) = mob_data.get(&target_id) {
                 self.npc_lookup.get_npc_name(code)
@@ -806,6 +935,7 @@ impl DpsCalculator {
         }
 
         let actors: Vec<DetailsActorSummary> = actor_meta.iter()
+            .filter(|(id, (nick, _))| actor_filter.as_ref().is_none_or(|f| f.allows(**id, nick)))
             .map(|(&id, (nick, job))| {
                 let job_id = if let Some(jc) = JobClass::convert_from_skill(
                     // Find a skill code from this actor's aggregate data
@@ -940,6 +1070,8 @@ impl DpsCalculator {
             expanded
         });
 
+        let actor_filter = self.actor_filter(&summon_data);
+
         // Build skill entries from aggregates (no packet iteration!)
         let mut skill_map: HashMap<(i32, i32), DetailSkillEntry> = HashMap::new();
         let fight_start = target_data.first_damage_time;
@@ -955,6 +1087,9 @@ impl DpsCalculator {
             let remapped = *orphan_to_owner.get(&raw_uid).unwrap_or(&raw_uid);
             let nickname = resolve_nickname(remapped, &nickname_data, &summon_data);
             let uid = *canonical.get(&nickname).unwrap_or(&remapped);
+            if actor_filter.as_ref().is_some_and(|f| !f.allows(uid, &nickname)) {
+                continue;
+            }
 
             for (&(raw_skill, is_dot), skill_data) in &actor_data.skills {
                 // Normalize skill code
@@ -1050,6 +1185,9 @@ impl DpsCalculator {
             let uid = *canonical.get(&nickname).unwrap_or(&remapped);
             if let Some(ref filter) = filter_uids {
                 if !filter.contains(&uid) { continue; }
+            }
+            if actor_filter.as_ref().is_some_and(|f| !f.allows(uid, &nickname)) {
+                continue;
             }
             for (&(skill_code, is_hot), hd) in skills {
                 let mut skill_name = self.skill_lookup.lookup_skill_name(skill_code);

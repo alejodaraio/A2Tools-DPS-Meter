@@ -156,6 +156,7 @@ fn meter_rows_are_all_named_with_combat_power() {
         Arc::new(PingTracker::new()),
     );
     calc.set_target_selection_mode("allTargets");
+    calc.set_actor_filter_mode("all");
     let dps = calc.get_dps();
 
     let mut rows: Vec<_> = dps.map.iter().map(|(&id, d)| (id, d)).collect();
@@ -209,6 +210,7 @@ fn divine_auras_collapse_onto_an_unnamed_cleric() {
         Arc::new(PingTracker::new()),
     );
     calc.set_target_selection_mode("allTargets");
+    calc.set_actor_filter_mode("all");
     let dps = calc.get_dps();
 
     let mut rows: Vec<_> = dps.map.iter().map(|(&id, d)| (id, d)).collect();

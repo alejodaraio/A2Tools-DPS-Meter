@@ -242,6 +242,14 @@
     "defaultMeterMode": {
       "label": "기본 미터 모드"
     },
+    "actorFilter": {
+      "label": "표시할 피해",
+      "options": {
+        "party": "나 + 파티",
+        "self": "나만",
+        "all": "전체"
+      }
+    },
     "trainingMode": {
       "label": "훈련 모드",
       "options": {

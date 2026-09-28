@@ -242,6 +242,14 @@
     "defaultMeterMode": {
       "label": "預設計量模式"
     },
+    "actorFilter": {
+      "label": "顯示傷害來源",
+      "options": {
+        "party": "我 + 隊伍",
+        "self": "僅我",
+        "all": "所有人"
+      }
+    },
     "trainingMode": {
       "label": "訓練模式",
       "options": {

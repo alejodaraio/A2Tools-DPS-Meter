@@ -244,6 +244,14 @@
     "defaultMeterMode": {
       "label": "Default mode"
     },
+    "actorFilter": {
+      "label": "Show damage from",
+      "options": {
+        "party": "Me + party",
+        "self": "Only me",
+        "all": "Everyone"
+      }
+    },
     "trainingMode": {
       "label": "Training Mode target",
       "options": {

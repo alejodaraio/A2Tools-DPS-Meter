@@ -42,6 +42,7 @@ class DpsApp {
       detailsHiddenColumns: "dpsMeter.detailsHiddenColumns",
       detailsSeenColumns: "dpsMeter.detailsSeenColumns",
       defaultMeterMode: "dpsMeter.defaultMeterMode",
+      actorFilter: "dpsMeter.actorFilter",
       targetSelection: "dpsMeter.targetSelection",
       displayMode: "dpsMeter.displayMode",
       language: "dpsMeter.language",
@@ -1887,6 +1888,8 @@ class DpsApp {
     this.trainSelectionModeDropdownMenu = document.querySelector(".trainSelectionModeDropdownMenu");
     this.defaultMeterModeDropdownBtn = document.querySelector(".defaultMeterModeDropdownBtn");
     this.defaultMeterModeDropdownMenu = document.querySelector(".defaultMeterModeDropdownMenu");
+    this.actorFilterDropdownBtn = document.querySelector(".actorFilterDropdownBtn");
+    this.actorFilterDropdownMenu = document.querySelector(".actorFilterDropdownMenu");
     this.resetDetectBtn = document.querySelector(".resetDetectBtn");
     this.autoDetectDeviceCheckbox = document.querySelector(".autoDetectDeviceCheckbox");
     this.deviceDropdownBtn = document.querySelector(".deviceDropdownBtn");
@@ -1934,6 +1937,7 @@ class DpsApp {
       language: "en",
       theme: this.theme,
       defaultMeterMode: "bossTargets",
+      actorFilter: "party",
       allTargetsWindowMs: "120000",
       trainSelectionMode: "all",
       targetSelectionWindowMs: "5000",
@@ -2046,6 +2050,13 @@ class DpsApp {
     this.settingsSelections.trainSelectionMode = selectedMode;
     this.safeSetSetting(this.storageKeys.trainSelectionMode, selectedMode);
     window.javaBridge?.setTrainSelectionMode?.(selectedMode);
+
+    // Whose damage the meter lists. The backend reads this key on startup and on
+    // every update_settings, so persisting it is all that's needed to apply it.
+    const storedActorFilter = this.safeGetSetting(this.storageKeys.actorFilter);
+    this.settingsSelections.actorFilter = ["all", "party", "self"].includes(storedActorFilter)
+      ? storedActorFilter
+      : "party";
 
     if (this.bossLogsCheckbox) {
       const storedBossLogs = this.safeGetSetting(this.storageKeys.bossLogs) === "true";
@@ -2771,6 +2782,25 @@ class DpsApp {
           syncBackend: true,
           reason: "default meter mode changed",
         });
+        if (!this.isCollapse) this.fetchDps();
+      }
+    );
+
+    const actorFilterOptions = [
+      { value: "party", label: this.i18n?.t("settings.actorFilter.options.party", "Me + party") },
+      { value: "self", label: this.i18n?.t("settings.actorFilter.options.self", "Only me") },
+      { value: "all", label: this.i18n?.t("settings.actorFilter.options.all", "Everyone") },
+    ];
+
+    setupDropdown(
+      this.actorFilterDropdownBtn,
+      this.actorFilterDropdownMenu,
+      actorFilterOptions,
+      this.settingsSelections.actorFilter,
+      (value) => {
+        if (!value) return;
+        this.settingsSelections.actorFilter = value;
+        this.safeSetSetting(this.storageKeys.actorFilter, value);
         if (!this.isCollapse) this.fetchDps();
       }
     );

@@ -20,7 +20,7 @@ use capture::combat_port_detector::CombatPortDetector;
 use capture::pcap_capturer::PcapCapturer;
 use combat::capture_dispatcher::CaptureDispatcher;
 use combat::data_storage::DataStorage;
-use combat::dps_calculator::DpsCalculator;
+use combat::dps_calculator::{ActorFilterMode, DpsCalculator};
 use combat::ping_tracker::PingTracker;
 use config::settings::Settings;
 use entity::dps_data::DpsData;
@@ -132,6 +132,9 @@ fn update_settings(
     key: String,
     value: String,
 ) {
+    if key == ActorFilterMode::SETTING_KEY {
+        state.dps_calculator.lock().set_actor_filter_mode(&value);
+    }
     if state.settings.set(&key, &value) {
         let _ = app.emit("setting-changed", serde_json::json!({ "key": key, "value": value }));
     }
@@ -140,6 +143,7 @@ fn update_settings(
 #[tauri::command]
 fn clear_settings(state: tauri::State<'_, AppState>) {
     state.settings.clear();
+    state.dps_calculator.lock().set_actor_filter_mode("party");
 }
 
 #[tauri::command]
@@ -1434,7 +1438,7 @@ pub fn run() {
             let ping_tracker = Arc::new(PingTracker::new());
             let port_detector = Arc::new(CombatPortDetector::new());
 
-            let dps_calculator = DpsCalculator::new(
+            let mut dps_calculator = DpsCalculator::new(
                 data_storage.clone(),
                 skill_lookup.clone(),
                 npc_lookup.clone(),
@@ -1442,6 +1446,10 @@ pub fn run() {
             );
 
             let settings = Settings::new(app_data_dir.clone());
+
+            if let Some(mode) = settings.get(ActorFilterMode::SETTING_KEY) {
+                dps_calculator.set_actor_filter_mode(&mode);
+            }
 
             // Load logging settings from saved state
             if settings.get("dpsMeter.debugLoggingEnabled").as_deref() == Some("true") {
