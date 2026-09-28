@@ -92,6 +92,18 @@ fn main() {
             code.map(|c| c.to_string()).unwrap_or("-".into()), format!("{name:?}"));
     }
 
+    // Buffs on the local player, as Details would show them.
+    {
+        let calc = DpsCalculator::new(storage.clone(), skills.clone(), Arc::new(NpcLookup::new()), Arc::new(PingTracker::new()));
+        let ctx = calc.get_details_context();
+        let me = storage.local_player_id().map(|v| v as i32);
+        for a in ctx.actors.iter().filter(|a| Some(a.actor_id) == me) {
+            for b in &a.buffs {
+                println!("buff {:>5.1}%  {:<28} effect={}", b.uptime_pct, b.name, b.effect);
+            }
+        }
+    }
+
     let local = storage.local_player_id().map(|v| v as i32);
     println!("local player: {:?}  name: {:?}", local, storage.local_character_name());
     let Some(local) = local else { return };
@@ -149,6 +161,14 @@ fn main() {
             let idle: i64 = hits.windows(2).map(|w| w[1] - w[0]).filter(|&g| g >= thr).sum();
             println!("  gaps>={:.1}s removed: active {:.1}s -> DPS {:.0}", thr as f64 / 1000.0,
                 (own - idle) as f64 / 1000.0, mine as f64 / ((own - idle).max(1000) as f64 / 1000.0));
+        }
+        if let Some(ad) = t.actors.get(&local) {
+            let levels = a2tools_dps_meter_lib::combat::data_storage::scalar_time_ms(&ad.active_spans, &ad.scalar_changes);
+            let total: i64 = levels.iter().map(|(_, ms)| ms).sum();
+            let text: Vec<String> = levels.iter()
+                .map(|(s, ms)| format!("{:.2}%: {:.1}s ({:.0}%)", *s as f64 / 100.0, *ms as f64 / 1000.0, *ms as f64 * 100.0 / total.max(1) as f64))
+                .collect();
+            println!("  multiplier: {}  changes={:?}", text.join(" · "), ad.scalar_changes);
         }
         per_skill.sort_by_key(|s| std::cmp::Reverse(s.3));
         for (name, dot, hits, dmg) in per_skill {

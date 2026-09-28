@@ -305,6 +305,126 @@ fn main() {
                 }
             }
         }
+        "scalars" => {
+            // Power scalar per hit dealt by <id>, decoded like parsing_damage:
+            // <target> <switch> <flag> <actor> <skill u32> <uid u8> <type> <skip>
+            // then [0 pad] <scalar> <damage>. Prints the timeline of changes.
+            let id: u32 = args[3].parse().unwrap();
+            let from = args.get(4).map(|s| s.as_str()).unwrap_or("");
+            let to = args.get(5).map(|s| s.as_str()).unwrap_or("~");
+            let mut last: Option<u32> = None;
+            let mut counts: BTreeMap<u32, usize> = BTreeMap::new();
+            let mut by_skill: BTreeMap<u32, BTreeMap<u32, usize>> = BTreeMap::new();
+            let verbose = std::env::var("VERBOSE").is_ok();
+            for p in pk.iter().filter(|p| p.ts.as_str() >= from && p.ts.as_str() < to) {
+                let d = &p.data;
+                for i in 0..d.len().saturating_sub(10) {
+                    if d[i] != 0x04 || d[i + 1] != 0x38 { continue; }
+                    let mut o = i + 2;
+                    let next = |o: &mut usize| -> Option<u32> { let (v, l) = varint(d, *o)?; *o += l; Some(v) };
+                    let (Some(_t), Some(sw), Some(_f), Some(actor)) = (next(&mut o), next(&mut o), next(&mut o), next(&mut o)) else { continue };
+                    let and = sw & 0x0F;
+                    if actor != id || !(4..=7).contains(&and) { continue; }
+                    let Some(sk) = d.get(o..o + 4) else { continue };
+                    let skill = u32::from_le_bytes([sk[0], sk[1], sk[2], sk[3]]);
+                    o += 4 + 1;
+                    let Some(dtype) = next(&mut o) else { continue };
+                    o += match and { 5 => 12, 6 => 10, 7 => 14, _ => 8 };
+                    let (Some(mut a), Some(mut b)) = (next(&mut o), next(&mut o)) else { continue };
+                    if a == 0 { if let Some(c) = next(&mut o) { a = b; b = c; } }
+                    let first_is_dmg = (1_000..=5_000_000).contains(&a) && b <= 25 && and == 6 && dtype == 3;
+                    let (scalar, dmg) = if first_is_dmg { (None, a) } else { ((1_000..=200_000).contains(&a).then_some(a), b) };
+                    if let Some(s) = scalar {
+                        *counts.entry(s).or_default() += 1;
+                        *by_skill.entry(skill / 10000).or_default().entry(s).or_default() += 1;
+                        if verbose {
+                            println!("  {} {skill} {s} {dmg}", &p.ts[11..23]);
+                        }
+                        if last != Some(s) {
+                            println!("{} skill={skill} scalar {:?} -> {s}  (dmg {dmg})", &p.ts[11..23], last);
+                            last = Some(s);
+                        }
+                    }
+                }
+            }
+            println!("--- scalar counts: {counts:?}");
+            for (sk, m) in &by_skill {
+                println!("    skill {sk}xxxx: {m:?}");
+            }
+        }
+        "around" => {
+            // Packets carrying <id> (as a varint anywhere) within [t - before_ms,
+            // t + after_ms] of each HH:MM:SS.mmm time given, skipping the chatty
+            // combat opcodes. `around <id> <before_ms> <after_ms> <t1> [t2 ...]`
+            let id: u32 = args[3].parse().unwrap();
+            let before: i64 = args[4].parse().unwrap();
+            let after: i64 = args[5].parse().unwrap();
+            let needle = enc_varint(id);
+            let skip: [(u8, u8); 5] = [(0x2B, 0x38), (0x02, 0x38), (0x06, 0x38), (0x4A, 0x36), (0x04, 0x38)];
+            let tod = |ts: &str| -> i64 {
+                let h: i64 = ts[0..2].parse().unwrap_or(0);
+                let m: i64 = ts[3..5].parse().unwrap_or(0);
+                let s: f64 = ts[6..].parse().unwrap_or(0.0);
+                (h * 3600 + m * 60) * 1000 + (s * 1000.0) as i64
+            };
+            for t in &args[6..] {
+                let center = tod(t);
+                println!("=== around {t}");
+                for p in &pk {
+                    let pt = tod(&p.ts[11..23]);
+                    if pt < center - before || pt > center + after { continue; }
+                    let Some((a, b, _)) = opcode(&p.data) else { continue };
+                    if skip.contains(&(a, b)) { continue; }
+                    if !p.data.windows(needle.len()).any(|w| w == needle.as_slice()) { continue; }
+                    let hex: String = p.data.iter().take(40).map(|x| format!("{:02X}", x)).collect::<Vec<_>>().join(" ");
+                    println!("  {} {:+5}ms {a:02X} {b:02X} len={:<4} {hex}", &p.ts[11..23], pt - center, p.data.len());
+                }
+            }
+        }
+        "buffs" => {
+            // Buff add (2A 38) / remove (2C 38) on <id>:
+            //   2A 38 <target> <v> <v> <seq> <effect u32> <duration_ms u32> <4 x 00> <u64 ms> <caster> ...
+            //   2C 38 <target> 01 00 <seq> 01
+            let id: u32 = args[3].parse().unwrap();
+            let names: HashMap<String, String> = std::fs::read_to_string("../src/data/i18n/skills/en.json")
+                .ok().and_then(|t| serde_json::from_str(&t).ok()).unwrap_or_default();
+            let name_of = |effect: u32| -> String {
+                let code = effect / 10;
+                names.get(&code.to_string()).cloned()
+                    .or_else(|| names.get(&(code - code % 10000).to_string()).cloned())
+                    .unwrap_or_else(|| "?".into())
+            };
+            let mut open: HashMap<u32, (String, u32, u32)> = HashMap::new(); // seq -> (ts, effect, dur)
+            let (mut adds, mut removes, mut matched) = (0, 0, 0);
+            for p in &pk {
+                let d = &p.data;
+                let Some((a, b, body)) = opcode(d) else { continue };
+                let mut o = body;
+                let next = |o: &mut usize| -> Option<u32> { let (v, l) = varint(d, *o)?; *o += l; Some(v) };
+                if (a, b) == (0x2A, 0x38) {
+                    let (Some(target), Some(_v1), Some(_v2), Some(seq)) = (next(&mut o), next(&mut o), next(&mut o), next(&mut o)) else { continue };
+                    if target != id { continue; }
+                    let Some(e) = d.get(o..o + 8) else { continue };
+                    let effect = u32::from_le_bytes([e[0], e[1], e[2], e[3]]);
+                    let dur = u32::from_le_bytes([e[4], e[5], e[6], e[7]]);
+                    let caster = varint(d, o + 8 + 4 + 8).map(|(v, _)| v).unwrap_or(0);
+                    adds += 1;
+                    println!("{} +  seq={seq:<6} effect={effect:<10} {:<28} dur={:>6}ms caster={caster}", &p.ts[11..23], name_of(effect), dur);
+                    open.insert(seq, (p.ts[11..23].to_string(), effect, dur));
+                } else if (a, b) == (0x2C, 0x38) && d.len() <= 12 {
+                    let (Some(target), Some(_one), Some(_zero), Some(seq)) = (next(&mut o), next(&mut o), next(&mut o), next(&mut o)) else { continue };
+                    if target != id { continue; }
+                    removes += 1;
+                    if let Some((t0, effect, dur)) = open.remove(&seq) {
+                        matched += 1;
+                        println!("{} -  seq={seq:<6} effect={effect:<10} {:<28} (added {t0}, dur {dur}ms)", &p.ts[11..23], name_of(effect));
+                    } else {
+                        println!("{} -  seq={seq:<6} (no matching add)", &p.ts[11..23]);
+                    }
+                }
+            }
+            println!("--- adds={adds} removes={removes} matched={matched} still_open={}", open.len());
+        }
         "findval" => {
             // Where does a value (e.g. an NPC code) appear, as varint or u32 LE,
             // and which entity varints sit near it? `findval <value> [near_id]`.
