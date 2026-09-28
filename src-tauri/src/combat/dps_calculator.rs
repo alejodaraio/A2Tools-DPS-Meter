@@ -1,7 +1,7 @@
 use std::collections::{HashMap, HashSet};
 use std::sync::Arc;
 
-use crate::combat::data_storage::{DataStorage, TargetCombatData};
+use crate::combat::data_storage::{active_ms, DataStorage, TargetCombatData};
 use crate::combat::ping_tracker::PingTracker;
 use crate::entity::details_context::*;
 use crate::entity::dps_data::DpsData;
@@ -188,8 +188,16 @@ impl DpsCalculator {
         Some(ActorFilter { ids, names })
     }
 
+    /// Setting for the ALL mode's look-back window, in ms (Settings → "All
+    /// Targets time range"). Applied on startup and on every change in lib.rs.
+    pub const ALL_TARGETS_WINDOW_KEY: &'static str = "dpsMeter.allTargetsWindowMs";
+
     pub fn set_all_targets_window_ms(&mut self, ms: i64) {
-        self.all_targets_window_ms = ms.clamp(10_000, 900_000);
+        let ms = ms.clamp(10_000, 900_000);
+        if ms != self.all_targets_window_ms {
+            self.all_targets_window_ms = ms;
+            self.last_damage_gen = -1;
+        }
     }
 
     pub fn mark_all_targets_saved(&mut self) {
@@ -280,10 +288,12 @@ impl DpsCalculator {
         // Collect actors from selected targets
         let mut combined_actors: HashMap<i32, i64> = HashMap::new();
         let mut combined_jobs: HashMap<i32, Option<JobClass>> = HashMap::new();
+        let mut actor_spans: HashMap<i32, Vec<(i64, i64)>> = HashMap::new();
         for &tid in &target_ids {
             if let Some(target_data) = combat_data.get(&tid) {
                 for (&actor_id, actor_data) in &target_data.actors {
                     *combined_actors.entry(actor_id).or_insert(0) += actor_data.total_damage;
+                    actor_spans.entry(actor_id).or_default().extend_from_slice(&actor_data.active_spans);
                     if actor_data.job.is_some() && combined_jobs.get(&actor_id).and_then(|j| j.as_ref()).is_none() {
                         combined_jobs.insert(actor_id, actor_data.job);
                     }
@@ -297,12 +307,13 @@ impl DpsCalculator {
                 .map(|td| (td.last_damage_time - td.first_damage_time).max(0))
                 .unwrap_or(0)
         } else if !target_ids.is_empty() {
-            // Multi-target: use max battle time across selected targets
-            target_ids.iter()
-                .filter_map(|tid| combat_data.get(tid))
-                .map(|td| (td.last_damage_time - td.first_damage_time).max(0))
-                .max()
-                .unwrap_or(0)
+            // Multi-target: first hit to last hit across the selected targets.
+            // The longest single target's window understated the fight when
+            // mobs were killed one after another.
+            let selected = target_ids.iter().filter_map(|tid| combat_data.get(tid));
+            let first = selected.clone().map(|td| td.first_damage_time).min().unwrap_or(0);
+            let last = selected.map(|td| td.last_damage_time).max().unwrap_or(0);
+            (last - first).max(0)
         } else {
             0
         };
@@ -325,6 +336,9 @@ impl DpsCalculator {
         let canonical = build_nickname_canonical_map_from_aggregates(&combined_actors, &summon_data, &nickname_data, current_local_id.map(|v| v as i32));
 
         let mut total_damage: f64 = 0.0;
+        // Active spans per row: a row is a player plus their summons, so their
+        // spans are pooled and `active_ms` counts overlapping stretches once.
+        let mut row_spans: HashMap<i32, Vec<(i64, i64)>> = HashMap::new();
 
         // Build PersonalData from aggregates (no packet iteration!)
         for (&actor_id, &damage) in &combined_actors {
@@ -334,6 +348,9 @@ impl DpsCalculator {
             let uid = *canonical.get(&nickname).unwrap_or(&raw_uid);
 
             total_damage += damage as f64;
+            if let Some(spans) = actor_spans.get(&actor_id) {
+                row_spans.entry(uid).or_default().extend_from_slice(spans);
+            }
 
             let entry = dps_data.map.entry(uid).or_insert_with(|| {
                 let cached_job = self.cached_job(&nickname);
@@ -448,6 +465,9 @@ impl DpsCalculator {
                 if let Some(owner_data) = dps_data.map.get_mut(&owner) {
                     owner_data.merge_from(&orphan_data);
                 }
+                if let Some(spans) = row_spans.remove(&orphan) {
+                    row_spans.entry(owner).or_default().extend(spans);
+                }
             }
         }
 
@@ -498,7 +518,14 @@ impl DpsCalculator {
                     continue;
                 }
             }
-            data.dps = data.amount / bt as f64 * 1000.0;
+            // Each row over its own active time; the target window is only the
+            // fallback for a row with no spans recorded.
+            let active = row_spans
+                .get(&uid)
+                .map(|s| active_ms(s))
+                .filter(|&ms| ms > 0)
+                .unwrap_or(bt);
+            data.dps = data.amount / active.max(1000) as f64 * 1000.0;
             data.damage_contribution = data.amount / shown_damage.max(1.0) * 100.0;
         }
         for uid in to_remove {
@@ -585,7 +612,18 @@ impl DpsCalculator {
                 }
             }
             TargetSelectionMode::AllTargets => {
-                let all: HashSet<i32> = combat_data.keys().cloned().collect();
+                // Only targets hit within the configured window ("All Targets time
+                // range"), anchored on the latest hit rather than the wall clock so
+                // the meter keeps the last fight on screen once combat stops.
+                // Without this, ALL summed every target since the last zone change
+                // or idle reset — stale fights included.
+                let latest = combat_data.values().map(|td| td.last_damage_time).max().unwrap_or(0);
+                let since = latest - self.all_targets_window_ms;
+                let all: HashSet<i32> = combat_data
+                    .iter()
+                    .filter(|(_, td)| td.last_damage_time >= since)
+                    .map(|(&id, _)| id)
+                    .collect();
                 (all, "All Targets".to_string(), 0)
             }
             TargetSelectionMode::TrainTargets => {

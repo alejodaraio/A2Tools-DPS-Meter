@@ -135,6 +135,11 @@ fn update_settings(
     if key == ActorFilterMode::SETTING_KEY {
         state.dps_calculator.lock().set_actor_filter_mode(&value);
     }
+    if key == DpsCalculator::ALL_TARGETS_WINDOW_KEY {
+        if let Ok(ms) = value.parse::<i64>() {
+            state.dps_calculator.lock().set_all_targets_window_ms(ms);
+        }
+    }
     if state.settings.set(&key, &value) {
         let _ = app.emit("setting-changed", serde_json::json!({ "key": key, "value": value }));
     }
@@ -1449,6 +1454,12 @@ pub fn run() {
 
             if let Some(mode) = settings.get(ActorFilterMode::SETTING_KEY) {
                 dps_calculator.set_actor_filter_mode(&mode);
+            }
+            if let Some(ms) = settings
+                .get(DpsCalculator::ALL_TARGETS_WINDOW_KEY)
+                .and_then(|v| v.parse::<i64>().ok())
+            {
+                dps_calculator.set_all_targets_window_ms(ms);
             }
 
             // Load logging settings from saved state

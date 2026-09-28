@@ -147,6 +147,60 @@ pub struct ActorCombatData {
     pub job: Option<JobClass>,
     /// Skills keyed by (raw_skill_code, is_dot)
     pub skills: HashMap<(i32, bool), SkillCombatData>,
+    /// Stretches of continuous attacking as `(first_hit_ms, last_hit_ms)`: a
+    /// gap of `ACTIVE_GAP_MS` or more between hits starts a new span. DPS is
+    /// divided by their total length, as the game's own combat analysis does —
+    /// dividing by first-to-last hit counted every pause and read ~25% low.
+    /// One entry per pause, so it stays small where per-hit timestamps don't.
+    pub active_spans: Vec<(i64, i64)>,
+}
+
+/// A pause between two hits at least this long doesn't count as fighting.
+/// Calibrated on a live capture (2026-09-27, 82 s on one target, 1.33M
+/// damage): the game's combat analysis showed ~22k DPS; removing gaps of
+/// >= 1.5-2 s gives 21.6k (61.6 s active), first-to-last gives 16.2k.
+pub const ACTIVE_GAP_MS: i64 = 2_000;
+
+/// Record a hit at `ts` into `spans` (see `ActorCombatData::active_spans`).
+pub fn note_active_hit(spans: &mut Vec<(i64, i64)>, ts: i64) {
+    if let Some(last) = spans.last_mut() {
+        if ts <= last.1 {
+            // Out-of-order or same-instant hit: already inside the span.
+            if ts < last.0 && last.0 - ts < ACTIVE_GAP_MS {
+                last.0 = ts;
+            }
+            return;
+        }
+        if ts - last.1 < ACTIVE_GAP_MS {
+            last.1 = ts;
+            return;
+        }
+    }
+    spans.push((ts, ts));
+}
+
+/// Total length of the union of several actors' / targets' active spans. A
+/// span's hits are one attack stream, so overlapping spans (a summon hitting
+/// alongside its owner, cleaving two targets) count once, not twice.
+pub fn active_ms<'a>(spans: impl IntoIterator<Item = &'a (i64, i64)>) -> i64 {
+    let mut all: Vec<(i64, i64)> = spans.into_iter().copied().collect();
+    all.sort_unstable();
+    let mut total = 0;
+    let mut cur: Option<(i64, i64)> = None;
+    for (s, e) in all {
+        match cur {
+            Some((cs, ce)) if s <= ce => cur = Some((cs, ce.max(e))),
+            Some((cs, ce)) => {
+                total += ce - cs;
+                cur = Some((s, e));
+            }
+            None => cur = Some((s, e)),
+        }
+    }
+    if let Some((cs, ce)) = cur {
+        total += ce - cs;
+    }
+    total
 }
 
 impl ActorCombatData {
@@ -160,6 +214,7 @@ impl ActorCombatData {
             last_damage_time: 0,
             job: None,
             skills: HashMap::new(),
+            active_spans: Vec::new(),
         }
     }
 }
@@ -476,6 +531,7 @@ impl DataStorage {
         if timestamp > actor_data.last_damage_time {
             actor_data.last_damage_time = timestamp;
         }
+        note_active_hit(&mut actor_data.active_spans, timestamp);
         if actor_data.job.is_none() {
             actor_data.job = JobClass::convert_from_skill(skill_code);
         }
@@ -882,6 +938,7 @@ impl DataStorage {
                                 last_damage_time: ad.last_damage_time,
                                 job: ad.job,
                                 skills,
+                                active_spans: ad.active_spans.clone(),
                             },
                         )
                     })
