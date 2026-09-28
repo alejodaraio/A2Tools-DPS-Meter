@@ -262,6 +262,49 @@ fn main() {
             }
             println!("{} distinct shapes", shapes.len());
         }
+        "dealt" => {
+            // 04 38 records dealt BY <id>: <target> <switch> <flag> <actor> <skill u32>.
+            // Counts per skill, over every 04 38 found anywhere in a packet (not
+            // just at the front), to compare with what the parser recorded.
+            let id: u32 = args[3].parse().unwrap();
+            let from = args.get(4).map(|s| s.as_str()).unwrap_or("");
+            let to = args.get(5).map(|s| s.as_str()).unwrap_or("~");
+            let mut front: BTreeMap<u32, usize> = BTreeMap::new();
+            let mut embedded: BTreeMap<u32, usize> = BTreeMap::new();
+            let mut samples: BTreeMap<u32, Vec<String>> = BTreeMap::new();
+            for p in pk.iter().filter(|p| p.ts.as_str() >= from && p.ts.as_str() < to) {
+                let d = &p.data;
+                let Some((_, llen)) = varint(d, 0) else { continue };
+                for i in 0..d.len().saturating_sub(10) {
+                    if d[i] != 0x04 || d[i + 1] != 0x38 { continue; }
+                    let mut o = i + 2;
+                    let mut next = || -> Option<u32> { let (v, l) = varint(d, o)?; o += l; Some(v) };
+                    let (Some(_t), Some(sw), Some(_f), Some(actor)) = (next(), next(), next(), next()) else { continue };
+                    if actor != id || !(4..=7).contains(&(sw & 0x0F)) { continue; }
+                    let Some(sk) = d.get(o..o + 4) else { continue };
+                    let skill = u32::from_le_bytes([sk[0], sk[1], sk[2], sk[3]]);
+                    if i == llen {
+                        *front.entry(skill).or_default() += 1;
+                    } else {
+                        *embedded.entry(skill).or_default() += 1;
+                    }
+                    let s = samples.entry(skill).or_default();
+                    if s.len() < 2 {
+                        s.push(d[i..d.len().min(i + 44)].iter().map(|x| format!("{:02X}", x)).collect::<Vec<_>>().join(" "));
+                    }
+                }
+            }
+            let skills: HashSet<u32> = front.keys().chain(embedded.keys()).copied().collect();
+            let mut skills: Vec<u32> = skills.into_iter().collect();
+            skills.sort();
+            println!("04 38 dealt by {id} ({from}..{to}): skill  front  embedded");
+            for s in skills {
+                println!("  {s:>10} {:>6} {:>9}", front.get(&s).unwrap_or(&0), embedded.get(&s).unwrap_or(&0));
+                for x in samples.get(&s).into_iter().flatten() {
+                    println!("       {x}");
+                }
+            }
+        }
         _ => eprintln!("unknown mode"),
     }
 }
