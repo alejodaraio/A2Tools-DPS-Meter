@@ -18,6 +18,14 @@ pub struct DetailsActorSummary {
     pub damage_received: i64,
     #[serde(default)]
     pub hits_received: i32,
+    /// From the party roster (0x9702), joined by character name; 0 for anyone
+    /// not in your party (the roster is the only packet carrying these).
+    #[serde(default)]
+    pub level: i32,
+    #[serde(default)]
+    pub gear_score: i32,
+    #[serde(default)]
+    pub combat_power: i64,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -32,6 +40,11 @@ pub struct DetailsTargetSummary {
     pub last_damage_time: i64,
     pub total_damage: i32,
     pub actor_damage: std::collections::HashMap<i32, i32>,
+    /// Per actor (same keys as `actor_damage`), their active stretches as
+    /// `[first_hit_ms, last_hit_ms]` — see `ActorCombatData::active_spans`.
+    /// The frontend unions them across targets for active-time DPS.
+    #[serde(default)]
+    pub actor_active_spans: std::collections::HashMap<i32, Vec<(i64, i64)>>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

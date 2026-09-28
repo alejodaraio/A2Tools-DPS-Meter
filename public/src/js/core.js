@@ -1044,7 +1044,7 @@ class DpsApp {
         : "";
       this.elBossName.classList.toggle("isAllTargets", targetMode === "allTargets");
     }
-    this.updateBossHpBar(targetMaxHp, targetTotalDamage, targetCurrentHp);
+    this.updateBossHpBar(targetMaxHp, targetTotalDamage, targetCurrentHp, targetId);
     if (
       nextTargetLabel !== this._lastRenderedTargetLabel ||
       previousTargetName !== targetName ||
@@ -1640,6 +1640,26 @@ class DpsApp {
     }
 
 
+    // Active time, from every hit — before the list is trimmed to maxSkills, or
+    // the trimmed skills' hits would read as pauses. Per actor for the party
+    // bars, and over everyone shown for the stats panel.
+    const hitsByActor = new Map();
+    const allHits = [];
+    for (const skill of skills) {
+      const hits = Array.isArray(skill?.hitTimestamps) ? skill.hitTimestamps : [];
+      if (hits.length === 0) continue;
+      allHits.push(...hits);
+      const actorId = Number(skill?.actorId);
+      if (Number.isFinite(actorId)) {
+        if (!hitsByActor.has(actorId)) hitsByActor.set(actorId, []);
+        hitsByActor.get(actorId).push(...hits);
+      }
+    }
+    const activeTotals = window.activeTime?.fromHits?.(allHits) ?? { activeMs: 0, spanMs: 0, pauses: [] };
+    const activeMsByActor = new Map(
+      [...hitsByActor.entries()].map(([id, hits]) => [id, window.activeTime?.fromHits?.(hits)?.activeMs ?? 0])
+    );
+
     if (Number.isFinite(Number(maxSkills)) && Number(maxSkills) > 0 && skills.length > Number(maxSkills)) {
       skills.sort((a, b) => (Number(b?.dmg) || 0) - (Number(a?.dmg) || 0));
       skills.length = Number(maxSkills);
@@ -1720,6 +1740,7 @@ class DpsApp {
         totalRegen: entry.totalRegen,
         multiHitCount: entry.multiHitCount,
         multiHitDamage: entry.multiHitDamage,
+        activeMs: activeMsByActor.get(entry.actorId) || 0,
         contributionPct:
           Number.isFinite(baseTotalDamage) && baseTotalDamage > 0
             ? (entry.totalDmg / baseTotalDamage) * 100
@@ -1797,6 +1818,9 @@ class DpsApp {
       totalRegen,
       combatTime,
       battleTimeMs: Number.isFinite(battleTimeMsRaw) ? battleTimeMsRaw : 0,
+      activeMs: activeTotals.activeMs,
+      activeSpanMs: activeTotals.spanMs,
+      pauses: activeTotals.pauses,
       maxHp: Number(detailObj?.maxHp) || 0,
 
       skills,
@@ -3849,7 +3873,31 @@ class DpsApp {
   // Boss remaining-HP bar. There is no live boss current-HP packet, so remaining
   // is derived from spawn-time max HP minus the damage the meter has tracked
   // against this target. Hidden unless a single boss target with known max HP.
-  updateBossHpBar(maxHp, totalDamage, currentHp) {
+  // Time-to-kill estimate from how fast the remaining HP fell over the last
+  // TTK_WINDOW_MS (not the whole-fight average, so it tracks the group speeding
+  // up or stalling). Needs TTK_MIN_MS of samples before it says anything.
+  estimateTimeToKill(targetId, remaining) {
+    const TTK_WINDOW_MS = 15000;
+    const TTK_MIN_MS = 3000;
+    const now = Date.now();
+    if (this._ttkTargetId !== targetId) {
+      this._ttkTargetId = targetId;
+      this._ttkSamples = [];
+    }
+    const samples = this._ttkSamples;
+    // HP went back up (heal, reset, new pull): start over.
+    if (samples.length && remaining > samples[samples.length - 1].remaining) samples.length = 0;
+    samples.push({ t: now, remaining });
+    while (samples.length > 2 && now - samples[1].t >= TTK_WINDOW_MS) samples.shift();
+    const first = samples[0];
+    const elapsed = now - first.t;
+    const dropped = first.remaining - remaining;
+    if (remaining <= 0 || elapsed < TTK_MIN_MS || dropped <= 0) return null;
+    const etaMs = remaining / (dropped / elapsed);
+    return etaMs < 60 * 60 * 1000 ? etaMs : null;
+  }
+
+  updateBossHpBar(maxHp, totalDamage, currentHp, targetId = 0) {
     if (!this.elBossHpBar) return;
     const max = Number(maxHp) || 0;
     if (max <= 0) {
@@ -3883,7 +3931,9 @@ class DpsApp {
       const amtEl = this.elBossHpText.querySelector(".bossHpAmt");
       if (pctEl && amtEl) {
         pctEl.textContent = `${Math.round(pct)}%`;
-        amtEl.textContent = `${this.formatAbbreviatedNumber(remaining)} / ${this.formatAbbreviatedNumber(max)}`;
+        const eta = this.estimateTimeToKill(targetId, remaining);
+        const etaText = eta !== null ? ` · ~${this.formatBattleTime(eta)}` : "";
+        amtEl.textContent = `${this.formatAbbreviatedNumber(remaining)} / ${this.formatAbbreviatedNumber(max)}${etaText}`;
       } else {
         this.elBossHpText.textContent = `${this.formatAbbreviatedNumber(remaining)} · ${Math.round(pct)}%`;
       }

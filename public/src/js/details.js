@@ -137,6 +137,12 @@ const createDetailsUI = ({
     detailsFightTitleEl.innerHTML = `${fightVs} <span class="fightTitleBossName">${bossName}</span>${suffix}`;
   };
 
+  // The one player the Details view is focused on, or null for "All" / several.
+  const getSingleSelectedActor = () =>
+    Array.isArray(selectedAttackerIds) && selectedAttackerIds.length === 1
+      ? detailsActors.get(Number(selectedAttackerIds[0])) || null
+      : null;
+
   const STATUS = [
     {
       key: "details.stats.totalDamage",
@@ -145,6 +151,61 @@ const createDetailsUI = ({
     },
     { key: "details.stats.contribution", fallback: "Contribution", getValue: (d) => pctText(d?.contributionPct) },
     { key: "details.stats.combatTime", fallback: "Combat Time", getValue: (d) => d?.combatTime ?? "-" },
+    // Active-time rows (activeTime.js): DPS the way the game's combat analysis
+    // measures it, how much of the fight was spent attacking, and the pauses
+    // that were left out.
+    {
+      key: "details.stats.dps",
+      fallback: "DPS",
+      getValue: (d) => (Number(d?.activeMs) > 0 ? formatDamageCompact(window.activeTime.dps(d.totalDmg, d.activeMs)) : "-"),
+    },
+    {
+      key: "details.stats.activeTime",
+      fallback: "Active Time",
+      getValue: (d) => {
+        const active = Number(d?.activeMs) || 0;
+        const span = Number(d?.activeSpanMs) || 0;
+        if (active <= 0) return "-";
+        const share = span > 0 ? ` (${Math.round((active / span) * 100)}%)` : "";
+        return `${formatBattleTime(active)}${share}`;
+      },
+    },
+    {
+      key: "details.stats.pauses",
+      fallback: "Pauses",
+      getValue: (d) => {
+        const pauses = Array.isArray(d?.pauses) ? d.pauses : [];
+        if (!(Number(d?.activeMs) > 0)) return "-";
+        if (pauses.length === 0) return "0";
+        const longest = Math.max(...pauses) / 1000;
+        return `${pauses.length} (${longest.toFixed(1)}s)`;
+      },
+    },
+    // Party-roster rows: only meaningful for one selected player, and only for
+    // party members (the roster is the sole source of these numbers).
+    {
+      key: "details.stats.combatPower",
+      fallback: "Combat Power",
+      getValue: () => {
+        const actor = getSingleSelectedActor();
+        const cp = Number(actor?.combatPower) || 0;
+        if (cp <= 0) return "-";
+        const extras = [
+          Number(actor.gearScore) > 0 ? `GS ${actor.gearScore}` : "",
+          Number(actor.level) > 0 ? `Lv ${actor.level}` : "",
+        ].filter(Boolean);
+        return `${formatDamageCompact(cp)}${extras.length ? ` (${extras.join(" · ")})` : ""}`;
+      },
+    },
+    {
+      key: "details.stats.dpsPerCp",
+      fallback: "DPS / 1k CP",
+      getValue: (d) => {
+        const cp = Number(getSingleSelectedActor()?.combatPower) || 0;
+        if (cp <= 0 || !(Number(d?.activeMs) > 0)) return "-";
+        return (window.activeTime.dps(d.totalDmg, d.activeMs) / (cp / 1000)).toFixed(1);
+      },
+    },
     { key: "details.skills.hits", fallback: "Hits", getValue: (d) => formatCount(d?.totalHits) },
     { key: "details.stats.multiHitHits", fallback: "Multi-Hits", getValue: (d) => pctText(d?.multiHitPct) },
     {
@@ -360,6 +421,7 @@ const createDetailsUI = ({
     "details.stats.totalDamage",
     "details.stats.contribution",
     "details.stats.combatTime",
+    "details.stats.dps",
     "details.skills.hits",
     "details.stats.critRate",
   ]);
@@ -461,6 +523,9 @@ const createDetailsUI = ({
       ? (getTargetById(selectedTargetId) ? [getTargetById(selectedTargetId)] : allTargets)
       : allTargets;
     const combined = new Map();
+    // Active spans are absolute times, so unlike the history path they can be
+    // unioned across targets: cleaving two mobs at once counts once.
+    const spansByActor = new Map();
     let maxBattleTimeMs = 0;
     targets.forEach((target) => {
       const actorDmg = target?.actorDamage;
@@ -471,6 +536,11 @@ const createDetailsUI = ({
         const actorId = Number(id);
         if (!Number.isFinite(actorId) || actorId <= 0) return;
         combined.set(actorId, (combined.get(actorId) || 0) + (Number(dmg) || 0));
+        const spans = target?.actorActiveSpans?.[id];
+        if (Array.isArray(spans)) {
+          if (!spansByActor.has(actorId)) spansByActor.set(actorId, []);
+          spansByActor.get(actorId).push(...spans);
+        }
       });
     });
     if (combined.size === 0) return null;
@@ -482,6 +552,7 @@ const createDetailsUI = ({
           job: detectedJobByActorId.get(actorId) || detailsActors.get(actorId)?.job || "",
           totalDmg: dmg,
           contributionPct: (dmg / total) * 100,
+          activeMs: window.activeTime?.fromSpans?.(spansByActor.get(actorId)) || 0,
         }))
         .sort((a, b) => b.totalDmg - a.totalDmg),
       battleTimeMs: maxBattleTimeMs,
@@ -553,7 +624,27 @@ const createDetailsUI = ({
 
       const dpsEl = document.createElement("span");
       dpsEl.className = "detailsPartyBarDps";
-      dpsEl.textContent = btMs > 0 ? `${formatDamageCompact(dmg / btMs * 1000)}${dpsSuffix}` : "-";
+      // Over the actor's own active time when known (damage mode); heal bars
+      // and old saved fights without hit times fall back to the fight window.
+      const actorActiveMs = Number(actor?.activeMs) || 0;
+      const perSec = actorActiveMs > 0
+        ? window.activeTime.dps(dmg, actorActiveMs)
+        : (btMs > 0 ? dmg / btMs * 1000 : null);
+      dpsEl.textContent = perSec !== null ? `${formatDamageCompact(perSec)}${dpsSuffix}` : "-";
+
+      // Roster details on hover (party members only).
+      const rosterActor = detailsActors.get(actorId);
+      const cp = Number(rosterActor?.combatPower) || 0;
+      if (cp > 0) {
+        bar.title = [
+          Number(rosterActor.level) > 0 ? `Lv ${rosterActor.level}` : "",
+          Number(rosterActor.gearScore) > 0 ? `GS ${rosterActor.gearScore}` : "",
+          `CP ${cp.toLocaleString()}`,
+          perSec !== null && detailsMode !== "heal"
+            ? `${(perSec / (cp / 1000)).toFixed(1)} ${labelText("details.stats.dpsPerCp", "DPS / 1k CP")}`
+            : "",
+        ].filter(Boolean).join(" · ");
+      }
 
       const dmgEl = document.createElement("span");
       dmgEl.className = "detailsPartyBarDmg";
@@ -1892,8 +1983,11 @@ const createDetailsUI = ({
           hitsReceived: 0,
           multiHitCount: 0,
           multiHitDamage: 0,
+          activeMs: 0,
         };
         next.totalDmg += Number(entry?.totalDmg) || 0;
+        // Summed across targets, like the combined battle time.
+        next.activeMs += Number(entry?.activeMs) || 0;
         if (!next.job && entry?.job) next.job = entry.job;
         next.totalTimes += Number(entry?.totalTimes) || 0;
         next.totalCrit += Number(entry?.totalCrit) || 0;
@@ -1953,8 +2047,14 @@ const createDetailsUI = ({
 
     const pct = (num, den) => (den > 0 ? Math.round((num / den) * 1000) / 10 : 0);
     const battleTimeMs = detailsList.reduce((sum, details) => sum + (Number(details?.battleTimeMs) || 0), 0);
+    // Hit times are relative to each target's own start, so active time and
+    // pauses are summed per target, the same convention as battleTimeMs above.
+    const sumOf = (key) => detailsList.reduce((sum, d) => sum + (Number(d?.[key]) || 0), 0);
 
     return {
+      activeMs: sumOf("activeMs"),
+      activeSpanMs: sumOf("activeSpanMs"),
+      pauses: detailsList.flatMap((d) => (Array.isArray(d?.pauses) ? d.pauses : [])),
       totalDmg,
       totalHits: totalTimes,
       maxHp: detailsList.reduce((max, d) => Math.max(max, Number(d?.maxHp) || 0), 0),

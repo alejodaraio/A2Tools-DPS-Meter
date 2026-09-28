@@ -789,6 +789,7 @@ impl DpsCalculator {
             }
 
             let local_id = self.data_storage.local_player_id().unwrap_or(-1) as i32;
+            let party = self.data_storage.get_party_members();
             let actors: Vec<DetailsActorSummary> = record_actors.iter()
                 .map(|(&id, (nick, job))| {
                     let display_nick = if id == local_id {
@@ -821,6 +822,10 @@ impl DpsCalculator {
                         regen,
                         damage_received: dmg_recv,
                         hits_received: hits_recv,
+                        // Looked up by the real name: display_nick is obscured.
+                        level: party.get(nick).map(|m| m.level).unwrap_or(0),
+                        gear_score: party.get(nick).map(|m| m.gear_score).unwrap_or(0),
+                        combat_power: party.get(nick).map(|m| m.combat_power).unwrap_or(0),
                     }
                 })
                 .collect();
@@ -885,6 +890,7 @@ impl DpsCalculator {
 
         for (&target_id, target_data) in &combat_data {
             let mut actor_damage: HashMap<i32, i32> = HashMap::new();
+            let mut actor_spans: HashMap<i32, Vec<(i64, i64)>> = HashMap::new();
             let canonical = build_nickname_canonical_map_from_aggregates(
                 &target_data.actors.iter().map(|(&id, ad)| (id, ad.total_damage)).collect(),
                 &summon_data,
@@ -898,6 +904,7 @@ impl DpsCalculator {
                 let nickname = resolve_nickname(raw_uid, &nickname_data, &summon_data);
                 let uid = *canonical.get(&nickname).unwrap_or(&raw_uid);
                 *actor_damage.entry(uid).or_insert(0) += actor_data.total_damage as i32;
+                actor_spans.entry(uid).or_default().extend_from_slice(&actor_data.active_spans);
 
                 actor_meta.entry(uid).or_insert_with(|| {
                     (resolve_nickname(uid, &nickname_data, &summon_data), String::new())
@@ -936,6 +943,9 @@ impl DpsCalculator {
                 if let Some(dmg) = actor_damage.remove(orphan) {
                     *actor_damage.entry(*owner).or_insert(0) += dmg;
                 }
+                if let Some(spans) = actor_spans.remove(orphan) {
+                    actor_spans.entry(*owner).or_default().extend(spans);
+                }
                 actor_meta.remove(orphan);
             }
             // Remove actors with no job and no nickname
@@ -954,6 +964,8 @@ impl DpsCalculator {
                     filter.allows(*id, nick)
                 });
             }
+            // Same rows as actor_damage after the merges, removals and filter.
+            actor_spans.retain(|id, _| actor_damage.contains_key(id));
 
             let target_name = if let Some(&code) = mob_data.get(&target_id) {
                 self.npc_lookup.get_npc_name(code)
@@ -969,9 +981,11 @@ impl DpsCalculator {
                 last_damage_time: target_data.last_damage_time,
                 total_damage: target_data.total_damage as i32,
                 actor_damage,
+                actor_active_spans: actor_spans,
             });
         }
 
+        let party = self.data_storage.get_party_members();
         let actors: Vec<DetailsActorSummary> = actor_meta.iter()
             .filter(|(id, (nick, _))| actor_filter.as_ref().is_none_or(|f| f.allows(**id, nick)))
             .map(|(&id, (nick, job))| {
@@ -1003,6 +1017,9 @@ impl DpsCalculator {
                     regen,
                     damage_received: dmg_recv,
                     hits_received: hits_recv,
+                    level: party.get(nick).map(|m| m.level).unwrap_or(0),
+                    gear_score: party.get(nick).map(|m| m.gear_score).unwrap_or(0),
+                    combat_power: party.get(nick).map(|m| m.combat_power).unwrap_or(0),
                 }
             })
             .collect();
