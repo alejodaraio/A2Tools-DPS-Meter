@@ -39,6 +39,10 @@ settings.properties
 # ...except vendored third-party libs, which are source, not generated. Without
 # these a fresh clone builds an app whose icons 404.
 !/public/vendor/
+# Class icons (<Korean class name>.png, as core.js/meter.js/details.js/history.js
+# request them). Upstream adds these at release time from outside git, so a
+# clean tree shipped without them; this fork keeps them in the repo.
+!/public/assets/
 /assets/
 /data/
 /i18n/
