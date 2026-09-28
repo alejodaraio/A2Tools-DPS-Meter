@@ -87,7 +87,9 @@
       "combatTime": "전투 시간",
       "multiHitDamage": "다중타 피해",
       "multiHitHits": "다중타",
-      "maxHp": "최대 HP"
+      "maxHp": "최대 HP",
+      "hits": "타격",
+      "selfHealing": "자가 회복"
     },
     "titleFor": "대상",
     "titleVs": "vs",
@@ -116,7 +118,11 @@
     "viewList": "목록 보기",
     "viewGrouped": "보스별 그룹",
     "fightCount": "{n}회",
-    "fightCountOne": "1회"
+    "fightCountOne": "1회",
+    "previewUpload": "업로드 미리보기",
+    "previewUploadTip": "이 전투를 공유하면 무엇이 올라가는지 파일로 남깁니다. 전송하지 않습니다.",
+    "previewWorking": "미리보기를 만드는 중…",
+    "previewDone": "{slice} KB를 저장했습니다(압축 시 {sent} KB — 실제 업로드 크기). 패킷 {seen}개 중 {kept}개를 남기고 이름 {blinded}개를 가렸습니다. 아무것도 업로드하지 않았습니다. 저장 위치: {dir}"
   },
   "settings": {
     "title": "설정",
@@ -256,6 +262,21 @@
         "all": "전체",
         "highestDamage": "최대 피해"
       }
+    },
+    "showSupporterColors": "후원자 색상 표시",
+    "showSupporterColorsHint": "후원자의 이름이 금색으로 표시됩니다. 표시 전용이며 수치에는 전혀 영향을 주지 않습니다.",
+    "account": {
+      "title": "A2 Tools 계정",
+      "signedOut": "로그인되어 있지 않습니다",
+      "signedIn": "{name}(으)로 로그인됨",
+      "hint": "로그인하면 캐릭터와 설정이 a2tools.app과 동기화됩니다.",
+      "connect": "로그인",
+      "signOut": "로그아웃",
+      "codePrompt": "브라우저에서 이 코드를 승인하세요:",
+      "codeHint": "페이지가 이미 열렸을 것입니다. 코드는 10분 후 만료됩니다.",
+      "working": "승인을 기다리는 중…",
+      "failed": "로그인 실패: {error}",
+      "supporter": "후원자"
     }
   },
   "support": {
@@ -326,5 +347,12 @@
     "ELEMENTALIST": "정령성",
     "CHANTER": "호법성",
     "FIGHTER": "권성"
+  },
+  "dungeon": {
+    "difficulty": {
+      "exploration": "탐험",
+      "normal": "일반",
+      "hard": "매우 어려움"
+    }
   }
 }

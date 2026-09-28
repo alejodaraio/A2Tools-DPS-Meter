@@ -9,8 +9,16 @@
     "isBoss": false,
     "isDummy": true
   },
+  "2000002": {
+    "name": "드라코뉴트 궁수",
+    "isBoss": false
+  },
   "2000004": {
     "name": "오드 거미",
+    "isBoss": false
+  },
+  "2000053": {
+    "name": "개조 크랄 전사",
     "isBoss": false
   },
   "2000059": {
@@ -104,6 +112,42 @@
     "name": "마른 가지 거미",
     "isBoss": false
   },
+  "2090001": {
+    "name": "숲 정령",
+    "isBoss": false
+  },
+  "2090002": {
+    "name": "숲 정령",
+    "isBoss": false
+  },
+  "2090003": {
+    "name": "아울라우 마법사",
+    "isBoss": false
+  },
+  "2090004": {
+    "name": "중형 괴물",
+    "isBoss": false
+  },
+  "2090005": {
+    "name": "환영 파편",
+    "isBoss": false
+  },
+  "2090006": {
+    "name": "펑기",
+    "isBoss": false
+  },
+  "2090007": {
+    "name": "환영 파편",
+    "isBoss": false
+  },
+  "2090008": {
+    "name": "환영 파편",
+    "isBoss": false
+  },
+  "2090009": {
+    "name": "고대 원혼 기사",
+    "isBoss": false
+  },
   "2090010": {
     "name": "펑거스",
     "isBoss": false
@@ -177,6 +221,14 @@
   "2090027": {
     "name": "몬스터 (표본)",
     "isBoss": true
+  },
+  "2090028": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090029": {
+    "name": "독기꽃",
+    "isBoss": false
   },
   "2090030": {
     "name": "밸런스테스트1",
@@ -724,6 +776,10 @@
     "name": "None",
     "isBoss": false
   },
+  "2090156": {
+    "name": "???",
+    "isBoss": false
+  },
   "2090157": {
     "name": "테스트몹_Hidden",
     "isBoss": false,
@@ -1085,12 +1141,212 @@
     "name": "폭탄형 기믹 (표본)",
     "isBoss": false
   },
+  "2090328": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090329": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090330": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090331": {
+    "name": "미니언 1단계",
+    "isBoss": false
+  },
+  "2090332": {
+    "name": "미니언 2단계",
+    "isBoss": false
+  },
+  "2090333": {
+    "name": "미니언 3단계",
+    "isBoss": false
+  },
+  "2090334": {
+    "name": "미니언 4단계",
+    "isBoss": false
+  },
+  "2090335": {
+    "name": "포탑 1단계",
+    "isBoss": false
+  },
+  "2090336": {
+    "name": "포탑 2단계",
+    "isBoss": false
+  },
+  "2090337": {
+    "name": "포탑 3단계",
+    "isBoss": false
+  },
+  "2090338": {
+    "name": "포탑 4단계",
+    "isBoss": false
+  },
+  "2090339": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090340": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090341": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090342": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090343": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090344": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090345": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090346": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090347": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090360": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090361": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090362": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090363": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090364": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090369": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090370": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090371": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090372": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090373": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090374": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090381": {
+    "name": "무적의 드라칸",
+    "isBoss": false
+  },
+  "2090382": {
+    "name": "기절의 라크슈미",
+    "isBoss": false
+  },
+  "2090383": {
+    "name": "쾌속의 케네이르",
+    "isBoss": false
+  },
+  "2090384": {
+    "name": "나포의 울라크",
+    "isBoss": false
+  },
+  "2090385": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090386": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090387": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090388": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090389": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090390": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090391": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090392": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090393": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090394": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090395": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090396": {
+    "name": "???",
+    "isBoss": false
+  },
   "2090397": {
     "name": "몬스터 (표본)",
     "isBoss": true
   },
   "2090398": {
     "name": "타신 (표본)",
+    "isBoss": false
+  },
+  "2090401": {
+    "name": "천족 핵",
+    "isBoss": true
+  },
+  "2090402": {
+    "name": "마족 핵",
+    "isBoss": true
+  },
+  "2090403": {
+    "name": "???",
     "isBoss": false
   },
   "2090404": {
@@ -1103,6 +1359,106 @@
   },
   "2090406": {
     "name": "괴조 루필리니",
+    "isBoss": false
+  },
+  "2090407": {
+    "name": "회복의 드라칸",
+    "isBoss": false
+  },
+  "2090408": {
+    "name": "수면의 라크슈미",
+    "isBoss": false
+  },
+  "2090409": {
+    "name": "신속의 케네이르",
+    "isBoss": false
+  },
+  "2090410": {
+    "name": "약화의 울라크",
+    "isBoss": false
+  },
+  "2090411": {
+    "name": "천족 외부 포탑",
+    "isBoss": false
+  },
+  "2090412": {
+    "name": "마족 외부 포탑",
+    "isBoss": false
+  },
+  "2090413": {
+    "name": "천족 내부 포탑",
+    "isBoss": false
+  },
+  "2090414": {
+    "name": "마족 내부 포탑",
+    "isBoss": false
+  },
+  "2090415": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090416": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090417": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090418": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090419": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090420": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090421": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090422": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090423": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090424": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090425": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090426": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090427": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090428": {
+    "name": "초월한 바카르마",
+    "isBoss": true
+  },
+  "2090429": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090430": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090431": {
+    "name": "???",
     "isBoss": false
   },
   "2090433": {
@@ -1263,6 +1619,11 @@
     "name": "개조 크랄 전사",
     "isBoss": false
   },
+  "2090536": {
+    "name": "샌드백",
+    "isBoss": false,
+    "isDummy": true
+  },
   "2090538": {
     "name": "크로마",
     "isBoss": false
@@ -1350,6 +1711,21 @@
   "2090655": {
     "name": "부모 40/None/None",
     "isBoss": false
+  },
+  "2090656": {
+    "name": "샌드백",
+    "isBoss": false,
+    "isDummy": true
+  },
+  "2090657": {
+    "name": "샌드백",
+    "isBoss": false,
+    "isDummy": true
+  },
+  "2090658": {
+    "name": "샌드백",
+    "isBoss": false,
+    "isDummy": true
   },
   "2090662": {
     "name": "None",
@@ -1487,6 +1863,10 @@
     "isBoss": false,
     "isDummy": true
   },
+  "2090818": {
+    "name": "All(정령)",
+    "isBoss": false
+  },
   "2090865": {
     "name": "None",
     "isBoss": false
@@ -1595,6 +1975,10 @@
     "name": "해안 오드 거미",
     "isBoss": false
   },
+  "2100035": {
+    "name": "새끼 오드 거미",
+    "isBoss": false
+  },
   "2100036": {
     "name": "언덕 스파키",
     "isBoss": false
@@ -1613,6 +1997,10 @@
   },
   "2100041": {
     "name": "붉은 갓 펑기",
+    "isBoss": false
+  },
+  "2100042": {
+    "name": "늪지대 거미 새끼",
     "isBoss": false
   },
   "2100044": {
@@ -2177,6 +2565,10 @@
   },
   "2100461": {
     "name": "늪지 펑기",
+    "isBoss": false
+  },
+  "2100464": {
+    "name": "활성화된 용족 대형 토템",
     "isBoss": false
   },
   "2100468": {
@@ -5557,6 +5949,66 @@
   },
   "2110675": {
     "name": "공중요새 불한당",
+    "isBoss": false
+  },
+  "2110679": {
+    "name": "영광의 모노리스",
+    "isBoss": false
+  },
+  "2110680": {
+    "name": "영광의 모노리스",
+    "isBoss": false
+  },
+  "2110681": {
+    "name": "영광의 모노리스",
+    "isBoss": false
+  },
+  "2110682": {
+    "name": "영광의 모노리스",
+    "isBoss": false
+  },
+  "2110683": {
+    "name": "영광의 모노리스",
+    "isBoss": false
+  },
+  "2110684": {
+    "name": "영광의 모노리스",
+    "isBoss": false
+  },
+  "2110685": {
+    "name": "영광의 모노리스",
+    "isBoss": false
+  },
+  "2110686": {
+    "name": "영광의 모노리스",
+    "isBoss": false
+  },
+  "2110687": {
+    "name": "영광의 모노리스",
+    "isBoss": false
+  },
+  "2110688": {
+    "name": "영광의 모노리스",
+    "isBoss": false
+  },
+  "2110689": {
+    "name": "영광의 모노리스",
+    "isBoss": false
+  },
+  "2110690": {
+    "name": "영광의 모노리스",
+    "isBoss": false
+  },
+  "2110691": {
+    "name": "영광의 모노리스",
+    "isBoss": false
+  },
+  "2110692": {
+    "name": "영광의 모노리스",
+    "isBoss": false
+  },
+  "2110693": {
+    "name": "영광의 모노리스",
     "isBoss": false
   },
   "2200001": {
@@ -10242,6 +10694,217 @@
     "name": "무스펠 수호상",
     "isBoss": false
   },
+  "2301101": {
+    "name": "델트라스의 얼어붙은 심장",
+    "isBoss": false
+  },
+  "2301102": {
+    "name": "파괴의 아칸 정예병",
+    "isBoss": false
+  },
+  "2301103": {
+    "name": "파괴의 아칸 수호성",
+    "isBoss": false
+  },
+  "2301104": {
+    "name": "파괴의 아칸 검성",
+    "isBoss": false
+  },
+  "2301105": {
+    "name": "파괴의 아칸 병사",
+    "isBoss": false
+  },
+  "2301106": {
+    "name": "모래폭풍 레기온 정예병",
+    "isBoss": false
+  },
+  "2301107": {
+    "name": "모래폭풍 레기온 십부장",
+    "isBoss": false
+  },
+  "2301108": {
+    "name": "모래폭풍 레기온 군단병",
+    "isBoss": false
+  },
+  "2301109": {
+    "name": "모래폭풍 레기온 검성",
+    "isBoss": false
+  },
+  "2301110": {
+    "name": "모래폭풍 레기온 수호성",
+    "isBoss": false
+  },
+  "2301111": {
+    "name": "방어포",
+    "isBoss": false
+  },
+  "2301112": {
+    "name": "귀환자 트리톤",
+    "isBoss": true,
+    "category": "성역",
+    "tier": "어려움",
+    "dungeonId": 620025
+  },
+  "2301113": {
+    "name": "델트라스",
+    "isBoss": true,
+    "category": "성역",
+    "tier": "어려움",
+    "dungeonId": 620025
+  },
+  "2301114": {
+    "name": "환영 폭탄",
+    "isBoss": false
+  },
+  "2301115": {
+    "name": "델트라스",
+    "isBoss": true,
+    "category": "성역",
+    "tier": "어려움",
+    "dungeonId": 620025
+  },
+  "2301119": {
+    "name": "온기의 화로",
+    "isBoss": false
+  },
+  "2301131": {
+    "name": "델트라스의 얼어붙은 심장",
+    "isBoss": false
+  },
+  "2301132": {
+    "name": "파괴의 아칸 정예병",
+    "isBoss": false
+  },
+  "2301133": {
+    "name": "파괴의 아칸 수호성",
+    "isBoss": false
+  },
+  "2301134": {
+    "name": "파괴의 아칸 검성",
+    "isBoss": false
+  },
+  "2301135": {
+    "name": "파괴의 아칸 병사",
+    "isBoss": false
+  },
+  "2301136": {
+    "name": "모래폭풍 레기온 정예병",
+    "isBoss": false
+  },
+  "2301137": {
+    "name": "모래폭풍 레기온 십부장",
+    "isBoss": false
+  },
+  "2301138": {
+    "name": "모래폭풍 레기온 군단병",
+    "isBoss": false
+  },
+  "2301139": {
+    "name": "모래폭풍 레기온 검성",
+    "isBoss": false
+  },
+  "2301140": {
+    "name": "모래폭풍 레기온 수호성",
+    "isBoss": false
+  },
+  "2301141": {
+    "name": "방어포",
+    "isBoss": false
+  },
+  "2301142": {
+    "name": "귀환자 트리톤",
+    "isBoss": true,
+    "category": "성역",
+    "tier": "보통",
+    "dungeonId": 620026
+  },
+  "2301143": {
+    "name": "델트라스",
+    "isBoss": true,
+    "category": "성역",
+    "tier": "보통",
+    "dungeonId": 620026
+  },
+  "2301144": {
+    "name": "환영 폭탄",
+    "isBoss": false
+  },
+  "2301145": {
+    "name": "델트라스",
+    "isBoss": true,
+    "category": "성역",
+    "tier": "보통",
+    "dungeonId": 620026
+  },
+  "2301151": {
+    "name": "델트라스의 얼어붙은 심장",
+    "isBoss": false
+  },
+  "2301152": {
+    "name": "파괴의 아칸 정예병",
+    "isBoss": false
+  },
+  "2301153": {
+    "name": "파괴의 아칸 수호성",
+    "isBoss": false
+  },
+  "2301154": {
+    "name": "파괴의 아칸 검성",
+    "isBoss": false
+  },
+  "2301155": {
+    "name": "파괴의 아칸 병사",
+    "isBoss": false
+  },
+  "2301156": {
+    "name": "모래폭풍 레기온 정예병",
+    "isBoss": false
+  },
+  "2301157": {
+    "name": "모래폭풍 레기온 십부장",
+    "isBoss": false
+  },
+  "2301158": {
+    "name": "모래폭풍 레기온 군단병",
+    "isBoss": false
+  },
+  "2301159": {
+    "name": "모래폭풍 레기온 검성",
+    "isBoss": false
+  },
+  "2301160": {
+    "name": "모래폭풍 레기온 수호성",
+    "isBoss": false
+  },
+  "2301161": {
+    "name": "방어포",
+    "isBoss": false
+  },
+  "2301162": {
+    "name": "귀환자 트리톤",
+    "isBoss": true,
+    "category": "성역",
+    "tier": "쉬움",
+    "dungeonId": 620027
+  },
+  "2301163": {
+    "name": "델트라스",
+    "isBoss": true,
+    "category": "성역",
+    "tier": "쉬움",
+    "dungeonId": 620027
+  },
+  "2301164": {
+    "name": "환영 폭탄",
+    "isBoss": false
+  },
+  "2301165": {
+    "name": "델트라스",
+    "isBoss": true,
+    "category": "성역",
+    "tier": "쉬움",
+    "dungeonId": 620027
+  },
   "2301201": {
     "name": "오염된 수라 마도사",
     "isBoss": false
@@ -10320,6 +10983,14 @@
   },
   "2301218": {
     "name": "역류하는 오염 정화기",
+    "isBoss": false
+  },
+  "2301222": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2301223": {
+    "name": "변질된 독성 지대",
     "isBoss": false
   },
   "2301301": {
@@ -14229,6 +14900,10 @@
     "name": "None",
     "isBoss": false
   },
+  "2340356": {
+    "name": "???",
+    "isBoss": false
+  },
   "2340401": {
     "name": "None",
     "isBoss": false
@@ -15072,21 +15747,21 @@
     "name": "거짓의 실리아토르",
     "isBoss": true,
     "category": "초월",
-    "tier": "3단계",
+    "tier": "2단계",
     "dungeonId": 600065
   },
   "2350708": {
     "name": "고통의 루탈리스",
     "isBoss": true,
     "category": "초월",
-    "tier": "3단계",
+    "tier": "2단계",
     "dungeonId": 600065
   },
   "2350709": {
     "name": "공허의 탈리스라",
     "isBoss": true,
     "category": "초월",
-    "tier": "3단계",
+    "tier": "2단계",
     "dungeonId": 600065
   },
   "2350710": {
@@ -15209,21 +15884,21 @@
     "name": "거짓의 실리아토르",
     "isBoss": true,
     "category": "초월",
-    "tier": "5단계",
+    "tier": "3단계",
     "dungeonId": 600068
   },
   "2353708": {
     "name": "고통의 루탈리스",
     "isBoss": true,
     "category": "초월",
-    "tier": "5단계",
+    "tier": "3단계",
     "dungeonId": 600068
   },
   "2353709": {
     "name": "공허의 탈리스라",
     "isBoss": true,
     "category": "초월",
-    "tier": "5단계",
+    "tier": "3단계",
     "dungeonId": 600068
   },
   "2353710": {
@@ -15350,22 +16025,22 @@
     "name": "거짓의 실리아토르",
     "isBoss": true,
     "category": "초월",
-    "tier": "2단계",
-    "dungeonId": 13
+    "tier": "4단계",
+    "dungeonId": 610062
   },
   "2356708": {
     "name": "고통의 루탈리스",
     "isBoss": true,
     "category": "초월",
-    "tier": "2단계",
-    "dungeonId": 13
+    "tier": "4단계",
+    "dungeonId": 610062
   },
   "2356709": {
     "name": "공허의 탈리스라",
     "isBoss": true,
     "category": "초월",
-    "tier": "2단계",
-    "dungeonId": 13
+    "tier": "4단계",
+    "dungeonId": 610062
   },
   "2356710": {
     "name": "회전 자기장",
@@ -21686,6 +22361,66 @@
     "name": "드라칸 상급 관리병",
     "isBoss": false
   },
+  "2407118": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
+  "2407119": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
+  "2407120": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
+  "2407121": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
+  "2407122": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
+  "2407123": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
+  "2407124": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
+  "2407125": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
+  "2407126": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
+  "2407127": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
+  "2407128": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
+  "2407129": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
+  "2407130": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
+  "2407131": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
+  "2407132": {
+    "name": "긍지의 모노리스",
+    "isBoss": false
+  },
   "2500000": {
     "name": "도적단 감시자",
     "isBoss": false
@@ -25344,6 +26079,478 @@
     "name": "라테스란 북쪽 하늘길 수호자",
     "isBoss": false
   },
+  "2670001": {
+    "name": "잿더미 바스마",
+    "isBoss": true
+  },
+  "2670002": {
+    "name": "버려진 사도 슈스카",
+    "isBoss": true
+  },
+  "2670003": {
+    "name": "제32 군단 조련사 바이쿨",
+    "isBoss": true
+  },
+  "2670004": {
+    "name": "제32 군단 돌격대장 가비르",
+    "isBoss": true
+  },
+  "2670005": {
+    "name": "제32 군단 칠흑의 라트리",
+    "isBoss": true
+  },
+  "2670006": {
+    "name": "독백의 에칸",
+    "isBoss": true
+  },
+  "2670007": {
+    "name": "제32 군단 돌격대 비크리",
+    "isBoss": true
+  },
+  "2670008": {
+    "name": "영멸의 베스탄",
+    "isBoss": true
+  },
+  "2670009": {
+    "name": "일그러진 자라마",
+    "isBoss": true
+  },
+  "2670010": {
+    "name": "은둔자 차야무",
+    "isBoss": true
+  },
+  "2670011": {
+    "name": "배회자 아다르",
+    "isBoss": true
+  },
+  "2670012": {
+    "name": "처형인 비달라",
+    "isBoss": true
+  },
+  "2670013": {
+    "name": "검은 폭풍 투한",
+    "isBoss": true
+  },
+  "2670014": {
+    "name": "격노의 라하사",
+    "isBoss": true
+  },
+  "2670015": {
+    "name": "혼돈의 아쿨라",
+    "isBoss": true
+  },
+  "2670016": {
+    "name": "환각의 바라마",
+    "isBoss": true
+  },
+  "2670017": {
+    "name": "탐욕의 라하스",
+    "isBoss": true
+  },
+  "2670018": {
+    "name": "제32 군단 뒤틀린 쿠티라",
+    "isBoss": true
+  },
+  "2670019": {
+    "name": "미혹의 바르티",
+    "isBoss": true
+  },
+  "2670020": {
+    "name": "제32 군단 사독의 우라가",
+    "isBoss": true
+  },
+  "2670021": {
+    "name": "제32 군단 악귀 야투",
+    "isBoss": true
+  },
+  "2670022": {
+    "name": "제32 군단 오만한 디르타",
+    "isBoss": true
+  },
+  "2670023": {
+    "name": "부식된 사도 칼루샤",
+    "isBoss": true
+  },
+  "2670024": {
+    "name": "말라붙은 부탐",
+    "isBoss": true
+  },
+  "2670025": {
+    "name": "제32 군단 돌격대장 사가",
+    "isBoss": true
+  },
+  "2670026": {
+    "name": "제32 군단 선봉장 타마타",
+    "isBoss": true
+  },
+  "2670027": {
+    "name": "맹렬한 잘람",
+    "isBoss": true
+  },
+  "2670028": {
+    "name": "흉폭한 구하무",
+    "isBoss": true
+  },
+  "2670029": {
+    "name": "공허한 슈니암",
+    "isBoss": true
+  },
+  "2670030": {
+    "name": "제32 군단 수확자 카르다",
+    "isBoss": true
+  },
+  "2670031": {
+    "name": "제32 군단 정찰대장 로히타",
+    "isBoss": true
+  },
+  "2670032": {
+    "name": "제32 군단 수색대장 아리슈",
+    "isBoss": true
+  },
+  "2670033": {
+    "name": "제32 군단 수확자 아샤트",
+    "isBoss": true
+  },
+  "2670034": {
+    "name": "가식의 우파디",
+    "isBoss": true
+  },
+  "2670035": {
+    "name": "집념의 아무르",
+    "isBoss": true
+  },
+  "2670036": {
+    "name": "굶주린 쿠마르",
+    "isBoss": true
+  },
+  "2670037": {
+    "name": "제32 군단 광전사 가투",
+    "isBoss": true
+  },
+  "2670038": {
+    "name": "제32 군단 돌격대장 샤라드",
+    "isBoss": true
+  },
+  "2670039": {
+    "name": "왜곡된 카로테",
+    "isBoss": true
+  },
+  "2670040": {
+    "name": "왜곡된 무카",
+    "isBoss": true
+  },
+  "2670041": {
+    "name": "공습부대장 탈라",
+    "isBoss": true
+  },
+  "2670042": {
+    "name": "왜곡된 니샤드",
+    "isBoss": true
+  },
+  "2670043": {
+    "name": "왜곡된 카반다",
+    "isBoss": true
+  },
+  "2670044": {
+    "name": "왜곡된 야투다나",
+    "isBoss": true
+  },
+  "2670045": {
+    "name": "공습부대장 가하나",
+    "isBoss": true
+  },
+  "2670046": {
+    "name": "왜곡된 가르다",
+    "isBoss": true
+  },
+  "2670047": {
+    "name": "영혼 잃은 라할드",
+    "isBoss": true
+  },
+  "2670048": {
+    "name": "제32 군단 종군데바 모리엔",
+    "isBoss": true
+  },
+  "2670049": {
+    "name": "제32 군단 바크라",
+    "isBoss": true
+  },
+  "2670050": {
+    "name": "제32 군단 프라파",
+    "isBoss": true
+  },
+  "2670051": {
+    "name": "제32 군단 종군데바 모스티",
+    "isBoss": true
+  },
+  "2670052": {
+    "name": "영혼 잃은 타렌",
+    "isBoss": true
+  },
+  "2670053": {
+    "name": "왜곡된 군단장 나히드",
+    "isBoss": true
+  },
+  "2670054": {
+    "name": "왜곡된 군단장 니르말라",
+    "isBoss": true
+  },
+  "2670055": {
+    "name": "왜곡된 사단장 두르다라",
+    "isBoss": true
+  },
+  "2670056": {
+    "name": "왜곡된 라크샤",
+    "isBoss": true
+  },
+  "2670057": {
+    "name": "왜곡된 아칸 엘드릭",
+    "isBoss": true
+  },
+  "2670058": {
+    "name": "왜곡된 군단장 라그타",
+    "isBoss": true
+  },
+  "2670059": {
+    "name": "왜곡된 군단장 즈뉴기쉬",
+    "isBoss": true
+  },
+  "2670060": {
+    "name": "왜곡된 가디언 란크리스",
+    "isBoss": true
+  },
+  "2670061": {
+    "name": "왜곡된 타몬드",
+    "isBoss": true
+  },
+  "2670062": {
+    "name": "왜곡된 부대장 바스티",
+    "isBoss": true
+  },
+  "2670063": {
+    "name": "왜곡된 부대장 바쉬드",
+    "isBoss": true
+  },
+  "2670064": {
+    "name": "왜곡된 부대장 무라크",
+    "isBoss": true
+  },
+  "2670065": {
+    "name": "뒤틀린 부대장 우르간",
+    "isBoss": true
+  },
+  "2670066": {
+    "name": "뒤틀린 부대장 아누샨",
+    "isBoss": true
+  },
+  "2670067": {
+    "name": "뒤틀린 부대장 사만크",
+    "isBoss": true
+  },
+  "2670068": {
+    "name": "뒤틀린 부대장 안타도스",
+    "isBoss": true
+  },
+  "2670069": {
+    "name": "버려진 전사 헥토르",
+    "isBoss": true
+  },
+  "2670070": {
+    "name": "저주받은 팔라루스",
+    "isBoss": true
+  },
+  "2670071": {
+    "name": "방랑자 한사무",
+    "isBoss": true
+  },
+  "2670072": {
+    "name": "타락한 아칸 아스콜트",
+    "isBoss": true
+  },
+  "2670073": {
+    "name": "제32 군단 돌격대 푸티카",
+    "isBoss": true
+  },
+  "2670074": {
+    "name": "고독한 그라니르",
+    "isBoss": true
+  },
+  "2670075": {
+    "name": "타락한 아칸 듀블레드",
+    "isBoss": true
+  },
+  "2670076": {
+    "name": "제32 군단 황혼의 삼디야",
+    "isBoss": true
+  },
+  "2670077": {
+    "name": "제32 군단 여명의 차드마",
+    "isBoss": true
+  },
+  "2670078": {
+    "name": "타락한 아칸 가트",
+    "isBoss": true
+  },
+  "2670079": {
+    "name": "형혹의 울로스",
+    "isBoss": true
+  },
+  "2670080": {
+    "name": "제32 군단 선봉대 브라샤",
+    "isBoss": true
+  },
+  "2670081": {
+    "name": "타락한 아칸 베르크론",
+    "isBoss": true
+  },
+  "2670082": {
+    "name": "강철의 아야스",
+    "isBoss": true
+  },
+  "2670083": {
+    "name": "우둔한 라르손",
+    "isBoss": true
+  },
+  "2670084": {
+    "name": "부식된 전사 스타카드",
+    "isBoss": true
+  },
+  "2670085": {
+    "name": "왜곡된 부군단장 라트리니",
+    "isBoss": true
+  },
+  "2670086": {
+    "name": "왜곡된 부대장 락타",
+    "isBoss": true
+  },
+  "2670087": {
+    "name": "왜곡된 부대장 마우나",
+    "isBoss": true
+  },
+  "2670088": {
+    "name": "왜곡된 아트만",
+    "isBoss": true
+  },
+  "2670089": {
+    "name": "왜곡된 부대장 드로하",
+    "isBoss": true
+  },
+  "2670090": {
+    "name": "왜곡된 부대장 아룬트",
+    "isBoss": true
+  },
+  "2670091": {
+    "name": "왜곡된 다이티",
+    "isBoss": true
+  },
+  "2670092": {
+    "name": "왜곡된 부대장 비샤카",
+    "isBoss": true
+  },
+  "2670093": {
+    "name": "왜곡된 부대장 우파라",
+    "isBoss": true
+  },
+  "2670094": {
+    "name": "왜곡된 부대장 바이라",
+    "isBoss": true
+  },
+  "2670095": {
+    "name": "제32 군단 전쟁군주 그룸가르",
+    "isBoss": true
+  },
+  "2670096": {
+    "name": "제32 군단 전쟁군주 드렉토르",
+    "isBoss": true
+  },
+  "2670097": {
+    "name": "제32 군단 척후대 주르타",
+    "isBoss": true
+  },
+  "2670098": {
+    "name": "칠흑의 발톱 사마프",
+    "isBoss": true
+  },
+  "2670099": {
+    "name": "배교자 비다라",
+    "isBoss": true
+  },
+  "2670100": {
+    "name": "부식된 오가",
+    "isBoss": true
+  },
+  "2670101": {
+    "name": "썩어가는 피샤차",
+    "isBoss": true
+  },
+  "2670102": {
+    "name": "배교자 샤리나",
+    "isBoss": true
+  },
+  "2670103": {
+    "name": "원망의 발톱 도샤",
+    "isBoss": true
+  },
+  "2670104": {
+    "name": "제32 군단 척후대 로바",
+    "isBoss": true
+  },
+  "2670105": {
+    "name": "제32 군단 전쟁군주 브록샤",
+    "isBoss": true
+  },
+  "2670106": {
+    "name": "제32 군단 전쟁군주 타르칸",
+    "isBoss": true
+  },
+  "2670107": {
+    "name": "왜곡된 부대장 우찬다",
+    "isBoss": true
+  },
+  "2670108": {
+    "name": "왜곡된 타루바",
+    "isBoss": true
+  },
+  "2670109": {
+    "name": "왜곡된 부대장 이리샤",
+    "isBoss": true
+  },
+  "2670110": {
+    "name": "왜곡된 부대장 사마야",
+    "isBoss": true
+  },
+  "2670111": {
+    "name": "왜곡된 크라그발드",
+    "isBoss": true
+  },
+  "2670112": {
+    "name": "왜곡된 부대장 나라카",
+    "isBoss": true
+  },
+  "2670113": {
+    "name": "뒤틀린 군단장 조르쉬브",
+    "isBoss": true
+  },
+  "2670114": {
+    "name": "뒤틀린 부군단장 쿤탈라",
+    "isBoss": true
+  },
+  "2670115": {
+    "name": "균열 수호신장 마하발리",
+    "isBoss": true
+  },
+  "2670116": {
+    "name": "균열 수호신장 타마팔라",
+    "isBoss": true
+  },
+  "2670117": {
+    "name": "뒤틀린 부군단장 칼리야",
+    "isBoss": true
+  },
+  "2670118": {
+    "name": "뒤틀린 군단장 바라나트",
+    "isBoss": true
+  },
   "2680000": {
     "name": "오드 샤드 폭풍",
     "isBoss": false
@@ -25568,6 +26775,86 @@
     "name": "중독된 수라 투사",
     "isBoss": false
   },
+  "2700070": {
+    "name": "저장고 아울라우 추격병",
+    "isBoss": false
+  },
+  "2700071": {
+    "name": "저장고 코누티 추적꾼",
+    "isBoss": false
+  },
+  "2700072": {
+    "name": "뿌리의 아울라우 사제",
+    "isBoss": false
+  },
+  "2700076": {
+    "name": "뿌리의 아울라우 경비병",
+    "isBoss": false
+  },
+  "2700077": {
+    "name": "뿌리의 아울라우 경계병",
+    "isBoss": false
+  },
+  "2700078": {
+    "name": "뿌리의 아울라우 주술사",
+    "isBoss": false
+  },
+  "2700079": {
+    "name": "저장고 아울라우 추격병",
+    "isBoss": false
+  },
+  "2700080": {
+    "name": "저장고 코누티 추적꾼",
+    "isBoss": false
+  },
+  "2700081": {
+    "name": "저장고 코누티 일꾼",
+    "isBoss": false
+  },
+  "2700082": {
+    "name": "저장고 피노 일꾼",
+    "isBoss": false
+  },
+  "2700083": {
+    "name": "뿌리 저장고 피노 싸움꾼",
+    "isBoss": false
+  },
+  "2700085": {
+    "name": "뿌리의 아울라우 폭발 토템",
+    "isBoss": false
+  },
+  "2700086": {
+    "name": "뿌리의 아울라우 향로",
+    "isBoss": false
+  },
+  "2700087": {
+    "name": "뿌리의 토템술사",
+    "isBoss": false
+  },
+  "2700088": {
+    "name": "뿌리의 토템술사",
+    "isBoss": false
+  },
+  "2700089": {
+    "name": "문지기 피노피",
+    "isBoss": true
+  },
+  "2700090": {
+    "name": "뿌리의 토템술사",
+    "isBoss": false
+  },
+  "2700091": {
+    "name": "아울트로스",
+    "isBoss": true
+  },
+  "2700092": {
+    "name": "아울트로스",
+    "isBoss": true
+  },
+  "2700093": {
+    "name": "문지기 피노피",
+    "isBoss": false
+  },
   "2700094": {
     "name": "부패한 카라스",
     "isBoss": false
@@ -25591,6 +26878,10 @@
   "2700100": {
     "name": "힐라드르",
     "isBoss": true
+  },
+  "2700209": {
+    "name": "뿌리의 아울라우 소환사",
+    "isBoss": false
   },
   "2700238": {
     "name": "꿈의 수호병",
@@ -29745,6 +31036,10 @@
     "name": "광폭한 원혼",
     "isBoss": false
   },
+  "2702022": {
+    "name": "뿌리의 토템술사",
+    "isBoss": false
+  },
   "2702023": {
     "name": "라이칸 치유병",
     "isBoss": false
@@ -32254,12 +33549,104 @@
     "name": "도태된 데바의 잔재",
     "isBoss": false
   },
+  "2910034": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2910035": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2910036": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2910037": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2910038": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2910039": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920011": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920012": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920014": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920015": {
+    "name": "결박의 덫",
+    "isBoss": false
+  },
+  "2920016": {
+    "name": "결박의 덫",
+    "isBoss": false
+  },
+  "2920017": {
+    "name": "결박의 덫",
+    "isBoss": false
+  },
+  "2920018": {
+    "name": "결박의 덫",
+    "isBoss": false
+  },
+  "2920020": {
+    "name": "용족 깃발",
+    "isBoss": false
+  },
+  "2920021": {
+    "name": "날카로운 울라크",
+    "isBoss": false
+  },
+  "2920022": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920023": {
+    "name": "밀거래상 두두리",
+    "isBoss": false
+  },
+  "2920024": {
+    "name": "제사장 아울리사",
+    "isBoss": false
+  },
+  "2920025": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920026": {
+    "name": "오염 포자",
+    "isBoss": false
+  },
+  "2920027": {
+    "name": "나가 정예 사제",
+    "isBoss": false
+  },
+  "2920028": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920029": {
     "name": "변이 아울라우 수호자",
     "isBoss": false
   },
   "2920030": {
     "name": "제단의 불길한 망령",
+    "isBoss": false
+  },
+  "2920031": {
+    "name": "???",
     "isBoss": false
   },
   "2920032": {
@@ -32270,8 +33657,104 @@
     "name": "중형 괴물",
     "isBoss": false
   },
+  "2920034": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920035": {
+    "name": "관리자 나지움",
+    "isBoss": false
+  },
+  "2920036": {
+    "name": "계약파괴자 가르투아",
+    "isBoss": false
+  },
   "2920037": {
     "name": "None",
+    "isBoss": false
+  },
+  "2920038": {
+    "name": "새끼 오드 거미",
+    "isBoss": false
+  },
+  "2920039": {
+    "name": "드라칸 네임드",
+    "isBoss": false
+  },
+  "2920040": {
+    "name": "변이 수라 마법사",
+    "isBoss": false
+  },
+  "2920041": {
+    "name": "새끼 오드 거미",
+    "isBoss": false
+  },
+  "2920042": {
+    "name": "새끼 오드 거미",
+    "isBoss": false
+  },
+  "2920043": {
+    "name": "새끼 오드 거미",
+    "isBoss": false
+  },
+  "2920044": {
+    "name": "크라오 마법 실험체",
+    "isBoss": false
+  },
+  "2920045": {
+    "name": "크로카",
+    "isBoss": false
+  },
+  "2920046": {
+    "name": "크라오 거대 실험체",
+    "isBoss": false
+  },
+  "2920047": {
+    "name": "크라오 거대 실험체",
+    "isBoss": false
+  },
+  "2920048": {
+    "name": "포식자 사라스와티",
+    "isBoss": false
+  },
+  "2920049": {
+    "name": "드라코뉴트 정예 관리자",
+    "isBoss": false
+  },
+  "2920050": {
+    "name": "대사제의 환영",
+    "isBoss": false
+  },
+  "2920051": {
+    "name": "새끼 오드 거미",
+    "isBoss": false
+  },
+  "2920052": {
+    "name": "새끼 오드 거미",
+    "isBoss": false
+  },
+  "2920053": {
+    "name": "새끼 오드 거미",
+    "isBoss": false
+  },
+  "2920054": {
+    "name": "아울트로스",
+    "isBoss": false
+  },
+  "2920055": {
+    "name": "All(정령)",
+    "isBoss": false
+  },
+  "2920056": {
+    "name": "치유의 토템",
+    "isBoss": false
+  },
+  "2920057": {
+    "name": "큰 아울라우 토템",
+    "isBoss": false
+  },
+  "2920058": {
+    "name": "작열의 토템",
     "isBoss": false
   },
   "2920059": {
@@ -32286,8 +33769,72 @@
     "name": "작열의 토템",
     "isBoss": false
   },
+  "2920062": {
+    "name": "치유의 토템",
+    "isBoss": false
+  },
+  "2920063": {
+    "name": "작열의 토템",
+    "isBoss": false
+  },
+  "2920064": {
+    "name": "드라코뉴트 정예 관리자",
+    "isBoss": false
+  },
   "2920065": {
     "name": "분열된 슬라임",
+    "isBoss": false
+  },
+  "2920066": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920067": {
+    "name": "불 정령 1",
+    "isBoss": false
+  },
+  "2920068": {
+    "name": "불 정령 2",
+    "isBoss": false
+  },
+  "2920069": {
+    "name": "물 정령 1",
+    "isBoss": false
+  },
+  "2920070": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920071": {
+    "name": "태고 정령 1",
+    "isBoss": false
+  },
+  "2920072": {
+    "name": "밀거래상 두두리",
+    "isBoss": false
+  },
+  "2920083": {
+    "name": "치유의 기운",
+    "isBoss": false
+  },
+  "2920084": {
+    "name": "치유의 기운",
+    "isBoss": false
+  },
+  "2920085": {
+    "name": "치유의 기운",
+    "isBoss": false
+  },
+  "2920086": {
+    "name": "치유의 기운",
+    "isBoss": false
+  },
+  "2920087": {
+    "name": "치유의 기운",
+    "isBoss": false
+  },
+  "2920088": {
+    "name": "치유의 기운",
     "isBoss": false
   },
   "2920089": {
@@ -32298,25 +33845,457 @@
     "name": "큰 아울라우 토템",
     "isBoss": false
   },
+  "2920091": {
+    "name": "가스 암석",
+    "isBoss": false
+  },
+  "2920093": {
+    "name": "용암 덩어리",
+    "isBoss": false
+  },
+  "2920094": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920095": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920096": {
+    "name": "회복 토템",
+    "isBoss": false
+  },
+  "2920097": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920098": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920099": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920100": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920101": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920102": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920103": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920104": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920105": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920106": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920107": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920108": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920109": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920110": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920111": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920112": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920113": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920114": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920115": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920121": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920122": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920123": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920124": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920125": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920126": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920127": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920128": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920129": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920130": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920131": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920132": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920133": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920134": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920135": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920141": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920142": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920143": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920144": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920145": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920146": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920147": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920148": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920149": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920150": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920151": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920152": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920153": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920154": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920155": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920161": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920162": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920163": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920164": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920165": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920166": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920167": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920168": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920169": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920170": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920171": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920172": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920173": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920174": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920175": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920181": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920182": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920183": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920184": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920185": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920186": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920187": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920188": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920189": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920190": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920191": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920192": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920193": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920194": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920195": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920200": {
+    "name": "붉은불꽃 이그누스",
+    "isBoss": false
+  },
   "2920201": {
     "name": "화염 지대",
+    "isBoss": false
+  },
+  "2920202": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920203": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920204": {
+    "name": "고대의 정령",
+    "isBoss": false
+  },
+  "2920205": {
+    "name": "회복 토템",
+    "isBoss": false
+  },
+  "2920206": {
+    "name": "신성한 아울도르 (표본)",
+    "isBoss": false
+  },
+  "2920207": {
+    "name": "신성한 아울도르 (표본)",
+    "isBoss": false
+  },
+  "2920208": {
+    "name": "신성한 아울도르 (표본)",
+    "isBoss": false
+  },
+  "2920209": {
+    "name": "신성한 아울도르 (표본)",
     "isBoss": false
   },
   "2920210": {
     "name": "None",
     "isBoss": false
   },
+  "2920211": {
+    "name": "영원의 가르투아",
+    "isBoss": false
+  },
+  "2920212": {
+    "name": "영원의 가르투아",
+    "isBoss": false
+  },
   "2920213": {
     "name": "오디움 광석",
+    "isBoss": false
+  },
+  "2920214": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920215": {
+    "name": "신성한 아울도르 (표본)",
+    "isBoss": false
+  },
+  "2920216": {
+    "name": "처형자 누아",
+    "isBoss": false
+  },
+  "2920217": {
+    "name": "???",
     "isBoss": false
   },
   "2920218": {
     "name": "변이 아울라우 수호자",
     "isBoss": false
   },
+  "2920219": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920222": {
     "name": "개조된 바고트",
     "isBoss": true
+  },
+  "2920223": {
+    "name": "망령 지젤 (표본)",
+    "isBoss": false
+  },
+  "2920224": {
+    "name": "망령 지젤 (표본)",
+    "isBoss": false
+  },
+  "2920225": {
+    "name": "오디움 광석",
+    "isBoss": false
+  },
+  "2920226": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920227": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920228": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920229": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920232": {
+    "name": "카이시넬의 환영",
+    "isBoss": false
   },
   "2920233": {
     "name": "파프니르 독혈 웅덩이",
@@ -32326,8 +34305,112 @@
     "name": "카이시넬의 심복",
     "isBoss": false
   },
+  "2920239": {
+    "name": "처형자 누아",
+    "isBoss": false
+  },
+  "2920240": {
+    "name": "처형자 누아",
+    "isBoss": false
+  },
+  "2920241": {
+    "name": "처형자 누아",
+    "isBoss": false
+  },
+  "2920242": {
+    "name": "분노한 레다",
+    "isBoss": false
+  },
+  "2920243": {
+    "name": "분노한 레다",
+    "isBoss": false
+  },
+  "2920245": {
+    "name": "영원의 가르투아",
+    "isBoss": false
+  },
+  "2920246": {
+    "name": "완성체 베르크",
+    "isBoss": false
+  },
+  "2920247": {
+    "name": "분노한 레다",
+    "isBoss": false
+  },
+  "2920248": {
+    "name": "완성체 베르크",
+    "isBoss": false
+  },
   "2920249": {
     "name": "바위",
+    "isBoss": false
+  },
+  "2920250": {
+    "name": "영혼수확자 라트만",
+    "isBoss": false
+  },
+  "2920251": {
+    "name": "정령왕 (표본)",
+    "isBoss": false
+  },
+  "2920252": {
+    "name": "요새 수호자 노툰",
+    "isBoss": false
+  },
+  "2920253": {
+    "name": "요새 수호자 노툰",
+    "isBoss": false
+  },
+  "2920254": {
+    "name": "초월한 바카르마",
+    "isBoss": false
+  },
+  "2920255": {
+    "name": "초월한 바카르마",
+    "isBoss": false
+  },
+  "2920256": {
+    "name": "휘감는 물기둥",
+    "isBoss": false
+  },
+  "2920257": {
+    "name": "휘감는 물기둥",
+    "isBoss": false
+  },
+  "2920258": {
+    "name": "초월한 바카르마",
+    "isBoss": false
+  },
+  "2920259": {
+    "name": "초월한 바카르마",
+    "isBoss": false
+  },
+  "2920260": {
+    "name": "초월한 바카르마",
+    "isBoss": false
+  },
+  "2920261": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920262": {
+    "name": "신성한 아울도르 (표본)",
+    "isBoss": false
+  },
+  "2920263": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920264": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920265": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920266": {
+    "name": "폭발의 덫",
     "isBoss": false
   },
   "2920267": {
@@ -32338,6 +34421,26 @@
     "name": "오드먹는 심연벌레",
     "isBoss": false
   },
+  "2920269": {
+    "name": "폭발 함정",
+    "isBoss": false
+  },
+  "2920270": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920271": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920273": {
+    "name": "영혼없는 송장 각다귀",
+    "isBoss": false
+  },
+  "2920274": {
+    "name": "현신한 비호의 깃",
+    "isBoss": false
+  },
   "2920275": {
     "name": "비호의 기운",
     "isBoss": false
@@ -32346,8 +34449,52 @@
     "name": "주미온의 기운",
     "isBoss": false
   },
+  "2920277": {
+    "name": "현신한 비호의 깃",
+    "isBoss": false
+  },
+  "2920278": {
+    "name": "현신한 비호의 깃",
+    "isBoss": false
+  },
+  "2920279": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920280": {
+    "name": "요새 수호자 노툰",
+    "isBoss": false
+  },
+  "2920281": {
+    "name": "요새 수호자 노툰",
+    "isBoss": false
+  },
+  "2920282": {
+    "name": "요새 수호자 노툰",
+    "isBoss": false
+  },
+  "2920283": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920284": {
+    "name": "요새 수호자 노툰",
+    "isBoss": false
+  },
+  "2920285": {
+    "name": "요새 수호자 노툰",
+    "isBoss": false
+  },
+  "2920286": {
+    "name": "요새 수호자 노툰",
+    "isBoss": false
+  },
   "2920287": {
     "name": "개조된 바고트",
+    "isBoss": false
+  },
+  "2920289": {
+    "name": "분노한 레다",
     "isBoss": false
   },
   "2920290": {
@@ -32365,44 +34512,312 @@
     "isBoss": false,
     "isDummy": true
   },
+  "2920295": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920296": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920300": {
+    "name": "초월한 바카르마",
+    "isBoss": false
+  },
+  "2920303": {
+    "name": "오디움 광석",
+    "isBoss": false
+  },
   "2920304": {
     "name": "카이시넬의 심복",
+    "isBoss": false
+  },
+  "2920305": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920306": {
+    "name": "어비스 스웜 군체 (표본)",
+    "isBoss": false
+  },
+  "2920310": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920311": {
+    "name": "완성체 베르크",
     "isBoss": false
   },
   "2920313": {
     "name": "부패한 두르바티",
     "isBoss": false
   },
+  "2920314": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920315": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920316": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920317": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920318": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920319": {
+    "name": "변이된 게로드",
+    "isBoss": false
+  },
+  "2920320": {
+    "name": "변이된 게로드",
+    "isBoss": false
+  },
+  "2920321": {
+    "name": "변이된 게로드",
+    "isBoss": false
+  },
+  "2920322": {
+    "name": "변이된 게로드",
+    "isBoss": false
+  },
+  "2920323": {
+    "name": "계약파괴자 가르투아",
+    "isBoss": false
+  },
+  "2920324": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920325": {
+    "name": "지켈의 사념체",
+    "isBoss": false
+  },
+  "2920326": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920327": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920328": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920329": {
+    "name": "큰 아울라우 토템",
+    "isBoss": false
+  },
+  "2920330": {
+    "name": "이드리스",
+    "isBoss": false
+  },
   "2920331": {
     "name": "길들인 포사 시체 (표본)",
+    "isBoss": false
+  },
+  "2920332": {
+    "name": "이드리스",
+    "isBoss": false
+  },
+  "2920333": {
+    "name": "새끼 오드 거미",
+    "isBoss": false
+  },
+  "2920334": {
+    "name": "새끼 오드 거미",
+    "isBoss": false
+  },
+  "2920335": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920336": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920337": {
+    "name": "완성체 베르크",
+    "isBoss": false
+  },
+  "2920338": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920339": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920340": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920342": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920343": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920344": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920345": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920346": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920347": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920348": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920351": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920352": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920353": {
+    "name": "수호신장 나흐마 (표본)",
+    "isBoss": false
+  },
+  "2920354": {
+    "name": "수호신장 나흐마 (표본)",
+    "isBoss": false
+  },
+  "2920355": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920356": {
+    "name": "부패한 두르바티",
+    "isBoss": false
+  },
+  "2920357": {
+    "name": "부패한 두르바티",
+    "isBoss": false
+  },
+  "2920358": {
+    "name": "부패한 두르바티",
+    "isBoss": false
+  },
+  "2920359": {
+    "name": "부패한 두르바티",
+    "isBoss": false
+  },
+  "2920360": {
+    "name": "바크론의 가시속박",
+    "isBoss": false
+  },
+  "2920361": {
+    "name": "겔코스",
+    "isBoss": false
+  },
+  "2920362": {
+    "name": "해독 라플레시아",
+    "isBoss": false
+  },
+  "2920363": {
+    "name": "탐식의 티에",
+    "isBoss": false
+  },
+  "2920364": {
+    "name": "탐식의 티에",
     "isBoss": false
   },
   "2920365": {
     "name": "None",
     "isBoss": false
   },
+  "2920366": {
+    "name": "해독 라플레시아",
+    "isBoss": false
+  },
   "2920367": {
     "name": "바크론의 가시덩굴",
     "isBoss": true
   },
+  "2920368": {
+    "name": "겔코스",
+    "isBoss": false
+  },
+  "2920369": {
+    "name": "겔코스",
+    "isBoss": false
+  },
   "2920370": {
     "name": "드라나 스웜",
+    "isBoss": false
+  },
+  "2920371": {
+    "name": "타몬",
     "isBoss": false
   },
   "2920372": {
     "name": "균형",
     "isBoss": false
   },
+  "2920373": {
+    "name": "개조된 크라오 수호자",
+    "isBoss": false
+  },
+  "2920374": {
+    "name": "계약파괴자 가르투아",
+    "isBoss": false
+  },
+  "2920375": {
+    "name": "계약파괴자 가르투아",
+    "isBoss": false
+  },
+  "2920376": {
+    "name": "부패한 두르바티",
+    "isBoss": false
+  },
   "2920378": {
     "name": "독혈",
+    "isBoss": false
+  },
+  "2920379": {
+    "name": "지켈의 사념체",
     "isBoss": false
   },
   "2920380": {
     "name": "드라토나 알",
     "isBoss": false
   },
+  "2920381": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920382": {
     "name": "동굴 드라토나 유체",
+    "isBoss": false
+  },
+  "2920383": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920384": {
+    "name": "부패한 두르바티",
     "isBoss": false
   },
   "2920387": {
@@ -32417,8 +34832,188 @@
     "name": "어둠의 기운",
     "isBoss": false
   },
+  "2920390": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920391": {
+    "name": "관리자 나지움",
+    "isBoss": false
+  },
+  "2920392": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920393": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920394": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920395": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920396": {
+    "name": "변이된 게로드",
+    "isBoss": false
+  },
+  "2920397": {
+    "name": "변이된 게로드",
+    "isBoss": false
+  },
+  "2920398": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920400": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920401": {
     "name": "None",
+    "isBoss": false
+  },
+  "2920402": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920403": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920404": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920405": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": false
+  },
+  "2920406": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": false
+  },
+  "2920407": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920408": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920409": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920410": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920411": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2920412": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2920413": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2920414": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2920415": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2920416": {
+    "name": "요새 수호자 노툰",
+    "isBoss": false
+  },
+  "2920417": {
+    "name": "요새 수호자 노툰",
+    "isBoss": false
+  },
+  "2920418": {
+    "name": "요새 수호자 노툰",
+    "isBoss": false
+  },
+  "2920419": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920420": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920421": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920422": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920423": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920430": {
+    "name": "완성체 베르크",
+    "isBoss": false
+  },
+  "2920431": {
+    "name": "완성체 베르크",
+    "isBoss": false
+  },
+  "2920432": {
+    "name": "카이시넬의 환영",
+    "isBoss": false
+  },
+  "2920433": {
+    "name": "파프니르의 독혈",
+    "isBoss": false
+  },
+  "2920434": {
+    "name": "파프니르의 독혈",
+    "isBoss": false
+  },
+  "2920435": {
+    "name": "파프니르의 독혈",
+    "isBoss": false
+  },
+  "2920436": {
+    "name": "파프니르의 독혈",
+    "isBoss": false
+  },
+  "2920437": {
+    "name": "파프니르의 독혈",
+    "isBoss": false
+  },
+  "2920438": {
+    "name": "파프니르의 독혈",
+    "isBoss": false
+  },
+  "2920439": {
+    "name": "완성체 베르크",
+    "isBoss": false
+  },
+  "2920440": {
+    "name": "나즈문의 병기",
+    "isBoss": false
+  },
+  "2920441": {
+    "name": "나즈문의 병기",
+    "isBoss": false
+  },
+  "2920444": {
+    "name": "나즈문의 병기",
     "isBoss": false
   },
   "2920445": {
@@ -32429,20 +35024,232 @@
     "name": "아티엘",
     "isBoss": true
   },
+  "2920447": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920448": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920449": {
     "name": "아티엘",
+    "isBoss": false
+  },
+  "2920450": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": false
+  },
+  "2920451": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": false
+  },
+  "2920452": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": false
+  },
+  "2920453": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": false
+  },
+  "2920454": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920455": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920456": {
+    "name": "개조된 바고트",
+    "isBoss": false
+  },
+  "2920457": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920458": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920459": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920460": {
+    "name": "개조된 바고트",
+    "isBoss": false
+  },
+  "2920461": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": false
+  },
+  "2920462": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": false
+  },
+  "2920463": {
+    "name": "바크론의 가시속박",
+    "isBoss": false
+  },
+  "2920464": {
+    "name": "바크론의 가시속박",
+    "isBoss": false
+  },
+  "2920465": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2920466": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920467": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2920469": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2920470": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2920471": {
+    "name": "화염",
+    "isBoss": false
+  },
+  "2920472": {
+    "name": "심판",
+    "isBoss": false
+  },
+  "2920473": {
+    "name": "부관 히브란",
     "isBoss": false
   },
   "2920474": {
     "name": "타몬의 석화",
     "isBoss": false
   },
+  "2920476": {
+    "name": "얼어붙은 집행자 에른",
+    "isBoss": false
+  },
+  "2920477": {
+    "name": "얼어붙은 집행자 에른",
+    "isBoss": false
+  },
+  "2920480": {
+    "name": "고통의 루탈리스",
+    "isBoss": false
+  },
+  "2920481": {
+    "name": "고통의 루탈리스",
+    "isBoss": false
+  },
+  "2920482": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920483": {
+    "name": "고통의 루탈리스",
+    "isBoss": false
+  },
+  "2920484": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920485": {
+    "name": "나즈문의 병기",
+    "isBoss": false
+  },
+  "2920486": {
+    "name": "자이겔름",
+    "isBoss": false
+  },
+  "2920487": {
+    "name": "자이겔름",
+    "isBoss": false
+  },
+  "2920488": {
+    "name": "자이겔름",
+    "isBoss": false
+  },
+  "2920492": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920493": {
+    "name": "심판",
+    "isBoss": false
+  },
   "2920494": {
     "name": "독혈",
     "isBoss": false
   },
+  "2920495": {
+    "name": "터렛 회전형 (표본)",
+    "isBoss": false
+  },
+  "2920496": {
+    "name": "터렛 회전형 (표본)",
+    "isBoss": false
+  },
+  "2920497": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920498": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920499": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920500": {
+    "name": "부패한 두르바티",
+    "isBoss": false
+  },
   "2920501": {
     "name": "독 주머니",
+    "isBoss": false
+  },
+  "2920502": {
+    "name": "수호신장 나흐마 (표본)",
+    "isBoss": false
+  },
+  "2920503": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920504": {
+    "name": "관리자 나지움",
+    "isBoss": false
+  },
+  "2920505": {
+    "name": "나즈문",
+    "isBoss": false
+  },
+  "2920506": {
+    "name": "나즈문",
+    "isBoss": false
+  },
+  "2920507": {
+    "name": "나즈문",
+    "isBoss": false
+  },
+  "2920508": {
+    "name": "용족 깃발",
+    "isBoss": false
+  },
+  "2920509": {
+    "name": "나즈문의 병기",
+    "isBoss": false
+  },
+  "2920510": {
+    "name": "지켈의 사념체",
     "isBoss": false
   },
   "2920511": {
@@ -32453,8 +35260,276 @@
     "name": "동굴 드라토나 유체",
     "isBoss": false
   },
+  "2920513": {
+    "name": "나즈문의 병기",
+    "isBoss": false
+  },
+  "2920514": {
+    "name": "나즈문의 병기",
+    "isBoss": false
+  },
+  "2920515": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920516": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920517": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920518": {
     "name": "None",
+    "isBoss": false
+  },
+  "2920519": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920520": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920521": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920522": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920523": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920524": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920526": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920527": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920528": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920529": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920530": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920531": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920532": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920533": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920534": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920535": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920536": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920537": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920538": {
+    "name": "현신한 비호의 깃",
+    "isBoss": false
+  },
+  "2920539": {
+    "name": "파괴의 창",
+    "isBoss": false
+  },
+  "2920540": {
+    "name": "파괴의 창",
+    "isBoss": false
+  },
+  "2920541": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920542": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920544": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920545": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920546": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920547": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920548": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920549": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920550": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920551": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920552": {
+    "name": "가스 암석",
+    "isBoss": false
+  },
+  "2920553": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920554": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920555": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920556": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920557": {
+    "name": "얼어붙은 집행자 에른",
+    "isBoss": false
+  },
+  "2920558": {
+    "name": "얼어붙은 집행자 에른",
+    "isBoss": false
+  },
+  "2920559": {
+    "name": "얼어붙은 집행자 에른",
+    "isBoss": false
+  },
+  "2920560": {
+    "name": "얼어붙은 집행자 에른",
+    "isBoss": false
+  },
+  "2920561": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920562": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920563": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920564": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920565": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920566": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920567": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920568": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920569": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920570": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920571": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920572": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920573": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920574": {
+    "name": "몬스터 (표본)",
+    "isBoss": false
+  },
+  "2920575": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920576": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920580": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920581": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920582": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920583": {
+    "name": "번견 쿠하푸",
+    "isBoss": false
+  },
+  "2920584": {
+    "name": "번견 쿠하푸",
+    "isBoss": false
+  },
+  "2920585": {
+    "name": "???",
     "isBoss": false
   },
   "2920586": {
@@ -32469,6 +35544,46 @@
     "name": "자식 20/All/None",
     "isBoss": false
   },
+  "2920589": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920590": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920591": {
+    "name": "라이칸 경계병의 영혼",
+    "isBoss": false
+  },
+  "2920592": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920593": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920594": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920595": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920596": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920597": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920598": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920599": {
     "name": "자식 20/Exceed/Exceed",
     "isBoss": false
@@ -32477,41 +35592,1281 @@
     "name": "자식 20/All/Exceed",
     "isBoss": false
   },
+  "2920601": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920602": {
+    "name": "응축된 에너지",
+    "isBoss": false
+  },
+  "2920603": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920604": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920605": {
+    "name": "응축된 에너지",
+    "isBoss": false
+  },
+  "2920606": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920607": {
+    "name": "번견 쿠하푸",
+    "isBoss": false
+  },
+  "2920608": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920609": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920610": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920611": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920612": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920613": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920614": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920616": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920618": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": false
+  },
+  "2920619": {
+    "name": "바크론의 가시속박",
+    "isBoss": false
+  },
+  "2920620": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920621": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920622": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920623": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920624": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920625": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920626": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920627": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920628": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920629": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920630": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920631": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920632": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920635": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920636": {
     "name": "None",
+    "isBoss": false
+  },
+  "2920637": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920638": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920639": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920640": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920641": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920642": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920643": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920644": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920645": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920646": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920647": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920648": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920649": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920650": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920651": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920652": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920653": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920654": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920655": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920656": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920657": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920658": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920659": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920660": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920661": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920662": {
+    "name": "???",
     "isBoss": false
   },
   "2920663": {
     "name": "바크론의 가시속박",
     "isBoss": false
   },
+  "2920664": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920665": {
+    "name": "완성체 베르크",
+    "isBoss": false
+  },
+  "2920666": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920667": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920668": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920669": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920670": {
+    "name": "케투의 낫",
+    "isBoss": false
+  },
+  "2920671": {
+    "name": "심연의 날개 케투",
+    "isBoss": false
+  },
+  "2920672": {
+    "name": "필멸자의 영혼석",
+    "isBoss": false
+  },
+  "2920673": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920674": {
+    "name": "공포의 악령",
+    "isBoss": false
+  },
+  "2920675": {
+    "name": "파괴의 악령",
+    "isBoss": false
+  },
+  "2920676": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920677": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920678": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920679": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920680": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920681": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920682": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920683": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920684": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920685": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920686": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920687": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920688": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920689": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920690": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920691": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920692": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920693": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920694": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920695": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920696": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920697": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920698": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920699": {
+    "name": "용암 덩어리",
+    "isBoss": false
+  },
+  "2920702": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920703": {
+    "name": "오디움 광석",
+    "isBoss": false
+  },
+  "2920704": {
+    "name": "불의 정령",
+    "isBoss": false
+  },
+  "2920705": {
+    "name": "바람의 정령",
+    "isBoss": false
+  },
+  "2920706": {
+    "name": "땅의 정령",
+    "isBoss": false
+  },
+  "2920707": {
+    "name": "물의 정령",
+    "isBoss": false
+  },
+  "2920708": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920709": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920710": {
     "name": "카이시넬의 심복",
     "isBoss": true
   },
+  "2920711": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920712": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920713": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920714": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920715": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920716": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920717": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920718": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920719": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920720": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920721": {
+    "name": "용족 깃발",
+    "isBoss": false
+  },
+  "2920722": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920723": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920724": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920725": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920726": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920727": {
+    "name": "라이칸 경계병의 영혼",
+    "isBoss": false
+  },
+  "2920728": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920729": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920730": {
+    "name": "번견 쿠하푸",
+    "isBoss": false
+  },
+  "2920731": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920732": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920733": {
     "name": "심연 포식자",
+    "isBoss": false
+  },
+  "2920734": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920735": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920736": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920737": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920738": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920739": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920740": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920741": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920742": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920743": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920744": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920745": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920746": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920747": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920748": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920749": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920750": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920751": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920752": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920753": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920754": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920755": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920756": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920757": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920758": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920759": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920760": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920761": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920762": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920763": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920764": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920765": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920766": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920767": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920768": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920769": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920770": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920771": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920772": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920773": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920775": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920776": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920777": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920778": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920779": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920780": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920781": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920782": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920783": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920784": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920785": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920786": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920787": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920788": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920789": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920790": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920791": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920792": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920793": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920794": {
+    "name": "변이된 게로드",
+    "isBoss": false
+  },
+  "2920795": {
+    "name": "변이된 게로드",
+    "isBoss": false
+  },
+  "2920796": {
+    "name": "변이된 게로드",
+    "isBoss": false
+  },
+  "2920797": {
+    "name": "변이된 게로드",
+    "isBoss": false
+  },
+  "2920798": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920799": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920800": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920801": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920802": {
+    "name": "망령 지젤 (표본)",
+    "isBoss": false
+  },
+  "2920803": {
+    "name": "망령 지젤 (표본)",
+    "isBoss": false
+  },
+  "2920804": {
+    "name": "파프니르 독혈 웅덩이",
+    "isBoss": false
+  },
+  "2920805": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920806": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920807": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920808": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920809": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2920810": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920811": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920812": {
+    "name": "왜곡된 균열의 망치",
+    "isBoss": false
+  },
+  "2920813": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920814": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920815": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2920816": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920817": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920818": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920819": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920820": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920821": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920822": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920823": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920824": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920825": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920826": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920827": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920828": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920829": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920830": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920831": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920832": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920833": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920834": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920835": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920842": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920843": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2920844": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2920845": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920846": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920847": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920848": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920849": {
+    "name": "작열의 토템",
+    "isBoss": false
+  },
+  "2920850": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920851": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920852": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920853": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920854": {
+    "name": "검은 피 블라트",
+    "isBoss": false
+  },
+  "2920855": {
+    "name": "검은 피 블라트",
+    "isBoss": false
+  },
+  "2920856": {
+    "name": "검은 피 블라트",
+    "isBoss": false
+  },
+  "2920857": {
+    "name": "검은 피 블라트",
+    "isBoss": false
+  },
+  "2920858": {
+    "name": "검은 피 블라트",
+    "isBoss": false
+  },
+  "2920859": {
+    "name": "검은 피 블라트",
+    "isBoss": false
+  },
+  "2920860": {
+    "name": "검은 피 블라트",
+    "isBoss": false
+  },
+  "2920861": {
+    "name": "검은 피 촉수",
+    "isBoss": false
+  },
+  "2920862": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920863": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920864": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920865": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920866": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920867": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920868": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920869": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920870": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920871": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920872": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920873": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920874": {
+    "name": "신성한 기운",
+    "isBoss": false
+  },
+  "2920875": {
+    "name": "노래하는 엘라이드",
+    "isBoss": false
+  },
+  "2920876": {
+    "name": "노래하는 엘라이드",
+    "isBoss": false
+  },
+  "2920877": {
+    "name": "노래하는 엘라이드",
+    "isBoss": false
+  },
+  "2920878": {
+    "name": "노래하는 엘라이드",
+    "isBoss": false
+  },
+  "2920879": {
+    "name": "노래하는 엘라이드",
+    "isBoss": false
+  },
+  "2920880": {
+    "name": "노래하는 엘라이드",
+    "isBoss": false
+  },
+  "2920881": {
+    "name": "노래하는 엘라이드",
+    "isBoss": false
+  },
+  "2920882": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920883": {
+    "name": "심해의 파이디온",
+    "isBoss": false
+  },
+  "2920884": {
+    "name": "심해의 파이디온",
+    "isBoss": false
+  },
+  "2920885": {
+    "name": "심해의 파이디온",
+    "isBoss": false
+  },
+  "2920886": {
+    "name": "심해의 파이디온",
+    "isBoss": false
+  },
+  "2920887": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920888": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920889": {
+    "name": "폭발의 덫",
+    "isBoss": false
+  },
+  "2920890": {
+    "name": "폐기물 덩어리",
+    "isBoss": false
+  },
+  "2920891": {
+    "name": "폐기물 덩어리",
+    "isBoss": false
+  },
+  "2920892": {
+    "name": "노래하는 엘라이드",
+    "isBoss": false
+  },
+  "2920893": {
+    "name": "노래하는 엘라이드",
+    "isBoss": false
+  },
+  "2920894": {
+    "name": "노래하는 엘라이드",
+    "isBoss": false
+  },
+  "2920895": {
+    "name": "고뇌하는 바카르마",
     "isBoss": false
   },
   "2920896": {
     "name": "None",
     "isBoss": false
   },
+  "2920897": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2920898": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2920899": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920900": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920901": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920902": {
+    "name": "검은 피 블라트",
+    "isBoss": false
+  },
+  "2920903": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920904": {
+    "name": "크로메데의 욕망",
+    "isBoss": false
+  },
+  "2920905": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920906": {
     "name": "바위",
+    "isBoss": false
+  },
+  "2920907": {
+    "name": "유압 프레스",
     "isBoss": false
   },
   "2920908": {
     "name": "유압 프레스",
     "isBoss": true
   },
+  "2920909": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920910": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920911": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920912": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920913": {
+    "name": "완성체 베르크",
+    "isBoss": false
+  },
+  "2920914": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920915": {
+    "name": "나사라크",
+    "isBoss": false
+  },
+  "2920916": {
+    "name": "나사라크",
+    "isBoss": false
+  },
+  "2920917": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920918": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920919": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920920": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920922": {
+    "name": "저격하는 크로카",
+    "isBoss": false
+  },
+  "2920923": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
   "2920924": {
     "name": "바위",
+    "isBoss": false
+  },
+  "2920925": {
+    "name": "검은 피 블라트",
+    "isBoss": false
+  },
+  "2920926": {
+    "name": "검은 피 블라트",
+    "isBoss": false
+  },
+  "2920931": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920932": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920933": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920934": {
+    "name": "???",
     "isBoss": false
   },
   "2920935": {
     "name": "나트하라의 환영",
     "isBoss": true
+  },
+  "2920936": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920937": {
+    "name": "???",
+    "isBoss": false
   },
   "2920938": {
     "name": "드라토나 알",
@@ -32521,6 +36876,130 @@
     "name": "드라토나 덩치",
     "isBoss": false
   },
+  "2920940": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920941": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920942": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920944": {
+    "name": "블라트의 촉수",
+    "isBoss": false
+  },
+  "2920945": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920946": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920947": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2920948": {
+    "name": "검은 피 촉수",
+    "isBoss": false
+  },
+  "2920949": {
+    "name": "검은 피 촉수",
+    "isBoss": false
+  },
+  "2920950": {
+    "name": "검은 피 촉수",
+    "isBoss": false
+  },
+  "2920951": {
+    "name": "오염된 슬라임",
+    "isBoss": false
+  },
+  "2920952": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920953": {
+    "name": "검은 피 촉수",
+    "isBoss": false
+  },
+  "2920954": {
+    "name": "검은 피 블라트",
+    "isBoss": false
+  },
+  "2920955": {
+    "name": "검은 피 블라트",
+    "isBoss": false
+  },
+  "2920956": {
+    "name": "블라트의 붉은촉수",
+    "isBoss": false
+  },
+  "2920957": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920958": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920959": {
+    "name": "심해의 파이디온",
+    "isBoss": false
+  },
+  "2920960": {
+    "name": "심해의 파이디온",
+    "isBoss": false
+  },
+  "2920961": {
+    "name": "심해의 파이디온",
+    "isBoss": false
+  },
+  "2920962": {
+    "name": "심해의 파이디온",
+    "isBoss": false
+  },
+  "2920963": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920964": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920965": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920966": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920967": {
+    "name": "팽창하는 자이르페",
+    "isBoss": false
+  },
+  "2920968": {
+    "name": "팽창하는 자이르페",
+    "isBoss": false
+  },
+  "2920969": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920970": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920971": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920972": {
     "name": "시한 폭탄",
     "isBoss": false
@@ -32528,6 +37007,142 @@
   "2920973": {
     "name": "뉴트",
     "isBoss": true
+  },
+  "2920974": {
+    "name": "중합체 바고트",
+    "isBoss": false
+  },
+  "2920975": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920976": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920977": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920978": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2920979": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920980": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920981": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920982": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920983": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920984": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920985": {
+    "name": "부패한 두르바티",
+    "isBoss": false
+  },
+  "2920986": {
+    "name": "포식하는 뉴트라",
+    "isBoss": false
+  },
+  "2920987": {
+    "name": "포식하는 뉴트라",
+    "isBoss": false
+  },
+  "2920988": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2920989": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2920990": {
+    "name": "포식하는 뉴트라",
+    "isBoss": false
+  },
+  "2920991": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920992": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920993": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2920994": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2920995": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920996": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920997": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920998": {
+    "name": "카이시넬의 환영",
+    "isBoss": false
+  },
+  "2920999": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921000": {
+    "name": "카이시넬의 환영",
+    "isBoss": false
+  },
+  "2921001": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921002": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921003": {
+    "name": "독 주머니",
+    "isBoss": false
+  },
+  "2921004": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921005": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921006": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921007": {
+    "name": "???",
+    "isBoss": false
   },
   "2921008": {
     "name": "드라토나 알",
@@ -32545,6 +37160,14 @@
     "name": "드라토나 덩치",
     "isBoss": false
   },
+  "2921012": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921013": {
+    "name": "???",
+    "isBoss": false
+  },
   "2921014": {
     "name": "펑기",
     "isBoss": false
@@ -32557,16 +37180,220 @@
     "name": "달팽이 얹은 펑기",
     "isBoss": false
   },
+  "2921017": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921018": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2921019": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2921020": {
+    "name": "고뇌하는 바카르마",
+    "isBoss": false
+  },
+  "2921021": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921022": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921023": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921024": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921025": {
+    "name": "투르겐의 폭열검",
+    "isBoss": false
+  },
+  "2921026": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921027": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921028": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921029": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921030": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
   "2921031": {
     "name": "깨어난 알투라돈",
     "isBoss": true
+  },
+  "2921032": {
+    "name": "언약의 오브",
+    "isBoss": false
+  },
+  "2921033": {
+    "name": "언약의 오브",
+    "isBoss": false
+  },
+  "2921034": {
+    "name": "언약의 오브",
+    "isBoss": false
+  },
+  "2921035": {
+    "name": "언약의 오브",
+    "isBoss": false
+  },
+  "2921036": {
+    "name": "언약의 오브",
+    "isBoss": false
+  },
+  "2921037": {
+    "name": "언약의 오브",
+    "isBoss": false
+  },
+  "2921038": {
+    "name": "언약의 오브",
+    "isBoss": false
+  },
+  "2921039": {
+    "name": "언약의 오브",
+    "isBoss": false
+  },
+  "2921040": {
+    "name": "언약의 오브",
+    "isBoss": false
+  },
+  "2921041": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921042": {
+    "name": "언약의 오브",
+    "isBoss": false
+  },
+  "2921043": {
+    "name": "언약의 오브",
+    "isBoss": false
   },
   "2921044": {
     "name": "배신",
     "isBoss": false
   },
+  "2921045": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921046": {
+    "name": "롭스티노",
+    "isBoss": false
+  },
+  "2921047": {
+    "name": "롭스티노",
+    "isBoss": false
+  },
+  "2921048": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921049": {
+    "name": "유압 프레스",
+    "isBoss": false
+  },
+  "2921050": {
+    "name": "심해의 파이디온",
+    "isBoss": false
+  },
+  "2921051": {
+    "name": "로타르",
+    "isBoss": false
+  },
+  "2921052": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921053": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921054": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921055": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921056": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921057": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921058": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921059": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921060": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921061": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921062": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921063": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921064": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921065": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921066": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921067": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921068": {
+    "name": "???",
+    "isBoss": false
+  },
   "2921069": {
     "name": "중합체 바고트",
+    "isBoss": false
+  },
+  "2921070": {
+    "name": "???",
     "isBoss": false
   },
   "2921072": {
@@ -32575,6 +37402,94 @@
   },
   "2921073": {
     "name": "None",
+    "isBoss": false
+  },
+  "2921074": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921075": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921076": {
+    "name": "폭군 타신",
+    "isBoss": false
+  },
+  "2921077": {
+    "name": "폭군 타신",
+    "isBoss": false
+  },
+  "2921078": {
+    "name": "폭군 타신",
+    "isBoss": false
+  },
+  "2921079": {
+    "name": "폭군 타신",
+    "isBoss": false
+  },
+  "2921080": {
+    "name": "폭군 타신",
+    "isBoss": false
+  },
+  "2921081": {
+    "name": "폭군 타신",
+    "isBoss": false
+  },
+  "2921082": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921083": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921084": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921085": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921086": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921087": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921088": {
+    "name": "무스펠 화맥의 정기",
+    "isBoss": false
+  },
+  "2921089": {
+    "name": "무스펠 화맥의 정기",
+    "isBoss": false
+  },
+  "2921090": {
+    "name": "무스펠 화맥의 정기",
+    "isBoss": false
+  },
+  "2921091": {
+    "name": "무스펠 화맥의 정기",
+    "isBoss": false
+  },
+  "2921092": {
+    "name": "무스펠 화맥의 정기",
+    "isBoss": false
+  },
+  "2921093": {
+    "name": "무스펠 화맥의 정기",
+    "isBoss": false
+  },
+  "2921094": {
+    "name": "무스펠 화맥의 정기",
+    "isBoss": false
+  },
+  "2921095": {
+    "name": "무스펠 화맥의 정기",
     "isBoss": false
   },
   "2921096": {
@@ -32589,8 +37504,272 @@
     "name": "중합체 바고트",
     "isBoss": false
   },
+  "2921099": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921100": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921101": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921102": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921103": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921104": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921105": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921106": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921107": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921108": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921109": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921110": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921111": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921112": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921113": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921114": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921115": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921116": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921117": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921118": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921119": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921120": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921121": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921122": {
+    "name": "정령왕 (표본)",
+    "isBoss": false
+  },
+  "2921123": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921124": {
+    "name": "용족 깃발",
+    "isBoss": false
+  },
+  "2921125": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921126": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921127": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921128": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921129": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921130": {
+    "name": "용족 깃발",
+    "isBoss": false
+  },
+  "2921131": {
+    "name": "드라나 폭탄 벌레",
+    "isBoss": false
+  },
+  "2921132": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921133": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921134": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921135": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921136": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921137": {
+    "name": "용암 덩어리",
+    "isBoss": false
+  },
+  "2921138": {
+    "name": "수호검 조각",
+    "isBoss": false
+  },
+  "2921139": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921141": {
+    "name": "얼어붙은 집행자 에른",
+    "isBoss": false
+  },
+  "2921142": {
+    "name": "얼어붙은 집행자 에른",
+    "isBoss": false
+  },
+  "2921143": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921144": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921145": {
+    "name": "금기의 마수 그리오사",
+    "isBoss": false
+  },
+  "2921146": {
+    "name": "금기의 마수 그리오사",
+    "isBoss": false
+  },
+  "2921147": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921148": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921149": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921150": {
+    "name": "번견 쿠하푸",
+    "isBoss": false
+  },
+  "2921151": {
+    "name": "마력 깃털",
+    "isBoss": false
+  },
+  "2921152": {
+    "name": "석화트렙 (표본)",
+    "isBoss": false
+  },
   "2921153": {
     "name": "잔향",
+    "isBoss": false
+  },
+  "2921154": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921155": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921156": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921157": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921158": {
+    "name": "폭군 타신",
+    "isBoss": false
+  },
+  "2921159": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921160": {
+    "name": "폭군 타신",
+    "isBoss": false
+  },
+  "2921161": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921162": {
+    "name": "치유의 기운",
+    "isBoss": false
+  },
+  "2921163": {
+    "name": "치유의 기운",
+    "isBoss": false
+  },
+  "2921164": {
+    "name": "치유의 기운",
+    "isBoss": false
+  },
+  "2921165": {
+    "name": "치유의 기운",
+    "isBoss": false
+  },
+  "2921166": {
+    "name": "치유의 기운",
     "isBoss": false
   },
   "2921167": {
@@ -32601,16 +37780,500 @@
     "name": "환영의 템페르 사제",
     "isBoss": false
   },
+  "2921169": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921170": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921171": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921172": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921173": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921174": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921175": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921176": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921177": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921178": {
+    "name": "붉은 포탈",
+    "isBoss": false
+  },
+  "2921179": {
+    "name": "녹색 포탈",
+    "isBoss": false
+  },
+  "2921180": {
+    "name": "보라색 포탈",
+    "isBoss": false
+  },
+  "2921181": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921182": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921183": {
+    "name": "과부하된 주홍의 오브",
+    "isBoss": false
+  },
+  "2921184": {
+    "name": "과부하된 취록의 오브",
+    "isBoss": false
+  },
+  "2921185": {
+    "name": "폭군 타신",
+    "isBoss": false
+  },
+  "2921186": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921187": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921188": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921189": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921190": {
+    "name": "폭군 타신",
+    "isBoss": false
+  },
+  "2921191": {
+    "name": "아울트로스",
+    "isBoss": false
+  },
+  "2921192": {
+    "name": "충전된 주홍의 오브",
+    "isBoss": false
+  },
+  "2921193": {
+    "name": "충전된 취록의 오브",
+    "isBoss": false
+  },
+  "2921194": {
+    "name": "충전된 주홍의 오브",
+    "isBoss": false
+  },
+  "2921195": {
+    "name": "충전된 취록의 오브",
+    "isBoss": false
+  },
+  "2921196": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921198": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921199": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921200": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921201": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921202": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921203": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921204": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921205": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921206": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921207": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921208": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921209": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921210": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921211": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921212": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921213": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921214": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921215": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921216": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921217": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921218": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921219": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921220": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921221": {
+    "name": "이스카리엘의 열기",
+    "isBoss": false
+  },
   "2921222": {
     "name": "몬스터 (표본)",
+    "isBoss": false
+  },
+  "2921223": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921224": {
+    "name": "크로메데의 심연",
+    "isBoss": false
+  },
+  "2921225": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921226": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921227": {
+    "name": "???",
     "isBoss": false
   },
   "2921228": {
     "name": "매혹의 화살",
     "isBoss": false
   },
+  "2921229": {
+    "name": "깨어난 알투라돈",
+    "isBoss": false
+  },
+  "2921230": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921231": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921233": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921234": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921235": {
+    "name": "가르가움",
+    "isBoss": false
+  },
+  "2921236": {
+    "name": "응축된 에너지",
+    "isBoss": false
+  },
+  "2921237": {
+    "name": "가르가움",
+    "isBoss": false
+  },
+  "2921238": {
+    "name": "가르가움",
+    "isBoss": false
+  },
+  "2921239": {
+    "name": "응축된 에너지",
+    "isBoss": false
+  },
+  "2921240": {
+    "name": "가르가움",
+    "isBoss": false
+  },
+  "2921241": {
+    "name": "가르가움",
+    "isBoss": false
+  },
+  "2921242": {
+    "name": "가르가움",
+    "isBoss": false
+  },
+  "2921243": {
+    "name": "가르가움",
+    "isBoss": false
+  },
+  "2921244": {
+    "name": "가르가움",
+    "isBoss": false
+  },
+  "2921245": {
+    "name": "가르가움",
+    "isBoss": false
+  },
+  "2921246": {
+    "name": "가르가움",
+    "isBoss": false
+  },
+  "2921247": {
+    "name": "가르가움",
+    "isBoss": false
+  },
+  "2921248": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921249": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921250": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921251": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921252": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921253": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921254": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921255": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921256": {
+    "name": "침식의 방패",
+    "isBoss": false
+  },
+  "2921257": {
+    "name": "시련의 방패",
+    "isBoss": false
+  },
+  "2921258": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921259": {
+    "name": "성화의 보호 결계",
+    "isBoss": false
+  },
+  "2921260": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921261": {
+    "name": "용족 미니토템",
+    "isBoss": false
+  },
+  "2921262": {
+    "name": "무스펠 수호상",
+    "isBoss": false
+  },
+  "2921263": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921264": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921265": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921266": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921267": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921268": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921269": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921270": {
+    "name": "롭스티노",
+    "isBoss": false
+  },
+  "2921271": {
+    "name": "타락한 데바 인도자",
+    "isBoss": false
+  },
+  "2921272": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921273": {
+    "name": "사랑의 시련",
+    "isBoss": false
+  },
   "2921274": {
     "name": "무스펠 수호상",
+    "isBoss": false
+  },
+  "2921275": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921276": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921277": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921278": {
+    "name": "시련의 검",
+    "isBoss": false
+  },
+  "2921279": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921280": {
+    "name": "무스펠 수호상",
+    "isBoss": false
+  },
+  "2921281": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921284": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921285": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921286": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921288": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921289": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921290": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921291": {
+    "name": "붉은 포탈",
+    "isBoss": false
+  },
+  "2921292": {
+    "name": "녹색 포탈",
+    "isBoss": false
+  },
+  "2921293": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2921294": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2921295": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2921296": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2921297": {
+    "name": "아티엘",
     "isBoss": false
   },
   "2921298": {
@@ -32625,8 +38288,216 @@
     "name": "오만의 아티엘",
     "isBoss": false
   },
+  "2921301": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2921302": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2921303": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2921304": {
+    "name": "아티엘",
+    "isBoss": false
+  },
+  "2921305": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921306": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921307": {
+    "name": "이스카리엘",
+    "isBoss": false
+  },
+  "2921308": {
+    "name": "금기의 마수 그리오사",
+    "isBoss": false
+  },
+  "2921309": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921310": {
+    "name": "금기의 마수 그리오사",
+    "isBoss": false
+  },
+  "2921311": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921312": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921313": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921314": {
+    "name": "???",
+    "isBoss": false
+  },
   "2921315": {
     "name": "무스펠 수호상",
+    "isBoss": false
+  },
+  "2921316": {
+    "name": "금기의 마수 그리오사",
+    "isBoss": false
+  },
+  "2921317": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921318": {
+    "name": "시련의 검",
+    "isBoss": false
+  },
+  "2921319": {
+    "name": "성화의 보호 결계",
+    "isBoss": false
+  },
+  "2921320": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921321": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921322": {
+    "name": "카푸",
+    "isBoss": false
+  },
+  "2921323": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921324": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921325": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921326": {
+    "name": "라이칸 경계병의 영혼",
+    "isBoss": false
+  },
+  "2921327": {
+    "name": "각성한 아테론",
+    "isBoss": false
+  },
+  "2921328": {
+    "name": "각성한 아테론",
+    "isBoss": false
+  },
+  "2921329": {
+    "name": "각성한 아테론",
+    "isBoss": false
+  },
+  "2921330": {
+    "name": "각성한 아테론",
+    "isBoss": false
+  },
+  "2921331": {
+    "name": "각성한 아테론",
+    "isBoss": false
+  },
+  "2921332": {
+    "name": "아테론의 수정",
+    "isBoss": false
+  },
+  "2921333": {
+    "name": "아테론의 수정",
+    "isBoss": false
+  },
+  "2921334": {
+    "name": "각성한 아테론",
+    "isBoss": false
+  },
+  "2921335": {
+    "name": "각성한 아테론",
+    "isBoss": false
+  },
+  "2921336": {
+    "name": "각성한 아테론",
+    "isBoss": false
+  },
+  "2921337": {
+    "name": "각성한 아테론",
+    "isBoss": false
+  },
+  "2921338": {
+    "name": "각성한 아테론",
+    "isBoss": false
+  },
+  "2921339": {
+    "name": "각성한 아테론",
+    "isBoss": false
+  },
+  "2921340": {
+    "name": "각성한 아테론",
+    "isBoss": false
+  },
+  "2921341": {
+    "name": "의지의 투르겐",
+    "isBoss": false
+  },
+  "2921342": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921343": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921344": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921345": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921346": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921347": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921348": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921349": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921350": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921351": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921352": {
+    "name": "축전핵",
+    "isBoss": false
+  },
+  "2921353": {
+    "name": "축전핵",
     "isBoss": false
   },
   "2921354": {
@@ -32645,8 +38516,172 @@
     "name": "바크론의 가시덩굴",
     "isBoss": false
   },
+  "2921358": {
+    "name": "바크론",
+    "isBoss": false
+  },
+  "2921359": {
+    "name": "시련의 검",
+    "isBoss": false
+  },
+  "2921360": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921361": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921362": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921363": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921364": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921365": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921366": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921367": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921368": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921369": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921370": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921371": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921372": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921373": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921374": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921375": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921376": {
+    "name": "의지의 투르겐",
+    "isBoss": false
+  },
+  "2921377": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921378": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921379": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921380": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921381": {
+    "name": "???",
+    "isBoss": false
+  },
   "2921382": {
     "name": "포효",
+    "isBoss": false
+  },
+  "2921383": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921384": {
+    "name": "위악의 바실루스",
+    "isBoss": false
+  },
+  "2921385": {
+    "name": "침식의 방패",
+    "isBoss": false
+  },
+  "2921386": {
+    "name": "시련의 방패",
+    "isBoss": false
+  },
+  "2921387": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921388": {
+    "name": "용암 덩어리",
+    "isBoss": false
+  },
+  "2921389": {
+    "name": "의지의 투르겐",
+    "isBoss": false
+  },
+  "2921390": {
+    "name": "카푸",
+    "isBoss": false
+  },
+  "2921391": {
+    "name": "시련의 검",
+    "isBoss": false
+  },
+  "2921392": {
+    "name": "가르가움",
+    "isBoss": false
+  },
+  "2921393": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921394": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921395": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921396": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921397": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921398": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921399": {
+    "name": "???",
     "isBoss": false
   },
   "2921400": {
@@ -32661,15 +38696,71 @@
     "name": "화염탄 폭격",
     "isBoss": true
   },
+  "2921403": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921404": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921405": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921406": {
+    "name": "바크론의 가시속박",
+    "isBoss": false
+  },
+  "2921407": {
+    "name": "영원의 가르투아",
+    "isBoss": false
+  },
+  "2921408": {
+    "name": "영원의 가르투아",
+    "isBoss": false
+  },
   "2921409": {
     "name": "오디움 광석",
+    "isBoss": false
+  },
+  "2921410": {
+    "name": "영원의 가르투아",
     "isBoss": false
   },
   "2921411": {
     "name": "None",
     "isBoss": false
   },
+  "2921412": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921414": {
+    "name": "해독 라플레시아",
+    "isBoss": false
+  },
+  "2921415": {
+    "name": "탐식의 티에",
+    "isBoss": false
+  },
+  "2921416": {
+    "name": "탐식의 티에",
+    "isBoss": false
+  },
+  "2921417": {
+    "name": "해독 라플레시아",
+    "isBoss": false
+  },
   "2921418": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": false
+  },
+  "2921419": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": false
+  },
+  "2921420": {
     "name": "바크론의 가시덩굴",
     "isBoss": false
   },
@@ -32697,8 +38788,80 @@
     "name": "바크론의 가시속박",
     "isBoss": true
   },
+  "2921431": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921432": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921433": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921434": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921442": {
+    "name": "델트라스",
+    "isBoss": true
+  },
+  "2921443": {
+    "name": "델트라스",
+    "isBoss": true
+  },
+  "2921448": {
+    "name": "델트라스",
+    "isBoss": true
+  },
+  "2921453": {
+    "name": "델트라스",
+    "isBoss": true
+  },
+  "2921454": {
+    "name": "델트라스",
+    "isBoss": true
+  },
+  "2921455": {
+    "name": "델트라스",
+    "isBoss": true
+  },
+  "2921456": {
+    "name": "델트라스",
+    "isBoss": true
+  },
+  "2921458": {
+    "name": "델트라스",
+    "isBoss": true
+  },
   "2921511": {
     "name": "오만의 아티엘",
+    "isBoss": false
+  },
+  "2921576": {
+    "name": "델트라스",
+    "isBoss": true
+  },
+  "2921579": {
+    "name": "지켈의 권능",
+    "isBoss": false
+  },
+  "2921580": {
+    "name": "드라토나 알",
+    "isBoss": false
+  },
+  "2921581": {
+    "name": "동굴 드라토나 유체",
+    "isBoss": false
+  },
+  "2921582": {
+    "name": "드라토나 알",
+    "isBoss": false
+  },
+  "2921583": {
+    "name": "드라토나 덩치",
     "isBoss": false
   },
   "2980000": {

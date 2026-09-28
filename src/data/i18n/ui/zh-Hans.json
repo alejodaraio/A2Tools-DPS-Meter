@@ -87,7 +87,9 @@
       "combatTime": "战斗时间",
       "multiHitDamage": "额外伤害",
       "multiHitHits": "多段打击",
-      "maxHp": "最大HP"
+      "maxHp": "最大HP",
+      "hits": "命中次数",
+      "selfHealing": "自我治疗"
     },
     "titleFor": "针对",
     "titleVs": "vs",
@@ -116,7 +118,11 @@
     "viewList": "列表视图",
     "viewGrouped": "按首领分组",
     "fightCount": "{n} 场",
-    "fightCountOne": "1 场"
+    "fightCountOne": "1 场",
+    "previewUpload": "预览上传内容",
+    "previewUploadTip": "把分享这场战斗时会上传的内容写成文件。不会发送。",
+    "previewWorking": "正在生成预览…",
+    "previewDone": "已写入 {slice} KB（压缩后 {sent} KB，即实际上传大小）。在 {seen} 个数据包中保留 {kept} 个，已遮蔽 {blinded} 个名称。没有上传任何内容。保存于 {dir}"
   },
   "settings": {
     "title": "设置",
@@ -256,6 +262,21 @@
         "all": "全部",
         "highestDamage": "最高伤害"
       }
+    },
+    "showSupporterColors": "显示赞助者颜色",
+    "showSupporterColorsHint": "赞助者的名字显示为金色。仅为外观，不会改变任何数值。",
+    "account": {
+      "title": "A2 Tools 账号",
+      "signedOut": "未登录",
+      "signedIn": "已登录：{name}",
+      "hint": "登录后可将角色与设置同步到 a2tools.app。",
+      "connect": "登录",
+      "signOut": "退出登录",
+      "codePrompt": "请在浏览器中确认此代码：",
+      "codeHint": "页面应该已经打开。代码将在 10 分钟后失效。",
+      "working": "等待确认…",
+      "failed": "登录失败：{error}",
+      "supporter": "赞助者"
     }
   },
   "support": {
@@ -326,5 +347,12 @@
     "ELEMENTALIST": "精灵圣",
     "CHANTER": "护法圣",
     "FIGHTER": "拳圣"
+  },
+  "dungeon": {
+    "difficulty": {
+      "exploration": "探索",
+      "normal": "普通",
+      "hard": "困难"
+    }
   }
 }

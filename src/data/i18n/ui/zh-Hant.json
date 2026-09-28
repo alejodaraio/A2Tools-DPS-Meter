@@ -87,7 +87,9 @@
       "combatTime": "戰鬥時間",
       "multiHitDamage": "額外傷害",
       "multiHitHits": "多段打擊",
-      "maxHp": "最大HP"
+      "maxHp": "最大HP",
+      "hits": "命中次數",
+      "selfHealing": "自我治療"
     },
     "titleFor": "針對",
     "titleVs": "vs",
@@ -116,7 +118,11 @@
     "viewList": "清單檢視",
     "viewGrouped": "依王分組",
     "fightCount": "{n} 場",
-    "fightCountOne": "1 場"
+    "fightCountOne": "1 場",
+    "previewUpload": "預覽上傳內容",
+    "previewUploadTip": "把分享這場戰鬥時會上傳的內容寫成檔案。不會傳送。",
+    "previewWorking": "正在產生預覽…",
+    "previewDone": "已寫入 {slice} KB（壓縮後 {sent} KB，即實際上傳大小）。在 {seen} 個封包中保留 {kept} 個，已遮蔽 {blinded} 個名稱。沒有上傳任何內容。儲存於 {dir}"
   },
   "settings": {
     "title": "設定",
@@ -256,6 +262,21 @@
         "all": "全部",
         "highestDamage": "最高傷害"
       }
+    },
+    "showSupporterColors": "顯示贊助者顏色",
+    "showSupporterColorsHint": "贊助者的名字顯示為金色。僅為外觀，不會改變任何數值。",
+    "account": {
+      "title": "A2 Tools 帳號",
+      "signedOut": "尚未登入",
+      "signedIn": "已登入：{name}",
+      "hint": "登入後可將角色與設定同步至 a2tools.app。",
+      "connect": "登入",
+      "signOut": "登出",
+      "codePrompt": "請在瀏覽器中確認此代碼：",
+      "codeHint": "頁面應該已經開啟。代碼將在 10 分鐘後失效。",
+      "working": "等待確認…",
+      "failed": "登入失敗：{error}",
+      "supporter": "贊助者"
     }
   },
   "support": {
@@ -326,5 +347,12 @@
     "ELEMENTALIST": "精靈聖",
     "CHANTER": "護法聖",
     "FIGHTER": "拳聖"
+  },
+  "dungeon": {
+    "difficulty": {
+      "exploration": "探索",
+      "normal": "普通",
+      "hard": "困難"
+    }
   }
 }

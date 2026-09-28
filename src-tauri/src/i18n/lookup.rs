@@ -102,8 +102,11 @@ pub fn load_language(
     data_dir: &std::path::Path,
     language: &str,
 ) {
+    // Every locale shipped under src/data/i18n. Anything else falls back to
+    // English rather than loading nothing, so an unknown setting degrades to
+    // readable names instead of bare ids.
     let lang = match language {
-        "ko" | "zh-Hans" | "zh-Hant" | "en" => language,
+        "de" | "en" | "es" | "fr" | "ja" | "ko" | "pt" | "ru" | "zh-Hans" | "zh-Hant" => language,
         _ => "en",
     };
 

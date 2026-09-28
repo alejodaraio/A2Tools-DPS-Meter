@@ -118,7 +118,11 @@
     "viewList": "List view",
     "viewGrouped": "Group by boss",
     "fightCount": "{n} fights",
-    "fightCountOne": "1 fight"
+    "fightCountOne": "1 fight",
+    "previewUpload": "Preview upload",
+    "previewUploadTip": "Write what sharing this fight would upload. Nothing is sent.",
+    "previewWorking": "Building the preview…",
+    "previewDone": "Wrote {slice} KB ({sent} KB compressed — what an upload would send). Kept {kept} of {seen} packets, blinded {blinded} names. Nothing was uploaded. Saved to {dir}"
   },
   "settings": {
     "title": "Settings",
@@ -258,6 +262,21 @@
         "all": "All",
         "highestDamage": "Highest Damage"
       }
+    },
+    "showSupporterColors": "Show supporter colours",
+    "showSupporterColorsHint": "Supporters' names render gold. Cosmetic only — it never changes any number.",
+    "account": {
+      "title": "A2 Tools Account",
+      "signedOut": "Not signed in",
+      "signedIn": "Signed in as {name}",
+      "hint": "Sign in to sync characters and settings with a2tools.app.",
+      "connect": "Sign in",
+      "signOut": "Sign out",
+      "codePrompt": "Approve this code in your browser:",
+      "codeHint": "The page should have opened already. The code expires in 10 minutes.",
+      "working": "Waiting for approval…",
+      "failed": "Sign-in failed: {error}",
+      "supporter": "Supporter"
     }
   },
   "support": {
@@ -328,5 +347,12 @@
     "ELEMENTALIST": "Elementalist",
     "CHANTER": "Chanter",
     "FIGHTER": "Brawler"
+  },
+  "dungeon": {
+    "difficulty": {
+      "exploration": "Exploration",
+      "normal": "Normal",
+      "hard": "Hard"
+    }
   }
 }

@@ -1,12 +1,15 @@
 const createI18n = ({
   defaultLanguage = "en",
   storageKey = "dpsMeter.language",
-  supportedLanguages = ["en", "ko", "zh-Hant", "zh-Hans"],
+  supportedLanguages = [
+    "en", "de", "es", "fr", "ja", "ko", "pt", "ru", "zh-Hant", "zh-Hans",
+  ],
 } = {}) => {
   let currentLanguage = defaultLanguage;
   let uiStrings = {};
   let skillStrings = {};
   let npcStrings = {};
+  let dungeonStrings = {};
   const listeners = new Set();
 
   const safeGetStorage = (key) => {
@@ -196,15 +199,17 @@ const createI18n = ({
       safeSetStorage(storageKey, next);
     }
 
-    const [ui, skills, npcs] = await Promise.all([
+    const [ui, skills, npcs, dungeons] = await Promise.all([
       loadJson(`./i18n/ui/${next}.json`),
       loadJson(`./i18n/skills/${next}.json`),
       loadJson(`./i18n/npcs/${next}.json`),
+      loadJson(`./i18n/dungeons/${next}.json`),
     ]);
 
     uiStrings = ui || {};
     skillStrings = skills || {};
     npcStrings = npcs || {};
+    dungeonStrings = dungeons || {};
     document.documentElement.setAttribute("lang", currentLanguage);
     applyTranslations();
     listeners.forEach((listener) => listener(currentLanguage));
@@ -220,6 +225,17 @@ const createI18n = ({
     return () => listeners.delete(listener);
   };
 
+  // "Ferocious Horn Den (Hard)" for the instance the party roster reports.
+  // Difficulty is only present for dungeons whose id set maps cleanly onto the
+  // game's three tiers; elsewhere the name is returned on its own.
+  const getDungeonLabel = (dungeonId) => {
+    const entry = dungeonStrings?.[String(dungeonId)];
+    if (!entry || !entry.name) return "";
+    if (!entry.difficulty) return entry.name;
+    const label = t(`dungeon.difficulty.${entry.difficulty}`, "");
+    return label ? `${entry.name} (${label})` : entry.name;
+  };
+
   return {
     init,
     setLanguage,
@@ -227,6 +243,7 @@ const createI18n = ({
     format,
     getSkillName,
     getNpcName,
+    getDungeonLabel,
     getLanguage: () => currentLanguage,
     onChange,
   };

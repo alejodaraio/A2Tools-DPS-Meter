@@ -9,8 +9,16 @@
     "isBoss": false,
     "isDummy": true
   },
+  "2000002": {
+    "name": "Draconute Ranger",
+    "isBoss": false
+  },
   "2000004": {
     "name": "奧德蜘蛛",
+    "isBoss": false
+  },
+  "2000053": {
+    "name": "Modified Krall Warrior",
     "isBoss": false
   },
   "2000059": {
@@ -104,6 +112,42 @@
     "name": "枯枝蜘蛛",
     "isBoss": false
   },
+  "2090001": {
+    "name": "Forest Spirit",
+    "isBoss": false
+  },
+  "2090002": {
+    "name": "Forest Spirit",
+    "isBoss": false
+  },
+  "2090003": {
+    "name": "Aullaeu Mage",
+    "isBoss": false
+  },
+  "2090004": {
+    "name": "Midsize Monster",
+    "isBoss": false
+  },
+  "2090005": {
+    "name": "Illusion Fragment",
+    "isBoss": false
+  },
+  "2090006": {
+    "name": "Fungie",
+    "isBoss": false
+  },
+  "2090007": {
+    "name": "Illusion Fragment",
+    "isBoss": false
+  },
+  "2090008": {
+    "name": "Illusion Fragment",
+    "isBoss": false
+  },
+  "2090009": {
+    "name": "Ancient Revenant Knight",
+    "isBoss": false
+  },
   "2090010": {
     "name": "波克斯",
     "isBoss": false
@@ -177,6 +221,14 @@
   "2090027": {
     "name": "怪物(樣本)",
     "isBoss": true
+  },
+  "2090028": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090029": {
+    "name": "Poison Flower",
+    "isBoss": false
   },
   "2090030": {
     "name": "平衡測試1",
@@ -724,6 +776,10 @@
     "name": "None",
     "isBoss": false
   },
+  "2090156": {
+    "name": "???",
+    "isBoss": false
+  },
   "2090157": {
     "name": "測試怪_Hidden",
     "isBoss": false,
@@ -1085,12 +1141,212 @@
     "name": "炸彈型機關(樣本)",
     "isBoss": false
   },
+  "2090328": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090329": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090330": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090331": {
+    "name": "Minion Level 1",
+    "isBoss": false
+  },
+  "2090332": {
+    "name": "Minion Level 2",
+    "isBoss": false
+  },
+  "2090333": {
+    "name": "Minion Level 3",
+    "isBoss": false
+  },
+  "2090334": {
+    "name": "Minion Level 4",
+    "isBoss": false
+  },
+  "2090335": {
+    "name": "Turret 1 Level",
+    "isBoss": false
+  },
+  "2090336": {
+    "name": "Turret 2 Level",
+    "isBoss": false
+  },
+  "2090337": {
+    "name": "Turret 3 Level",
+    "isBoss": false
+  },
+  "2090338": {
+    "name": "Turret 4 Level",
+    "isBoss": false
+  },
+  "2090339": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090340": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090341": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090342": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090343": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090344": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090345": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090346": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090347": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090360": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090361": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090362": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090363": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090364": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090369": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090370": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090371": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090372": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090373": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090374": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090381": {
+    "name": "Invincible Drakan",
+    "isBoss": false
+  },
+  "2090382": {
+    "name": "Incapacitating Lakshmi",
+    "isBoss": false
+  },
+  "2090383": {
+    "name": "Rapid Keneire",
+    "isBoss": false
+  },
+  "2090384": {
+    "name": "Grappling Aulak",
+    "isBoss": false
+  },
+  "2090385": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090386": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090387": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090388": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090389": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090390": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090391": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090392": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090393": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090394": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090395": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090396": {
+    "name": "???",
+    "isBoss": false
+  },
   "2090397": {
     "name": "怪物(樣本)",
     "isBoss": true
   },
   "2090398": {
     "name": "塔辛(樣本)",
+    "isBoss": false
+  },
+  "2090401": {
+    "name": "Elyos Core",
+    "isBoss": true
+  },
+  "2090402": {
+    "name": "Asmodian Core",
+    "isBoss": true
+  },
+  "2090403": {
+    "name": "???",
     "isBoss": false
   },
   "2090404": {
@@ -1103,6 +1359,106 @@
   },
   "2090406": {
     "name": "怪鳥路比利尼",
+    "isBoss": false
+  },
+  "2090407": {
+    "name": "Healing Drakan",
+    "isBoss": false
+  },
+  "2090408": {
+    "name": "Slumber Lakshmi",
+    "isBoss": false
+  },
+  "2090409": {
+    "name": "Swift Keneire",
+    "isBoss": false
+  },
+  "2090410": {
+    "name": "Weakening Aulak",
+    "isBoss": false
+  },
+  "2090411": {
+    "name": "Elyos Outer Turret",
+    "isBoss": false
+  },
+  "2090412": {
+    "name": "Asmodians Outer Turret",
+    "isBoss": false
+  },
+  "2090413": {
+    "name": "Elyos Inner Turret",
+    "isBoss": false
+  },
+  "2090414": {
+    "name": "Asmodian Inner Turret",
+    "isBoss": false
+  },
+  "2090415": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090416": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090417": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090418": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090419": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090420": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090421": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090422": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090423": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090424": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090425": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090426": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090427": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090428": {
+    "name": "Transcendent Bakarma",
+    "isBoss": true
+  },
+  "2090429": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090430": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2090431": {
+    "name": "???",
     "isBoss": false
   },
   "2090433": {
@@ -1263,6 +1619,11 @@
     "name": "改造克拉爾戰士",
     "isBoss": false
   },
+  "2090536": {
+    "name": "Punching Bag",
+    "isBoss": false,
+    "isDummy": true
+  },
   "2090538": {
     "name": "克羅馬",
     "isBoss": false
@@ -1350,6 +1711,21 @@
   "2090655": {
     "name": "父母40/None/None",
     "isBoss": false
+  },
+  "2090656": {
+    "name": "Punching Bag",
+    "isBoss": false,
+    "isDummy": true
+  },
+  "2090657": {
+    "name": "Punching Bag",
+    "isBoss": false,
+    "isDummy": true
+  },
+  "2090658": {
+    "name": "Punching Bag",
+    "isBoss": false,
+    "isDummy": true
   },
   "2090662": {
     "name": "None",
@@ -1487,6 +1863,10 @@
     "isBoss": false,
     "isDummy": true
   },
+  "2090818": {
+    "name": "All (Spirit)",
+    "isBoss": false
+  },
   "2090865": {
     "name": "None",
     "isBoss": false
@@ -1595,6 +1975,10 @@
     "name": "海岸奧德蜘蛛",
     "isBoss": false
   },
+  "2100035": {
+    "name": "Baby Odyle Spider",
+    "isBoss": false
+  },
   "2100036": {
     "name": "山丘光蟲",
     "isBoss": false
@@ -1613,6 +1997,10 @@
   },
   "2100041": {
     "name": "紅帽波奇",
+    "isBoss": false
+  },
+  "2100042": {
+    "name": "Baby Marsh Spider",
     "isBoss": false
   },
   "2100044": {
@@ -2177,6 +2565,10 @@
   },
   "2100461": {
     "name": "沼澤波奇",
+    "isBoss": false
+  },
+  "2100464": {
+    "name": "Activated Large Balaur Totem",
     "isBoss": false
   },
   "2100468": {
@@ -5557,6 +5949,66 @@
   },
   "2110675": {
     "name": "空中要塞惡棍",
+    "isBoss": false
+  },
+  "2110679": {
+    "name": "光榮獨石柱",
+    "isBoss": false
+  },
+  "2110680": {
+    "name": "光榮獨石柱",
+    "isBoss": false
+  },
+  "2110681": {
+    "name": "光榮獨石柱",
+    "isBoss": false
+  },
+  "2110682": {
+    "name": "光榮獨石柱",
+    "isBoss": false
+  },
+  "2110683": {
+    "name": "光榮獨石柱",
+    "isBoss": false
+  },
+  "2110684": {
+    "name": "光榮獨石柱",
+    "isBoss": false
+  },
+  "2110685": {
+    "name": "光榮獨石柱",
+    "isBoss": false
+  },
+  "2110686": {
+    "name": "光榮獨石柱",
+    "isBoss": false
+  },
+  "2110687": {
+    "name": "光榮獨石柱",
+    "isBoss": false
+  },
+  "2110688": {
+    "name": "光榮獨石柱",
+    "isBoss": false
+  },
+  "2110689": {
+    "name": "光榮獨石柱",
+    "isBoss": false
+  },
+  "2110690": {
+    "name": "光榮獨石柱",
+    "isBoss": false
+  },
+  "2110691": {
+    "name": "光榮獨石柱",
+    "isBoss": false
+  },
+  "2110692": {
+    "name": "光榮獨石柱",
+    "isBoss": false
+  },
+  "2110693": {
+    "name": "光榮獨石柱",
     "isBoss": false
   },
   "2200001": {
@@ -10242,6 +10694,217 @@
     "name": "穆斯費爾守護像",
     "isBoss": false
   },
+  "2301101": {
+    "name": "泰爾拉斯冰凍的心臟",
+    "isBoss": false
+  },
+  "2301102": {
+    "name": "破壞執政官精銳兵",
+    "isBoss": false
+  },
+  "2301103": {
+    "name": "破壞執政官守護星",
+    "isBoss": false
+  },
+  "2301104": {
+    "name": "破壞執政官劍星",
+    "isBoss": false
+  },
+  "2301105": {
+    "name": "破壞執政官士兵",
+    "isBoss": false
+  },
+  "2301106": {
+    "name": "沙暴軍團精銳兵",
+    "isBoss": false
+  },
+  "2301107": {
+    "name": "沙暴軍團十夫長",
+    "isBoss": false
+  },
+  "2301108": {
+    "name": "沙暴軍團軍團兵",
+    "isBoss": false
+  },
+  "2301109": {
+    "name": "沙暴軍團劍星",
+    "isBoss": false
+  },
+  "2301110": {
+    "name": "沙暴軍團守護星",
+    "isBoss": false
+  },
+  "2301111": {
+    "name": "防禦砲",
+    "isBoss": false
+  },
+  "2301112": {
+    "name": "回歸者特里頓",
+    "isBoss": true,
+    "category": "聖域",
+    "tier": "困難",
+    "dungeonId": 620025
+  },
+  "2301113": {
+    "name": "泰爾拉斯",
+    "isBoss": true,
+    "category": "聖域",
+    "tier": "困難",
+    "dungeonId": 620025
+  },
+  "2301114": {
+    "name": "幻影炸彈",
+    "isBoss": false
+  },
+  "2301115": {
+    "name": "泰爾拉斯",
+    "isBoss": true,
+    "category": "聖域",
+    "tier": "困難",
+    "dungeonId": 620025
+  },
+  "2301119": {
+    "name": "暖意火爐",
+    "isBoss": false
+  },
+  "2301131": {
+    "name": "泰爾拉斯冰凍的心臟",
+    "isBoss": false
+  },
+  "2301132": {
+    "name": "破壞執政官精銳兵",
+    "isBoss": false
+  },
+  "2301133": {
+    "name": "破壞執政官守護星",
+    "isBoss": false
+  },
+  "2301134": {
+    "name": "破壞執政官劍星",
+    "isBoss": false
+  },
+  "2301135": {
+    "name": "破壞執政官士兵",
+    "isBoss": false
+  },
+  "2301136": {
+    "name": "沙暴軍團精銳兵",
+    "isBoss": false
+  },
+  "2301137": {
+    "name": "沙暴軍團十夫長",
+    "isBoss": false
+  },
+  "2301138": {
+    "name": "沙暴軍團軍團兵",
+    "isBoss": false
+  },
+  "2301139": {
+    "name": "沙暴軍團劍星",
+    "isBoss": false
+  },
+  "2301140": {
+    "name": "沙暴軍團守護星",
+    "isBoss": false
+  },
+  "2301141": {
+    "name": "防禦砲",
+    "isBoss": false
+  },
+  "2301142": {
+    "name": "回歸者特里頓",
+    "isBoss": true,
+    "category": "聖域",
+    "tier": "普通",
+    "dungeonId": 620026
+  },
+  "2301143": {
+    "name": "泰爾拉斯",
+    "isBoss": true,
+    "category": "聖域",
+    "tier": "普通",
+    "dungeonId": 620026
+  },
+  "2301144": {
+    "name": "幻影炸彈",
+    "isBoss": false
+  },
+  "2301145": {
+    "name": "泰爾拉斯",
+    "isBoss": true,
+    "category": "聖域",
+    "tier": "普通",
+    "dungeonId": 620026
+  },
+  "2301151": {
+    "name": "泰爾拉斯冰凍的心臟",
+    "isBoss": false
+  },
+  "2301152": {
+    "name": "破壞執政官精銳兵",
+    "isBoss": false
+  },
+  "2301153": {
+    "name": "破壞執政官守護星",
+    "isBoss": false
+  },
+  "2301154": {
+    "name": "破壞執政官劍星",
+    "isBoss": false
+  },
+  "2301155": {
+    "name": "破壞執政官士兵",
+    "isBoss": false
+  },
+  "2301156": {
+    "name": "沙暴軍團精銳兵",
+    "isBoss": false
+  },
+  "2301157": {
+    "name": "沙暴軍團十夫長",
+    "isBoss": false
+  },
+  "2301158": {
+    "name": "沙暴軍團軍團兵",
+    "isBoss": false
+  },
+  "2301159": {
+    "name": "沙暴軍團劍星",
+    "isBoss": false
+  },
+  "2301160": {
+    "name": "沙暴軍團守護星",
+    "isBoss": false
+  },
+  "2301161": {
+    "name": "防禦砲",
+    "isBoss": false
+  },
+  "2301162": {
+    "name": "回歸者特里頓",
+    "isBoss": true,
+    "category": "聖域",
+    "tier": "簡單",
+    "dungeonId": 620027
+  },
+  "2301163": {
+    "name": "泰爾拉斯",
+    "isBoss": true,
+    "category": "聖域",
+    "tier": "簡單",
+    "dungeonId": 620027
+  },
+  "2301164": {
+    "name": "幻影炸彈",
+    "isBoss": false
+  },
+  "2301165": {
+    "name": "泰爾拉斯",
+    "isBoss": true,
+    "category": "聖域",
+    "tier": "簡單",
+    "dungeonId": 620027
+  },
   "2301201": {
     "name": "被汙染的修羅魔道師",
     "isBoss": false
@@ -10320,6 +10983,14 @@
   },
   "2301218": {
     "name": "逆流的汙染淨化器",
+    "isBoss": false
+  },
+  "2301222": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2301223": {
+    "name": "Defiled Noxious Zone",
     "isBoss": false
   },
   "2301301": {
@@ -14229,6 +14900,10 @@
     "name": "None",
     "isBoss": false
   },
+  "2340356": {
+    "name": "???",
+    "isBoss": false
+  },
   "2340401": {
     "name": "None",
     "isBoss": false
@@ -15072,21 +15747,21 @@
     "name": "謊言席利亞多爾",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第2階段",
     "dungeonId": 600065
   },
   "2350708": {
     "name": "痛苦路堤里斯",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第2階段",
     "dungeonId": 600065
   },
   "2350709": {
     "name": "空虛塔里斯拉",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第2階段",
     "dungeonId": 600065
   },
   "2350710": {
@@ -15209,21 +15884,21 @@
     "name": "謊言席利亞多爾",
     "isBoss": true,
     "category": "超越",
-    "tier": "第5階段",
+    "tier": "第3階段",
     "dungeonId": 600068
   },
   "2353708": {
     "name": "痛苦路堤里斯",
     "isBoss": true,
     "category": "超越",
-    "tier": "第5階段",
+    "tier": "第3階段",
     "dungeonId": 600068
   },
   "2353709": {
     "name": "空虛塔里斯拉",
     "isBoss": true,
     "category": "超越",
-    "tier": "第5階段",
+    "tier": "第3階段",
     "dungeonId": 600068
   },
   "2353710": {
@@ -15350,22 +16025,22 @@
     "name": "謊言席利亞多爾",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
-    "dungeonId": 13
+    "tier": "第4階段",
+    "dungeonId": 610062
   },
   "2356708": {
     "name": "痛苦路堤里斯",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
-    "dungeonId": 13
+    "tier": "第4階段",
+    "dungeonId": 610062
   },
   "2356709": {
     "name": "空虛塔里斯拉",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
-    "dungeonId": 13
+    "tier": "第4階段",
+    "dungeonId": 610062
   },
   "2356710": {
     "name": "旋轉磁場",
@@ -21686,6 +22361,66 @@
     "name": "德拉坎上級管理兵",
     "isBoss": false
   },
+  "2407118": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
+  "2407119": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
+  "2407120": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
+  "2407121": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
+  "2407122": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
+  "2407123": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
+  "2407124": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
+  "2407125": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
+  "2407126": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
+  "2407127": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
+  "2407128": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
+  "2407129": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
+  "2407130": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
+  "2407131": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
+  "2407132": {
+    "name": "驕傲獨石柱",
+    "isBoss": false
+  },
   "2500000": {
     "name": "盜賊團監視者",
     "isBoss": false
@@ -25344,6 +26079,478 @@
     "name": "拉泰斯蘭北方航線守護者",
     "isBoss": false
   },
+  "2670001": {
+    "name": "Ashpile Vasma",
+    "isBoss": true
+  },
+  "2670002": {
+    "name": "Abandoned Apostle Shuska",
+    "isBoss": true
+  },
+  "2670003": {
+    "name": "32nd Division Tamer Vaikul",
+    "isBoss": true
+  },
+  "2670004": {
+    "name": "32nd Division Assault Captain Gavir",
+    "isBoss": true
+  },
+  "2670005": {
+    "name": "32nd Division Latri the Pitch-Black",
+    "isBoss": true
+  },
+  "2670006": {
+    "name": "Ekan the Long-Winded",
+    "isBoss": true
+  },
+  "2670007": {
+    "name": "32nd Division Assault Trooper Vikri",
+    "isBoss": true
+  },
+  "2670008": {
+    "name": "Eternal Doom Bestan",
+    "isBoss": true
+  },
+  "2670009": {
+    "name": "Distorted Zarama",
+    "isBoss": true
+  },
+  "2670010": {
+    "name": "Hermit Chayamu",
+    "isBoss": true
+  },
+  "2670011": {
+    "name": "Wanderer Adar",
+    "isBoss": true
+  },
+  "2670012": {
+    "name": "Executioner Vidala",
+    "isBoss": true
+  },
+  "2670013": {
+    "name": "Blackstorm Tuhan",
+    "isBoss": true
+  },
+  "2670014": {
+    "name": "Furious Rahasa",
+    "isBoss": true
+  },
+  "2670015": {
+    "name": "Akula of Chaos",
+    "isBoss": true
+  },
+  "2670016": {
+    "name": "Hallucinogenic Barama",
+    "isBoss": true
+  },
+  "2670017": {
+    "name": "Greedy Lahas",
+    "isBoss": true
+  },
+  "2670018": {
+    "name": "32nd Division Twisted Kutira",
+    "isBoss": true
+  },
+  "2670019": {
+    "name": "Beguiling Varti",
+    "isBoss": true
+  },
+  "2670020": {
+    "name": "32nd Division Fanatic Uraga",
+    "isBoss": true
+  },
+  "2670021": {
+    "name": "32nd Division Evil Spirit Yatu",
+    "isBoss": true
+  },
+  "2670022": {
+    "name": "32nd Division Arrogant Dirta",
+    "isBoss": true
+  },
+  "2670023": {
+    "name": "Eroded Apostle Kalusha",
+    "isBoss": true
+  },
+  "2670024": {
+    "name": "Withered Butam",
+    "isBoss": true
+  },
+  "2670025": {
+    "name": "32nd Division Assault Captain Sahga",
+    "isBoss": true
+  },
+  "2670026": {
+    "name": "32nd Division Vanguard Captain Tamatha",
+    "isBoss": true
+  },
+  "2670027": {
+    "name": "Zalam the Fierce",
+    "isBoss": true
+  },
+  "2670028": {
+    "name": "Guhamu the Savage",
+    "isBoss": true
+  },
+  "2670029": {
+    "name": "Shuniam the Hollow",
+    "isBoss": true
+  },
+  "2670030": {
+    "name": "32nd Division Harvest Manager Karda",
+    "isBoss": true
+  },
+  "2670031": {
+    "name": "32nd Division Scouts Captain Rohita",
+    "isBoss": true
+  },
+  "2670032": {
+    "name": "32nd Division Scouts Captain Arishu",
+    "isBoss": true
+  },
+  "2670033": {
+    "name": "32nd Division Harvest Manager Ashat",
+    "isBoss": true
+  },
+  "2670034": {
+    "name": "Upadhi the False",
+    "isBoss": true
+  },
+  "2670035": {
+    "name": "Tenacious Amur",
+    "isBoss": true
+  },
+  "2670036": {
+    "name": "Hungry Khumar",
+    "isBoss": true
+  },
+  "2670037": {
+    "name": "32nd Division Berserker Gatu",
+    "isBoss": true
+  },
+  "2670038": {
+    "name": "32nd Division Assault Troopers Captain Sharad",
+    "isBoss": true
+  },
+  "2670039": {
+    "name": "Distorted Karotei",
+    "isBoss": true
+  },
+  "2670040": {
+    "name": "Distorted Muka",
+    "isBoss": true
+  },
+  "2670041": {
+    "name": "Air Raiders Captain Tahla",
+    "isBoss": true
+  },
+  "2670042": {
+    "name": "Distorted Nishad",
+    "isBoss": true
+  },
+  "2670043": {
+    "name": "Distorted Kavanda",
+    "isBoss": true
+  },
+  "2670044": {
+    "name": "Distorted Yatudana",
+    "isBoss": true
+  },
+  "2670045": {
+    "name": "Air Raiders Captain Gahana",
+    "isBoss": true
+  },
+  "2670046": {
+    "name": "Distorted Gardha",
+    "isBoss": true
+  },
+  "2670047": {
+    "name": "Soulless Rahald",
+    "isBoss": true
+  },
+  "2670048": {
+    "name": "32nd Division Conscript Morien",
+    "isBoss": true
+  },
+  "2670049": {
+    "name": "32nd Division Vakra",
+    "isBoss": true
+  },
+  "2670050": {
+    "name": "32nd Division Prapha",
+    "isBoss": true
+  },
+  "2670051": {
+    "name": "32nd Division Conscript Mostey",
+    "isBoss": true
+  },
+  "2670052": {
+    "name": "Soulless Tarren",
+    "isBoss": true
+  },
+  "2670053": {
+    "name": "Distorted High Commander Nahid",
+    "isBoss": true
+  },
+  "2670054": {
+    "name": "Distorted High Commander Nirmala",
+    "isBoss": true
+  },
+  "2670055": {
+    "name": "Distorted Division Commander Durdhara",
+    "isBoss": true
+  },
+  "2670056": {
+    "name": "Distorted Laksha",
+    "isBoss": true
+  },
+  "2670057": {
+    "name": "Distorted Archon Eldric",
+    "isBoss": true
+  },
+  "2670058": {
+    "name": "Distorted High Commander Lagta",
+    "isBoss": true
+  },
+  "2670059": {
+    "name": "Distorted High Commander Zunewgishe",
+    "isBoss": true
+  },
+  "2670060": {
+    "name": "Distorted Guardian Lankris",
+    "isBoss": true
+  },
+  "2670061": {
+    "name": "Distorted Thamon",
+    "isBoss": true
+  },
+  "2670062": {
+    "name": "Distorted Captain Bhasti",
+    "isBoss": true
+  },
+  "2670063": {
+    "name": "Distorted Captain Vashid",
+    "isBoss": true
+  },
+  "2670064": {
+    "name": "Distorted Captain Murak",
+    "isBoss": true
+  },
+  "2670065": {
+    "name": "Twisted Vice Captain Urgan",
+    "isBoss": true
+  },
+  "2670066": {
+    "name": "Twisted Vice Captain Anushan",
+    "isBoss": true
+  },
+  "2670067": {
+    "name": "Twisted Vice Captain Samank",
+    "isBoss": true
+  },
+  "2670068": {
+    "name": "Twisted Vice Captain Antados",
+    "isBoss": true
+  },
+  "2670069": {
+    "name": "Abandoned Warrior Hector",
+    "isBoss": true
+  },
+  "2670070": {
+    "name": "Accursed Pallarus",
+    "isBoss": true
+  },
+  "2670071": {
+    "name": "Wanderer Hansamu",
+    "isBoss": true
+  },
+  "2670072": {
+    "name": "Corrupted Archon Askolt",
+    "isBoss": true
+  },
+  "2670073": {
+    "name": "32nd Division Assault Trooper Putika",
+    "isBoss": true
+  },
+  "2670074": {
+    "name": "Granir the Solitary",
+    "isBoss": true
+  },
+  "2670075": {
+    "name": "Corrupted Archon Duebledd",
+    "isBoss": true
+  },
+  "2670076": {
+    "name": "32nd Division Samdiya of Twilight",
+    "isBoss": true
+  },
+  "2670077": {
+    "name": "32nd Division Chadma of the Daybreak",
+    "isBoss": true
+  },
+  "2670078": {
+    "name": "Corrupted Archon Ghatt",
+    "isBoss": true
+  },
+  "2670079": {
+    "name": "Bewitching Ulos",
+    "isBoss": true
+  },
+  "2670080": {
+    "name": "32nd Division Vanguard Brasha",
+    "isBoss": true
+  },
+  "2670081": {
+    "name": "Corrupted Archon Verkron",
+    "isBoss": true
+  },
+  "2670082": {
+    "name": "Steel Ayas",
+    "isBoss": true
+  },
+  "2670083": {
+    "name": "Dim Larson",
+    "isBoss": true
+  },
+  "2670084": {
+    "name": "Eroded Warrior Stakard",
+    "isBoss": true
+  },
+  "2670085": {
+    "name": "Distorted Deputy Commander Laturini",
+    "isBoss": true
+  },
+  "2670086": {
+    "name": "Distorted Captain Rakhta",
+    "isBoss": true
+  },
+  "2670087": {
+    "name": "Distorted Captain Miunah",
+    "isBoss": true
+  },
+  "2670088": {
+    "name": "Distorted Atman",
+    "isBoss": true
+  },
+  "2670089": {
+    "name": "Distorted Captain Droha",
+    "isBoss": true
+  },
+  "2670090": {
+    "name": "Distorted Captain Arunt",
+    "isBoss": true
+  },
+  "2670091": {
+    "name": "Distorted Daithi",
+    "isBoss": true
+  },
+  "2670092": {
+    "name": "Distorted Captain Vishaka",
+    "isBoss": true
+  },
+  "2670093": {
+    "name": "Distorted Captain Uparha",
+    "isBoss": true
+  },
+  "2670094": {
+    "name": "Distorted Captain Vaira",
+    "isBoss": true
+  },
+  "2670095": {
+    "name": "32nd Division Warlord Grumghar",
+    "isBoss": true
+  },
+  "2670096": {
+    "name": "32nd Division Warlord Dregthor",
+    "isBoss": true
+  },
+  "2670097": {
+    "name": "32nd Division Skirmisher Zurta",
+    "isBoss": true
+  },
+  "2670098": {
+    "name": "Samaf the Ebon Claw",
+    "isBoss": true
+  },
+  "2670099": {
+    "name": "Heretic Vidara",
+    "isBoss": true
+  },
+  "2670100": {
+    "name": "Eroded Oga",
+    "isBoss": true
+  },
+  "2670101": {
+    "name": "Decaying Pshatcha",
+    "isBoss": true
+  },
+  "2670102": {
+    "name": "Heretic Sharina",
+    "isBoss": true
+  },
+  "2670103": {
+    "name": "Vengeful Claw Dosha",
+    "isBoss": true
+  },
+  "2670104": {
+    "name": "32nd Division Skirmisher Rovha",
+    "isBoss": true
+  },
+  "2670105": {
+    "name": "32nd Division Warlord Broksha",
+    "isBoss": true
+  },
+  "2670106": {
+    "name": "32nd Division Warlord Tarkhan",
+    "isBoss": true
+  },
+  "2670107": {
+    "name": "Distorted Captain Uchanda",
+    "isBoss": true
+  },
+  "2670108": {
+    "name": "Distorted Tarva",
+    "isBoss": true
+  },
+  "2670109": {
+    "name": "Distorted Captain Irisha",
+    "isBoss": true
+  },
+  "2670110": {
+    "name": "Distorted Captain Samaya",
+    "isBoss": true
+  },
+  "2670111": {
+    "name": "Distorted Kragvald",
+    "isBoss": true
+  },
+  "2670112": {
+    "name": "Distorted Captain Narakha",
+    "isBoss": true
+  },
+  "2670113": {
+    "name": "Twisted High Commander Zorshiv",
+    "isBoss": true
+  },
+  "2670114": {
+    "name": "Twisted Deputy Commander Khuntala",
+    "isBoss": true
+  },
+  "2670115": {
+    "name": "Rift Guardian Lord Mahabali",
+    "isBoss": true
+  },
+  "2670116": {
+    "name": "Rift Guardian Lord Tamapala",
+    "isBoss": true
+  },
+  "2670117": {
+    "name": "Twisted Deputy Commander Kaliya",
+    "isBoss": true
+  },
+  "2670118": {
+    "name": "Twisted High Commander Baranath",
+    "isBoss": true
+  },
   "2680000": {
     "name": "奧德碎晶暴風",
     "isBoss": false
@@ -25568,6 +26775,86 @@
     "name": "中毒的修羅鬥士",
     "isBoss": false
   },
+  "2700070": {
+    "name": "Cellar Aullaeu Chaser",
+    "isBoss": false
+  },
+  "2700071": {
+    "name": "Cellar Konutin Tracker",
+    "isBoss": false
+  },
+  "2700072": {
+    "name": "Root Aullaeu Priest",
+    "isBoss": false
+  },
+  "2700076": {
+    "name": "Root Aullaeu Guard",
+    "isBoss": false
+  },
+  "2700077": {
+    "name": "Root Aullaeu Sentry",
+    "isBoss": false
+  },
+  "2700078": {
+    "name": "Root Aullaeu Shaman",
+    "isBoss": false
+  },
+  "2700079": {
+    "name": "Cellar Aullaeu Chaser",
+    "isBoss": false
+  },
+  "2700080": {
+    "name": "Cellar Konutin Tracker",
+    "isBoss": false
+  },
+  "2700081": {
+    "name": "Cellar Konutin Worker",
+    "isBoss": false
+  },
+  "2700082": {
+    "name": "Cellar Pino Worker",
+    "isBoss": false
+  },
+  "2700083": {
+    "name": "Root Cellar Pino Fighter",
+    "isBoss": false
+  },
+  "2700085": {
+    "name": "Root Aullaeu Explosion Totem",
+    "isBoss": false
+  },
+  "2700086": {
+    "name": "Root Aullaeu Censer",
+    "isBoss": false
+  },
+  "2700087": {
+    "name": "Root Totem Shaman",
+    "isBoss": false
+  },
+  "2700088": {
+    "name": "Root Totem Shaman",
+    "isBoss": false
+  },
+  "2700089": {
+    "name": "Gatekeeper Pinopi",
+    "isBoss": true
+  },
+  "2700090": {
+    "name": "Root Totem Shaman",
+    "isBoss": false
+  },
+  "2700091": {
+    "name": "Aultross",
+    "isBoss": true
+  },
+  "2700092": {
+    "name": "Aultross",
+    "isBoss": true
+  },
+  "2700093": {
+    "name": "Gatekeeper Pinopi",
+    "isBoss": false
+  },
   "2700094": {
     "name": "腐敗的卡拉斯",
     "isBoss": false
@@ -25591,6 +26878,10 @@
   "2700100": {
     "name": "希爾拉德",
     "isBoss": true
+  },
+  "2700209": {
+    "name": "Root Aullaeu Summoner",
+    "isBoss": false
   },
   "2700238": {
     "name": "夢之守護兵",
@@ -29745,6 +31036,10 @@
     "name": "狂暴的冤魂",
     "isBoss": false
   },
+  "2702022": {
+    "name": "Root Totem Shaman",
+    "isBoss": false
+  },
   "2702023": {
     "name": "萊卡恩治癒兵",
     "isBoss": false
@@ -32254,12 +33549,104 @@
     "name": "被淘汰的守護者殘渣",
     "isBoss": false
   },
+  "2910034": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2910035": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2910036": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2910037": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2910038": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2910039": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920011": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920012": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920014": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920015": {
+    "name": "Ensnaring Trap",
+    "isBoss": false
+  },
+  "2920016": {
+    "name": "Ensnaring Trap",
+    "isBoss": false
+  },
+  "2920017": {
+    "name": "Ensnaring Trap",
+    "isBoss": false
+  },
+  "2920018": {
+    "name": "Ensnaring Trap",
+    "isBoss": false
+  },
+  "2920020": {
+    "name": "Balaur Flag",
+    "isBoss": false
+  },
+  "2920021": {
+    "name": "Sharp Aulak",
+    "isBoss": false
+  },
+  "2920022": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920023": {
+    "name": "Trafficker Duduri",
+    "isBoss": false
+  },
+  "2920024": {
+    "name": "Ritualist Aulisa",
+    "isBoss": false
+  },
+  "2920025": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920026": {
+    "name": "Contaminated Spores",
+    "isBoss": false
+  },
+  "2920027": {
+    "name": "Naga Elite Priest",
+    "isBoss": false
+  },
+  "2920028": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920029": {
     "name": "變異阿爾拉烏守護者",
     "isBoss": false
   },
   "2920030": {
     "name": "祭壇不祥的亡靈",
+    "isBoss": false
+  },
+  "2920031": {
+    "name": "???",
     "isBoss": false
   },
   "2920032": {
@@ -32270,8 +33657,104 @@
     "name": "中型怪物",
     "isBoss": false
   },
+  "2920034": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920035": {
+    "name": "Manager Nasium",
+    "isBoss": false
+  },
+  "2920036": {
+    "name": "Oathbreaker Gartua",
+    "isBoss": false
+  },
   "2920037": {
     "name": "None",
+    "isBoss": false
+  },
+  "2920038": {
+    "name": "Baby Odyle Spider",
+    "isBoss": false
+  },
+  "2920039": {
+    "name": "Drakan Unique",
+    "isBoss": false
+  },
+  "2920040": {
+    "name": "Mutated Sura Mage",
+    "isBoss": false
+  },
+  "2920041": {
+    "name": "Baby Odyle Spider",
+    "isBoss": false
+  },
+  "2920042": {
+    "name": "Baby Odyle Spider",
+    "isBoss": false
+  },
+  "2920043": {
+    "name": "Baby Odyle Spider",
+    "isBoss": false
+  },
+  "2920044": {
+    "name": "Krao Magic Test Subject",
+    "isBoss": false
+  },
+  "2920045": {
+    "name": "Croka",
+    "isBoss": false
+  },
+  "2920046": {
+    "name": "Krao Giant Test Subject",
+    "isBoss": false
+  },
+  "2920047": {
+    "name": "Krao Giant Test Subject",
+    "isBoss": false
+  },
+  "2920048": {
+    "name": "Predator Saraswati",
+    "isBoss": false
+  },
+  "2920049": {
+    "name": "Draconute Elite Warden",
+    "isBoss": false
+  },
+  "2920050": {
+    "name": "High Priestess's Illusion",
+    "isBoss": false
+  },
+  "2920051": {
+    "name": "Baby Odyle Spider",
+    "isBoss": false
+  },
+  "2920052": {
+    "name": "Baby Odyle Spider",
+    "isBoss": false
+  },
+  "2920053": {
+    "name": "Baby Odyle Spider",
+    "isBoss": false
+  },
+  "2920054": {
+    "name": "Aultross",
+    "isBoss": false
+  },
+  "2920055": {
+    "name": "All (Spirit)",
+    "isBoss": false
+  },
+  "2920056": {
+    "name": "Healing Totem",
+    "isBoss": false
+  },
+  "2920057": {
+    "name": "Large Aullaeu Totem",
+    "isBoss": false
+  },
+  "2920058": {
+    "name": "Blazing Totem",
     "isBoss": false
   },
   "2920059": {
@@ -32286,8 +33769,72 @@
     "name": "灼熱圖騰",
     "isBoss": false
   },
+  "2920062": {
+    "name": "Healing Totem",
+    "isBoss": false
+  },
+  "2920063": {
+    "name": "Blazing Totem",
+    "isBoss": false
+  },
+  "2920064": {
+    "name": "Draconute Elite Warden",
+    "isBoss": false
+  },
   "2920065": {
     "name": "分裂的史萊姆",
+    "isBoss": false
+  },
+  "2920066": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920067": {
+    "name": "Fire Spirit 1",
+    "isBoss": false
+  },
+  "2920068": {
+    "name": "Fire Spirit 2",
+    "isBoss": false
+  },
+  "2920069": {
+    "name": "Water Spirit 1",
+    "isBoss": false
+  },
+  "2920070": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920071": {
+    "name": "Primeval Spirit 1",
+    "isBoss": false
+  },
+  "2920072": {
+    "name": "Trafficker Duduri",
+    "isBoss": false
+  },
+  "2920083": {
+    "name": "Healing Aura",
+    "isBoss": false
+  },
+  "2920084": {
+    "name": "Healing Aura",
+    "isBoss": false
+  },
+  "2920085": {
+    "name": "Healing Aura",
+    "isBoss": false
+  },
+  "2920086": {
+    "name": "Healing Aura",
+    "isBoss": false
+  },
+  "2920087": {
+    "name": "Healing Aura",
+    "isBoss": false
+  },
+  "2920088": {
+    "name": "Healing Aura",
     "isBoss": false
   },
   "2920089": {
@@ -32298,25 +33845,457 @@
     "name": "大阿爾拉烏圖騰",
     "isBoss": false
   },
+  "2920091": {
+    "name": "Gas Rock",
+    "isBoss": false
+  },
+  "2920093": {
+    "name": "Lava Glob",
+    "isBoss": false
+  },
+  "2920094": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920095": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920096": {
+    "name": "Recovery Totem",
+    "isBoss": false
+  },
+  "2920097": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920098": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920099": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920100": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920101": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920102": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920103": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920104": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920105": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920106": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920107": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920108": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920109": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920110": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920111": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920112": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920113": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920114": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920115": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920121": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920122": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920123": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920124": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920125": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920126": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920127": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920128": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920129": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920130": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920131": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920132": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920133": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920134": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920135": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920141": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920142": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920143": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920144": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920145": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920146": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920147": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920148": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920149": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920150": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920151": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920152": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920153": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920154": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920155": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920161": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920162": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920163": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920164": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920165": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920166": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920167": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920168": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920169": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920170": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920171": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920172": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920173": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920174": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920175": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920181": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920182": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920183": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920184": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920185": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920186": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920187": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920188": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920189": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920190": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920191": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920192": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920193": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920194": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920195": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920200": {
+    "name": "Red Spark Ignus",
+    "isBoss": false
+  },
   "2920201": {
     "name": "火焰地帶",
+    "isBoss": false
+  },
+  "2920202": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920203": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920204": {
+    "name": "Ancient Spirit",
+    "isBoss": false
+  },
+  "2920205": {
+    "name": "Recovery Totem",
+    "isBoss": false
+  },
+  "2920206": {
+    "name": "Divine Auldor (Specimen)",
+    "isBoss": false
+  },
+  "2920207": {
+    "name": "Divine Auldor (Specimen)",
+    "isBoss": false
+  },
+  "2920208": {
+    "name": "Divine Auldor (Specimen)",
+    "isBoss": false
+  },
+  "2920209": {
+    "name": "Divine Auldor (Specimen)",
     "isBoss": false
   },
   "2920210": {
     "name": "None",
     "isBoss": false
   },
+  "2920211": {
+    "name": "Eternal Gartua",
+    "isBoss": false
+  },
+  "2920212": {
+    "name": "Eternal Gartua",
+    "isBoss": false
+  },
   "2920213": {
     "name": "奧德石礦石",
+    "isBoss": false
+  },
+  "2920214": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920215": {
+    "name": "Divine Auldor (Specimen)",
+    "isBoss": false
+  },
+  "2920216": {
+    "name": "Executioner Nua",
+    "isBoss": false
+  },
+  "2920217": {
+    "name": "???",
     "isBoss": false
   },
   "2920218": {
     "name": "變異阿爾拉烏守護者",
     "isBoss": false
   },
+  "2920219": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920222": {
     "name": "改造的巴考特",
     "isBoss": true
+  },
+  "2920223": {
+    "name": "Wraith Giselle (Specimen)",
+    "isBoss": false
+  },
+  "2920224": {
+    "name": "Wraith Giselle (Specimen)",
+    "isBoss": false
+  },
+  "2920225": {
+    "name": "Odylium Ore",
+    "isBoss": false
+  },
+  "2920226": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920227": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920228": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920229": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920232": {
+    "name": "Kaisinel's Illusion",
+    "isBoss": false
   },
   "2920233": {
     "name": "法夫尼爾毒血池",
@@ -32326,8 +34305,112 @@
     "name": "凱西內爾心腹",
     "isBoss": false
   },
+  "2920239": {
+    "name": "Executioner Nua",
+    "isBoss": false
+  },
+  "2920240": {
+    "name": "Executioner Nua",
+    "isBoss": false
+  },
+  "2920241": {
+    "name": "Executioner Nua",
+    "isBoss": false
+  },
+  "2920242": {
+    "name": "Enraged Reda",
+    "isBoss": false
+  },
+  "2920243": {
+    "name": "Enraged Reda",
+    "isBoss": false
+  },
+  "2920245": {
+    "name": "Eternal Gartua",
+    "isBoss": false
+  },
+  "2920246": {
+    "name": "Ultimate Berk",
+    "isBoss": false
+  },
+  "2920247": {
+    "name": "Enraged Reda",
+    "isBoss": false
+  },
+  "2920248": {
+    "name": "Ultimate Berk",
+    "isBoss": false
+  },
   "2920249": {
     "name": "岩石",
+    "isBoss": false
+  },
+  "2920250": {
+    "name": "Soulreaper Rathman",
+    "isBoss": false
+  },
+  "2920251": {
+    "name": "Spirit King (Specimen)",
+    "isBoss": false
+  },
+  "2920252": {
+    "name": "Fortress Guardian Notun",
+    "isBoss": false
+  },
+  "2920253": {
+    "name": "Fortress Guardian Notun",
+    "isBoss": false
+  },
+  "2920254": {
+    "name": "Transcendent Bakarma",
+    "isBoss": false
+  },
+  "2920255": {
+    "name": "Transcendent Bakarma",
+    "isBoss": false
+  },
+  "2920256": {
+    "name": "Wrapping Waterspout",
+    "isBoss": false
+  },
+  "2920257": {
+    "name": "Wrapping Waterspout",
+    "isBoss": false
+  },
+  "2920258": {
+    "name": "Transcendent Bakarma",
+    "isBoss": false
+  },
+  "2920259": {
+    "name": "Transcendent Bakarma",
+    "isBoss": false
+  },
+  "2920260": {
+    "name": "Transcendent Bakarma",
+    "isBoss": false
+  },
+  "2920261": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920262": {
+    "name": "Divine Auldor (Specimen)",
+    "isBoss": false
+  },
+  "2920263": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920264": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920265": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920266": {
+    "name": "Explosion Trap",
     "isBoss": false
   },
   "2920267": {
@@ -32338,6 +34421,26 @@
     "name": "吃奧德的深淵蟲",
     "isBoss": false
   },
+  "2920269": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920270": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920271": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920273": {
+    "name": "Soulless Corpse Gnat",
+    "isBoss": false
+  },
+  "2920274": {
+    "name": "Incarnated Warding Feather",
+    "isBoss": false
+  },
   "2920275": {
     "name": "庇護氣息",
     "isBoss": false
@@ -32346,8 +34449,52 @@
     "name": "祖米昂氣息",
     "isBoss": false
   },
+  "2920277": {
+    "name": "Incarnated Warding Feather",
+    "isBoss": false
+  },
+  "2920278": {
+    "name": "Incarnated Warding Feather",
+    "isBoss": false
+  },
+  "2920279": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920280": {
+    "name": "Fortress Guardian Notun",
+    "isBoss": false
+  },
+  "2920281": {
+    "name": "Fortress Guardian Notun",
+    "isBoss": false
+  },
+  "2920282": {
+    "name": "Fortress Guardian Notun",
+    "isBoss": false
+  },
+  "2920283": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920284": {
+    "name": "Fortress Guardian Notun",
+    "isBoss": false
+  },
+  "2920285": {
+    "name": "Fortress Guardian Notun",
+    "isBoss": false
+  },
+  "2920286": {
+    "name": "Fortress Guardian Notun",
+    "isBoss": false
+  },
   "2920287": {
     "name": "改造的巴考特",
+    "isBoss": false
+  },
+  "2920289": {
+    "name": "Enraged Reda",
     "isBoss": false
   },
   "2920290": {
@@ -32365,44 +34512,312 @@
     "isBoss": false,
     "isDummy": true
   },
+  "2920295": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920296": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920300": {
+    "name": "Transcendent Bakarma",
+    "isBoss": false
+  },
+  "2920303": {
+    "name": "Odylium Ore",
+    "isBoss": false
+  },
   "2920304": {
     "name": "凱西內爾心腹",
+    "isBoss": false
+  },
+  "2920305": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920306": {
+    "name": "Abyss Swarm Hive (Specimen)",
+    "isBoss": false
+  },
+  "2920310": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920311": {
+    "name": "Ultimate Berk",
     "isBoss": false
   },
   "2920313": {
     "name": "腐敗的杜勒巴提",
     "isBoss": false
   },
+  "2920314": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920315": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920316": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920317": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920318": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920319": {
+    "name": "Mutated Gerod",
+    "isBoss": false
+  },
+  "2920320": {
+    "name": "Mutated Gerod",
+    "isBoss": false
+  },
+  "2920321": {
+    "name": "Mutated Gerod",
+    "isBoss": false
+  },
+  "2920322": {
+    "name": "Mutated Gerod",
+    "isBoss": false
+  },
+  "2920323": {
+    "name": "Oathbreaker Gartua",
+    "isBoss": false
+  },
+  "2920324": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920325": {
+    "name": "Zikel's Apparition",
+    "isBoss": false
+  },
+  "2920326": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920327": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920328": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920329": {
+    "name": "Large Aullaeu Totem",
+    "isBoss": false
+  },
+  "2920330": {
+    "name": "Idris",
+    "isBoss": false
+  },
   "2920331": {
     "name": "馴養的波沙屍體(樣本)",
+    "isBoss": false
+  },
+  "2920332": {
+    "name": "Idris",
+    "isBoss": false
+  },
+  "2920333": {
+    "name": "Baby Odyle Spider",
+    "isBoss": false
+  },
+  "2920334": {
+    "name": "Baby Odyle Spider",
+    "isBoss": false
+  },
+  "2920335": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920336": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920337": {
+    "name": "Ultimate Berk",
+    "isBoss": false
+  },
+  "2920338": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920339": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920340": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920342": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920343": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920344": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920345": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920346": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920347": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920348": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920351": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920352": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920353": {
+    "name": "Guardian Lord Nahma (Specimen)",
+    "isBoss": false
+  },
+  "2920354": {
+    "name": "Guardian Lord Nahma (Specimen)",
+    "isBoss": false
+  },
+  "2920355": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920356": {
+    "name": "Decaying Durvati",
+    "isBoss": false
+  },
+  "2920357": {
+    "name": "Decaying Durvati",
+    "isBoss": false
+  },
+  "2920358": {
+    "name": "Decaying Durvati",
+    "isBoss": false
+  },
+  "2920359": {
+    "name": "Decaying Durvati",
+    "isBoss": false
+  },
+  "2920360": {
+    "name": "Vakron's Thorn Root",
+    "isBoss": false
+  },
+  "2920361": {
+    "name": "Gelcos",
+    "isBoss": false
+  },
+  "2920362": {
+    "name": "Detoxifying Rafflesia",
+    "isBoss": false
+  },
+  "2920363": {
+    "name": "Gluttonous Tiere",
+    "isBoss": false
+  },
+  "2920364": {
+    "name": "Gluttonous Tiere",
     "isBoss": false
   },
   "2920365": {
     "name": "None",
     "isBoss": false
   },
+  "2920366": {
+    "name": "Detoxifying Rafflesia",
+    "isBoss": false
+  },
   "2920367": {
     "name": "巴克隆尖刺藤蔓",
     "isBoss": true
   },
+  "2920368": {
+    "name": "Gelcos",
+    "isBoss": false
+  },
+  "2920369": {
+    "name": "Gelcos",
+    "isBoss": false
+  },
   "2920370": {
     "name": "德拉那蟲子",
+    "isBoss": false
+  },
+  "2920371": {
+    "name": "Thamon",
     "isBoss": false
   },
   "2920372": {
     "name": "平衡",
     "isBoss": false
   },
+  "2920373": {
+    "name": "Modified Krao Guardian",
+    "isBoss": false
+  },
+  "2920374": {
+    "name": "Oathbreaker Gartua",
+    "isBoss": false
+  },
+  "2920375": {
+    "name": "Oathbreaker Gartua",
+    "isBoss": false
+  },
+  "2920376": {
+    "name": "Decaying Durvati",
+    "isBoss": false
+  },
   "2920378": {
     "name": "毒血",
+    "isBoss": false
+  },
+  "2920379": {
+    "name": "Zikel's Apparition",
     "isBoss": false
   },
   "2920380": {
     "name": "德拉多納卵",
     "isBoss": false
   },
+  "2920381": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920382": {
     "name": "洞穴德拉多納幼體",
+    "isBoss": false
+  },
+  "2920383": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920384": {
+    "name": "Decaying Durvati",
     "isBoss": false
   },
   "2920387": {
@@ -32417,8 +34832,188 @@
     "name": "黑暗氣息",
     "isBoss": false
   },
+  "2920390": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920391": {
+    "name": "Manager Nasium",
+    "isBoss": false
+  },
+  "2920392": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920393": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920394": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920395": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920396": {
+    "name": "Mutated Gerod",
+    "isBoss": false
+  },
+  "2920397": {
+    "name": "Mutated Gerod",
+    "isBoss": false
+  },
+  "2920398": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920400": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920401": {
     "name": "None",
+    "isBoss": false
+  },
+  "2920402": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920403": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920404": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920405": {
+    "name": "Vakron's Thorn Vines",
+    "isBoss": false
+  },
+  "2920406": {
+    "name": "Vakron's Thorn Vines",
+    "isBoss": false
+  },
+  "2920407": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920408": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920409": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920410": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920411": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2920412": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2920413": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2920414": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2920415": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2920416": {
+    "name": "Fortress Guardian Notun",
+    "isBoss": false
+  },
+  "2920417": {
+    "name": "Fortress Guardian Notun",
+    "isBoss": false
+  },
+  "2920418": {
+    "name": "Fortress Guardian Notun",
+    "isBoss": false
+  },
+  "2920419": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920420": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920421": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920422": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920423": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920430": {
+    "name": "Ultimate Berk",
+    "isBoss": false
+  },
+  "2920431": {
+    "name": "Ultimate Berk",
+    "isBoss": false
+  },
+  "2920432": {
+    "name": "Kaisinel's Illusion",
+    "isBoss": false
+  },
+  "2920433": {
+    "name": "Fafnir's Poison Blood",
+    "isBoss": false
+  },
+  "2920434": {
+    "name": "Fafnir's Poison Blood",
+    "isBoss": false
+  },
+  "2920435": {
+    "name": "Fafnir's Poison Blood",
+    "isBoss": false
+  },
+  "2920436": {
+    "name": "Fafnir's Poison Blood",
+    "isBoss": false
+  },
+  "2920437": {
+    "name": "Fafnir's Poison Blood",
+    "isBoss": false
+  },
+  "2920438": {
+    "name": "Fafnir's Poison Blood",
+    "isBoss": false
+  },
+  "2920439": {
+    "name": "Ultimate Berk",
+    "isBoss": false
+  },
+  "2920440": {
+    "name": "Nazmun's Weapon",
+    "isBoss": false
+  },
+  "2920441": {
+    "name": "Nazmun's Weapon",
+    "isBoss": false
+  },
+  "2920444": {
+    "name": "Nazmun's Weapon",
     "isBoss": false
   },
   "2920445": {
@@ -32429,20 +35024,232 @@
     "name": "亞提埃爾",
     "isBoss": true
   },
+  "2920447": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920448": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920449": {
     "name": "亞提埃爾",
+    "isBoss": false
+  },
+  "2920450": {
+    "name": "Vakron's Thorn Vines",
+    "isBoss": false
+  },
+  "2920451": {
+    "name": "Vakron's Thorn Vines",
+    "isBoss": false
+  },
+  "2920452": {
+    "name": "Vakron's Thorn Vines",
+    "isBoss": false
+  },
+  "2920453": {
+    "name": "Vakron's Thorn Vines",
+    "isBoss": false
+  },
+  "2920454": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920455": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920456": {
+    "name": "Modified Bargott",
+    "isBoss": false
+  },
+  "2920457": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920458": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920459": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920460": {
+    "name": "Modified Bargott",
+    "isBoss": false
+  },
+  "2920461": {
+    "name": "Vakron's Thorn Vines",
+    "isBoss": false
+  },
+  "2920462": {
+    "name": "Vakron's Thorn Vines",
+    "isBoss": false
+  },
+  "2920463": {
+    "name": "Vakron's Thorn Root",
+    "isBoss": false
+  },
+  "2920464": {
+    "name": "Vakron's Thorn Root",
+    "isBoss": false
+  },
+  "2920465": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2920466": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920467": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2920469": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2920470": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2920471": {
+    "name": "Flame",
+    "isBoss": false
+  },
+  "2920472": {
+    "name": "Judgment",
+    "isBoss": false
+  },
+  "2920473": {
+    "name": "Lieutenant Hebran",
     "isBoss": false
   },
   "2920474": {
     "name": "塔蒙石化",
     "isBoss": false
   },
+  "2920476": {
+    "name": "Frozen Executor Erne",
+    "isBoss": false
+  },
+  "2920477": {
+    "name": "Frozen Executor Erne",
+    "isBoss": false
+  },
+  "2920480": {
+    "name": "Ruthilis of Pain",
+    "isBoss": false
+  },
+  "2920481": {
+    "name": "Ruthilis of Pain",
+    "isBoss": false
+  },
+  "2920482": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920483": {
+    "name": "Ruthilis of Pain",
+    "isBoss": false
+  },
+  "2920484": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920485": {
+    "name": "Nazmun's Weapon",
+    "isBoss": false
+  },
+  "2920486": {
+    "name": "Zaigolem",
+    "isBoss": false
+  },
+  "2920487": {
+    "name": "Zaigolem",
+    "isBoss": false
+  },
+  "2920488": {
+    "name": "Zaigolem",
+    "isBoss": false
+  },
+  "2920492": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920493": {
+    "name": "Judgment",
+    "isBoss": false
+  },
   "2920494": {
     "name": "毒血",
     "isBoss": false
   },
+  "2920495": {
+    "name": "Spinning Turren (Specimen)",
+    "isBoss": false
+  },
+  "2920496": {
+    "name": "Spinning Turren (Specimen)",
+    "isBoss": false
+  },
+  "2920497": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920498": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920499": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920500": {
+    "name": "Decaying Durvati",
+    "isBoss": false
+  },
   "2920501": {
     "name": "毒袋",
+    "isBoss": false
+  },
+  "2920502": {
+    "name": "Guardian Lord Nahma (Specimen)",
+    "isBoss": false
+  },
+  "2920503": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920504": {
+    "name": "Manager Nasium",
+    "isBoss": false
+  },
+  "2920505": {
+    "name": "Nazmun",
+    "isBoss": false
+  },
+  "2920506": {
+    "name": "Nazmun",
+    "isBoss": false
+  },
+  "2920507": {
+    "name": "Nazmun",
+    "isBoss": false
+  },
+  "2920508": {
+    "name": "Balaur Flag",
+    "isBoss": false
+  },
+  "2920509": {
+    "name": "Nazmun's Weapon",
+    "isBoss": false
+  },
+  "2920510": {
+    "name": "Zikel's Apparition",
     "isBoss": false
   },
   "2920511": {
@@ -32453,8 +35260,276 @@
     "name": "洞穴德拉多納幼體",
     "isBoss": false
   },
+  "2920513": {
+    "name": "Nazmun's Weapon",
+    "isBoss": false
+  },
+  "2920514": {
+    "name": "Nazmun's Weapon",
+    "isBoss": false
+  },
+  "2920515": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920516": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920517": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920518": {
     "name": "None",
+    "isBoss": false
+  },
+  "2920519": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920520": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920521": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920522": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920523": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920524": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920526": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920527": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920528": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920529": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920530": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920531": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920532": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920533": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920534": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920535": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920536": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920537": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920538": {
+    "name": "Incarnated Warding Feather",
+    "isBoss": false
+  },
+  "2920539": {
+    "name": "Destruction Spear",
+    "isBoss": false
+  },
+  "2920540": {
+    "name": "Destruction Spear",
+    "isBoss": false
+  },
+  "2920541": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920542": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920544": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920545": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920546": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920547": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920548": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920549": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920550": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920551": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920552": {
+    "name": "Gas Rock",
+    "isBoss": false
+  },
+  "2920553": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920554": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920555": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920556": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920557": {
+    "name": "Frozen Executor Erne",
+    "isBoss": false
+  },
+  "2920558": {
+    "name": "Frozen Executor Erne",
+    "isBoss": false
+  },
+  "2920559": {
+    "name": "Frozen Executor Erne",
+    "isBoss": false
+  },
+  "2920560": {
+    "name": "Frozen Executor Erne",
+    "isBoss": false
+  },
+  "2920561": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920562": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920563": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920564": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920565": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920566": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920567": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920568": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920569": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920570": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920571": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920572": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920573": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920574": {
+    "name": "Monster (Specimen)",
+    "isBoss": false
+  },
+  "2920575": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920576": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920580": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920581": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920582": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920583": {
+    "name": "Watchdog Kwapo",
+    "isBoss": false
+  },
+  "2920584": {
+    "name": "Watchdog Kwapo",
+    "isBoss": false
+  },
+  "2920585": {
+    "name": "???",
     "isBoss": false
   },
   "2920586": {
@@ -32469,6 +35544,46 @@
     "name": "孩子20/All/None",
     "isBoss": false
   },
+  "2920589": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920590": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920591": {
+    "name": "Mau Sentry's Soul",
+    "isBoss": false
+  },
+  "2920592": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920593": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920594": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920595": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920596": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920597": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920598": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920599": {
     "name": "孩子20/Exceed/Exceed",
     "isBoss": false
@@ -32477,41 +35592,1281 @@
     "name": "孩子20/All/Exceed",
     "isBoss": false
   },
+  "2920601": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920602": {
+    "name": "Condensed Energy",
+    "isBoss": false
+  },
+  "2920603": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920604": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920605": {
+    "name": "Condensed Energy",
+    "isBoss": false
+  },
+  "2920606": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920607": {
+    "name": "Watchdog Kwapo",
+    "isBoss": false
+  },
+  "2920608": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920609": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920610": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920611": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920612": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920613": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920614": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920616": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920618": {
+    "name": "Vakron's Thorn Vines",
+    "isBoss": false
+  },
+  "2920619": {
+    "name": "Vakron's Thorn Root",
+    "isBoss": false
+  },
+  "2920620": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920621": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920622": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920623": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920624": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920625": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920626": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920627": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920628": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920629": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920630": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920631": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920632": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920635": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920636": {
     "name": "None",
+    "isBoss": false
+  },
+  "2920637": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920638": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920639": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920640": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920641": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920642": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920643": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920644": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920645": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920646": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920647": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920648": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920649": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920650": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920651": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920652": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920653": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920654": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920655": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920656": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920657": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920658": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920659": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920660": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920661": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920662": {
+    "name": "???",
     "isBoss": false
   },
   "2920663": {
     "name": "巴克隆尖刺束縛",
     "isBoss": false
   },
+  "2920664": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920665": {
+    "name": "Ultimate Berk",
+    "isBoss": false
+  },
+  "2920666": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920667": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920668": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920669": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920670": {
+    "name": "Ketu's Scythe",
+    "isBoss": false
+  },
+  "2920671": {
+    "name": "Abyssal Wings Ketu",
+    "isBoss": false
+  },
+  "2920672": {
+    "name": "Mortal Soul Stone",
+    "isBoss": false
+  },
+  "2920673": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920674": {
+    "name": "Fearsome Evil Spirit",
+    "isBoss": false
+  },
+  "2920675": {
+    "name": "Destruction Evil Spirit",
+    "isBoss": false
+  },
+  "2920676": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920677": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920678": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920679": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920680": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920681": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920682": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920683": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920684": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920685": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920686": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920687": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920688": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920689": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920690": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920691": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920692": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920693": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920694": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920695": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920696": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920697": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920698": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920699": {
+    "name": "Lava Glob",
+    "isBoss": false
+  },
+  "2920702": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920703": {
+    "name": "Odylium Ore",
+    "isBoss": false
+  },
+  "2920704": {
+    "name": "Fire Spirit",
+    "isBoss": false
+  },
+  "2920705": {
+    "name": "Wind Spirit",
+    "isBoss": false
+  },
+  "2920706": {
+    "name": "Earth Spirit",
+    "isBoss": false
+  },
+  "2920707": {
+    "name": "Water Spirit",
+    "isBoss": false
+  },
+  "2920708": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920709": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920710": {
     "name": "凱西內爾心腹",
     "isBoss": true
   },
+  "2920711": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920712": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920713": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920714": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920715": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920716": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920717": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920718": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920719": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920720": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920721": {
+    "name": "Balaur Flag",
+    "isBoss": false
+  },
+  "2920722": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920723": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920724": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920725": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920726": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920727": {
+    "name": "Mau Sentry's Soul",
+    "isBoss": false
+  },
+  "2920728": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920729": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920730": {
+    "name": "Watchdog Kwapo",
+    "isBoss": false
+  },
+  "2920731": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920732": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920733": {
     "name": "深淵捕食者",
+    "isBoss": false
+  },
+  "2920734": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920735": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920736": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920737": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920738": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920739": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920740": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920741": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920742": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920743": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920744": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920745": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920746": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920747": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920748": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920749": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920750": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920751": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920752": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920753": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920754": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920755": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920756": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920757": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920758": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920759": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920760": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920761": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920762": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920763": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920764": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920765": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920766": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920767": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920768": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920769": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920770": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920771": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920772": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920773": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920775": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920776": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920777": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920778": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920779": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920780": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920781": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920782": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920783": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920784": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920785": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920786": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920787": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920788": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920789": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920790": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920791": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920792": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920793": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920794": {
+    "name": "Mutated Gerod",
+    "isBoss": false
+  },
+  "2920795": {
+    "name": "Mutated Gerod",
+    "isBoss": false
+  },
+  "2920796": {
+    "name": "Mutated Gerod",
+    "isBoss": false
+  },
+  "2920797": {
+    "name": "Mutated Gerod",
+    "isBoss": false
+  },
+  "2920798": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920799": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920800": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920801": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920802": {
+    "name": "Wraith Giselle (Specimen)",
+    "isBoss": false
+  },
+  "2920803": {
+    "name": "Wraith Giselle (Specimen)",
+    "isBoss": false
+  },
+  "2920804": {
+    "name": "Fafnir's Poison Blood Pool",
+    "isBoss": false
+  },
+  "2920805": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920806": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920807": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920808": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920809": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2920810": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920811": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920812": {
+    "name": "Distorted Rift Hammer",
+    "isBoss": false
+  },
+  "2920813": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920814": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920815": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2920816": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920817": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920818": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920819": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920820": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920821": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920822": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920823": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920824": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920825": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920826": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920827": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920828": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920829": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920830": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920831": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920832": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920833": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920834": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920835": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920842": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920843": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2920844": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2920845": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920846": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920847": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920848": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920849": {
+    "name": "Blazing Totem",
+    "isBoss": false
+  },
+  "2920850": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920851": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920852": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920853": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920854": {
+    "name": "Black Blood Blatt",
+    "isBoss": false
+  },
+  "2920855": {
+    "name": "Black Blood Blatt",
+    "isBoss": false
+  },
+  "2920856": {
+    "name": "Black Blood Blatt",
+    "isBoss": false
+  },
+  "2920857": {
+    "name": "Black Blood Blatt",
+    "isBoss": false
+  },
+  "2920858": {
+    "name": "Black Blood Blatt",
+    "isBoss": false
+  },
+  "2920859": {
+    "name": "Black Blood Blatt",
+    "isBoss": false
+  },
+  "2920860": {
+    "name": "Black Blood Blatt",
+    "isBoss": false
+  },
+  "2920861": {
+    "name": "Black Tentacle Lawa",
+    "isBoss": false
+  },
+  "2920862": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920863": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920864": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920865": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920866": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920867": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920868": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920869": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920870": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920871": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920872": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920873": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920874": {
+    "name": "Divine Aura",
+    "isBoss": false
+  },
+  "2920875": {
+    "name": "Singing Ellyde",
+    "isBoss": false
+  },
+  "2920876": {
+    "name": "Singing Ellyde",
+    "isBoss": false
+  },
+  "2920877": {
+    "name": "Singing Ellyde",
+    "isBoss": false
+  },
+  "2920878": {
+    "name": "Singing Ellyde",
+    "isBoss": false
+  },
+  "2920879": {
+    "name": "Singing Ellyde",
+    "isBoss": false
+  },
+  "2920880": {
+    "name": "Singing Ellyde",
+    "isBoss": false
+  },
+  "2920881": {
+    "name": "Singing Ellyde",
+    "isBoss": false
+  },
+  "2920882": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920883": {
+    "name": "Deep Sea Pydeon",
+    "isBoss": false
+  },
+  "2920884": {
+    "name": "Deep Sea Pydeon",
+    "isBoss": false
+  },
+  "2920885": {
+    "name": "Deep Sea Pydeon",
+    "isBoss": false
+  },
+  "2920886": {
+    "name": "Deep Sea Pydeon",
+    "isBoss": false
+  },
+  "2920887": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920888": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920889": {
+    "name": "Explosion Trap",
+    "isBoss": false
+  },
+  "2920890": {
+    "name": "Detritus",
+    "isBoss": false
+  },
+  "2920891": {
+    "name": "Detritus",
+    "isBoss": false
+  },
+  "2920892": {
+    "name": "Singing Ellyde",
+    "isBoss": false
+  },
+  "2920893": {
+    "name": "Singing Ellyde",
+    "isBoss": false
+  },
+  "2920894": {
+    "name": "Singing Ellyde",
+    "isBoss": false
+  },
+  "2920895": {
+    "name": "Afflicted Bakarma",
     "isBoss": false
   },
   "2920896": {
     "name": "None",
     "isBoss": false
   },
+  "2920897": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2920898": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2920899": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920900": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920901": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920902": {
+    "name": "Black Blood Blatt",
+    "isBoss": false
+  },
+  "2920903": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920904": {
+    "name": "Kromede's Desire",
+    "isBoss": false
+  },
+  "2920905": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920906": {
     "name": "岩石",
+    "isBoss": false
+  },
+  "2920907": {
+    "name": "Hydraulic Press",
     "isBoss": false
   },
   "2920908": {
     "name": "液壓衝床",
     "isBoss": true
   },
+  "2920909": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920910": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920911": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920912": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920913": {
+    "name": "Ultimate Berk",
+    "isBoss": false
+  },
+  "2920914": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920915": {
+    "name": "Nazarak",
+    "isBoss": false
+  },
+  "2920916": {
+    "name": "Nazarak",
+    "isBoss": false
+  },
+  "2920917": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920918": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920919": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920920": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920922": {
+    "name": "Sniping Croka",
+    "isBoss": false
+  },
+  "2920923": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
   "2920924": {
     "name": "岩石",
+    "isBoss": false
+  },
+  "2920925": {
+    "name": "Black Blood Blatt",
+    "isBoss": false
+  },
+  "2920926": {
+    "name": "Black Blood Blatt",
+    "isBoss": false
+  },
+  "2920931": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920932": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920933": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920934": {
+    "name": "???",
     "isBoss": false
   },
   "2920935": {
     "name": "納特哈拉幻影",
     "isBoss": true
+  },
+  "2920936": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920937": {
+    "name": "???",
+    "isBoss": false
   },
   "2920938": {
     "name": "德拉多納卵",
@@ -32521,6 +36876,130 @@
     "name": "德拉多納大塊頭",
     "isBoss": false
   },
+  "2920940": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920941": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920942": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920944": {
+    "name": "Blatt's Tentacles",
+    "isBoss": false
+  },
+  "2920945": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920946": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920947": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2920948": {
+    "name": "Black Tentacle Lawa",
+    "isBoss": false
+  },
+  "2920949": {
+    "name": "Black Tentacle Lawa",
+    "isBoss": false
+  },
+  "2920950": {
+    "name": "Black Tentacle Lawa",
+    "isBoss": false
+  },
+  "2920951": {
+    "name": "Contaminated Slime",
+    "isBoss": false
+  },
+  "2920952": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920953": {
+    "name": "Black Tentacle Lawa",
+    "isBoss": false
+  },
+  "2920954": {
+    "name": "Black Blood Blatt",
+    "isBoss": false
+  },
+  "2920955": {
+    "name": "Black Blood Blatt",
+    "isBoss": false
+  },
+  "2920956": {
+    "name": "Blatt's Crimson Tentacles",
+    "isBoss": false
+  },
+  "2920957": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920958": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920959": {
+    "name": "Deep Sea Pydeon",
+    "isBoss": false
+  },
+  "2920960": {
+    "name": "Deep Sea Pydeon",
+    "isBoss": false
+  },
+  "2920961": {
+    "name": "Deep Sea Pydeon",
+    "isBoss": false
+  },
+  "2920962": {
+    "name": "Deep Sea Pydeon",
+    "isBoss": false
+  },
+  "2920963": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920964": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920965": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920966": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920967": {
+    "name": "Expanding Xyrepe",
+    "isBoss": false
+  },
+  "2920968": {
+    "name": "Expanding Xyrepe",
+    "isBoss": false
+  },
+  "2920969": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920970": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920971": {
+    "name": "???",
+    "isBoss": false
+  },
   "2920972": {
     "name": "定時炸彈",
     "isBoss": false
@@ -32528,6 +37007,142 @@
   "2920973": {
     "name": "紐特",
     "isBoss": true
+  },
+  "2920974": {
+    "name": "Terminator Bargott",
+    "isBoss": false
+  },
+  "2920975": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920976": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920977": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920978": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2920979": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920980": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920981": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920982": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920983": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920984": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920985": {
+    "name": "Decaying Durvati",
+    "isBoss": false
+  },
+  "2920986": {
+    "name": "Devouring Klawfly",
+    "isBoss": false
+  },
+  "2920987": {
+    "name": "Devouring Klawfly",
+    "isBoss": false
+  },
+  "2920988": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2920989": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2920990": {
+    "name": "Devouring Klawfly",
+    "isBoss": false
+  },
+  "2920991": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920992": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920993": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2920994": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2920995": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920996": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920997": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2920998": {
+    "name": "Kaisinel's Illusion",
+    "isBoss": false
+  },
+  "2920999": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921000": {
+    "name": "Kaisinel's Illusion",
+    "isBoss": false
+  },
+  "2921001": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921002": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921003": {
+    "name": "Poison Pouch",
+    "isBoss": false
+  },
+  "2921004": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921005": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921006": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921007": {
+    "name": "???",
+    "isBoss": false
   },
   "2921008": {
     "name": "德拉多納卵",
@@ -32545,6 +37160,14 @@
     "name": "德拉多納大塊頭",
     "isBoss": false
   },
+  "2921012": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921013": {
+    "name": "???",
+    "isBoss": false
+  },
   "2921014": {
     "name": "波奇",
     "isBoss": false
@@ -32557,16 +37180,220 @@
     "name": "放著蝸牛的波奇",
     "isBoss": false
   },
+  "2921017": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921018": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2921019": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2921020": {
+    "name": "Afflicted Bakarma",
+    "isBoss": false
+  },
+  "2921021": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921022": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921023": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921024": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921025": {
+    "name": "Turgen's Blazing Sword",
+    "isBoss": false
+  },
+  "2921026": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921027": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921028": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921029": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921030": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
   "2921031": {
     "name": "甦醒的艾圖拉頓",
     "isBoss": true
+  },
+  "2921032": {
+    "name": "Orb of Vows",
+    "isBoss": false
+  },
+  "2921033": {
+    "name": "Orb of Vows",
+    "isBoss": false
+  },
+  "2921034": {
+    "name": "Orb of Vows",
+    "isBoss": false
+  },
+  "2921035": {
+    "name": "Orb of Vows",
+    "isBoss": false
+  },
+  "2921036": {
+    "name": "Orb of Vows",
+    "isBoss": false
+  },
+  "2921037": {
+    "name": "Orb of Vows",
+    "isBoss": false
+  },
+  "2921038": {
+    "name": "Orb of Vows",
+    "isBoss": false
+  },
+  "2921039": {
+    "name": "Orb of Vows",
+    "isBoss": false
+  },
+  "2921040": {
+    "name": "Orb of Vows",
+    "isBoss": false
+  },
+  "2921041": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921042": {
+    "name": "Orb of Vows",
+    "isBoss": false
+  },
+  "2921043": {
+    "name": "Orb of Vows",
+    "isBoss": false
   },
   "2921044": {
     "name": "背叛",
     "isBoss": false
   },
+  "2921045": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921046": {
+    "name": "Robstino",
+    "isBoss": false
+  },
+  "2921047": {
+    "name": "Robstino",
+    "isBoss": false
+  },
+  "2921048": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921049": {
+    "name": "Hydraulic Press",
+    "isBoss": false
+  },
+  "2921050": {
+    "name": "Deep Sea Pydeon",
+    "isBoss": false
+  },
+  "2921051": {
+    "name": "Rotar",
+    "isBoss": false
+  },
+  "2921052": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921053": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921054": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921055": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921056": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921057": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921058": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921059": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921060": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921061": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921062": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921063": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921064": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921065": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921066": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921067": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921068": {
+    "name": "???",
+    "isBoss": false
+  },
   "2921069": {
     "name": "聚合物巴考特",
+    "isBoss": false
+  },
+  "2921070": {
+    "name": "???",
     "isBoss": false
   },
   "2921072": {
@@ -32575,6 +37402,94 @@
   },
   "2921073": {
     "name": "None",
+    "isBoss": false
+  },
+  "2921074": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921075": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921076": {
+    "name": "Tyrant Tassin",
+    "isBoss": false
+  },
+  "2921077": {
+    "name": "Tyrant Tassin",
+    "isBoss": false
+  },
+  "2921078": {
+    "name": "Tyrant Tassin",
+    "isBoss": false
+  },
+  "2921079": {
+    "name": "Tyrant Tassin",
+    "isBoss": false
+  },
+  "2921080": {
+    "name": "Tyrant Tassin",
+    "isBoss": false
+  },
+  "2921081": {
+    "name": "Tyrant Tassin",
+    "isBoss": false
+  },
+  "2921082": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921083": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921084": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921085": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921086": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921087": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921088": {
+    "name": "Muspel Volcanic Range Essence",
+    "isBoss": false
+  },
+  "2921089": {
+    "name": "Muspel Volcanic Range Essence",
+    "isBoss": false
+  },
+  "2921090": {
+    "name": "Muspel Volcanic Range Essence",
+    "isBoss": false
+  },
+  "2921091": {
+    "name": "Muspel Volcanic Range Essence",
+    "isBoss": false
+  },
+  "2921092": {
+    "name": "Muspel Volcanic Range Essence",
+    "isBoss": false
+  },
+  "2921093": {
+    "name": "Muspel Volcanic Range Essence",
+    "isBoss": false
+  },
+  "2921094": {
+    "name": "Muspel Volcanic Range Essence",
+    "isBoss": false
+  },
+  "2921095": {
+    "name": "Muspel Volcanic Range Essence",
     "isBoss": false
   },
   "2921096": {
@@ -32589,8 +37504,272 @@
     "name": "聚合物巴考特",
     "isBoss": false
   },
+  "2921099": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921100": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921101": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921102": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921103": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921104": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921105": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921106": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921107": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921108": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921109": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921110": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921111": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921112": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921113": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921114": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921115": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921116": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921117": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921118": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921119": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921120": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921121": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921122": {
+    "name": "Spirit King (Specimen)",
+    "isBoss": false
+  },
+  "2921123": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921124": {
+    "name": "Balaur Flag",
+    "isBoss": false
+  },
+  "2921125": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921126": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921127": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921128": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921129": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921130": {
+    "name": "Balaur Flag",
+    "isBoss": false
+  },
+  "2921131": {
+    "name": "Drana Bomb Insectoid",
+    "isBoss": false
+  },
+  "2921132": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921133": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921134": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921135": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921136": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921137": {
+    "name": "Lava Glob",
+    "isBoss": false
+  },
+  "2921138": {
+    "name": "Guardian Sword Fragment",
+    "isBoss": false
+  },
+  "2921139": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921141": {
+    "name": "Frozen Executor Erne",
+    "isBoss": false
+  },
+  "2921142": {
+    "name": "Frozen Executor Erne",
+    "isBoss": false
+  },
+  "2921143": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921144": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921145": {
+    "name": "Forbidden Hexbeast Griosa",
+    "isBoss": false
+  },
+  "2921146": {
+    "name": "Forbidden Hexbeast Griosa",
+    "isBoss": false
+  },
+  "2921147": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921148": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921149": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921150": {
+    "name": "Watchdog Kwapo",
+    "isBoss": false
+  },
+  "2921151": {
+    "name": "Magic Feather",
+    "isBoss": false
+  },
+  "2921152": {
+    "name": "Petrification Trap (Specimen)",
+    "isBoss": false
+  },
   "2921153": {
     "name": "殘香",
+    "isBoss": false
+  },
+  "2921154": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921155": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921156": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921157": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921158": {
+    "name": "Tyrant Tassin",
+    "isBoss": false
+  },
+  "2921159": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921160": {
+    "name": "Tyrant Tassin",
+    "isBoss": false
+  },
+  "2921161": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921162": {
+    "name": "Healing Aura",
+    "isBoss": false
+  },
+  "2921163": {
+    "name": "Healing Aura",
+    "isBoss": false
+  },
+  "2921164": {
+    "name": "Healing Aura",
+    "isBoss": false
+  },
+  "2921165": {
+    "name": "Healing Aura",
+    "isBoss": false
+  },
+  "2921166": {
+    "name": "Healing Aura",
     "isBoss": false
   },
   "2921167": {
@@ -32601,16 +37780,500 @@
     "name": "幻影天培爾祭司",
     "isBoss": false
   },
+  "2921169": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921170": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921171": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921172": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921173": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921174": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921175": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921176": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921177": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921178": {
+    "name": "Scarlet Portal",
+    "isBoss": false
+  },
+  "2921179": {
+    "name": "Green Portal",
+    "isBoss": false
+  },
+  "2921180": {
+    "name": "Purple Portal",
+    "isBoss": false
+  },
+  "2921181": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921182": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921183": {
+    "name": "Overcharged Scarlet Orb",
+    "isBoss": false
+  },
+  "2921184": {
+    "name": "Overcharged Green Orb",
+    "isBoss": false
+  },
+  "2921185": {
+    "name": "Tyrant Tassin",
+    "isBoss": false
+  },
+  "2921186": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921187": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921188": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921189": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921190": {
+    "name": "Tyrant Tassin",
+    "isBoss": false
+  },
+  "2921191": {
+    "name": "Aultross",
+    "isBoss": false
+  },
+  "2921192": {
+    "name": "Charged Scarlet Orb",
+    "isBoss": false
+  },
+  "2921193": {
+    "name": "Charged Green Orb",
+    "isBoss": false
+  },
+  "2921194": {
+    "name": "Charged Scarlet Orb",
+    "isBoss": false
+  },
+  "2921195": {
+    "name": "Charged Green Orb",
+    "isBoss": false
+  },
+  "2921196": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921198": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921199": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921200": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921201": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921202": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921203": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921204": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921205": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921206": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921207": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921208": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921209": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921210": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921211": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921212": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921213": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921214": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921215": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921216": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921217": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921218": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921219": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921220": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921221": {
+    "name": "Iscariel's Flame",
+    "isBoss": false
+  },
   "2921222": {
     "name": "怪物(樣本)",
+    "isBoss": false
+  },
+  "2921223": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921224": {
+    "name": "Kromede's Desolation",
+    "isBoss": false
+  },
+  "2921225": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921226": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921227": {
+    "name": "???",
     "isBoss": false
   },
   "2921228": {
     "name": "魅惑箭矢",
     "isBoss": false
   },
+  "2921229": {
+    "name": "Awakened Alturadon",
+    "isBoss": false
+  },
+  "2921230": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921231": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921233": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921234": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921235": {
+    "name": "Gargaum",
+    "isBoss": false
+  },
+  "2921236": {
+    "name": "Condensed Energy",
+    "isBoss": false
+  },
+  "2921237": {
+    "name": "Gargaum",
+    "isBoss": false
+  },
+  "2921238": {
+    "name": "Gargaum",
+    "isBoss": false
+  },
+  "2921239": {
+    "name": "Condensed Energy",
+    "isBoss": false
+  },
+  "2921240": {
+    "name": "Gargaum",
+    "isBoss": false
+  },
+  "2921241": {
+    "name": "Gargaum",
+    "isBoss": false
+  },
+  "2921242": {
+    "name": "Gargaum",
+    "isBoss": false
+  },
+  "2921243": {
+    "name": "Gargaum",
+    "isBoss": false
+  },
+  "2921244": {
+    "name": "Gargaum",
+    "isBoss": false
+  },
+  "2921245": {
+    "name": "Gargaum",
+    "isBoss": false
+  },
+  "2921246": {
+    "name": "Gargaum",
+    "isBoss": false
+  },
+  "2921247": {
+    "name": "Gargaum",
+    "isBoss": false
+  },
+  "2921248": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921249": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921250": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921251": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921252": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921253": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921254": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921255": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921256": {
+    "name": "Shield of Corruption",
+    "isBoss": false
+  },
+  "2921257": {
+    "name": "Shield of Judgment",
+    "isBoss": false
+  },
+  "2921258": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921259": {
+    "name": "Sacred Flame Barrier of Protection",
+    "isBoss": false
+  },
+  "2921260": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921261": {
+    "name": "Balaur Mini Totem",
+    "isBoss": false
+  },
+  "2921262": {
+    "name": "Muspel Guardian Statue",
+    "isBoss": false
+  },
+  "2921263": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921264": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921265": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921266": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921267": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921268": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921269": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921270": {
+    "name": "Robstino",
+    "isBoss": false
+  },
+  "2921271": {
+    "name": "Corrupted Daeva Cleric",
+    "isBoss": false
+  },
+  "2921272": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921273": {
+    "name": "Ordeal of Love",
+    "isBoss": false
+  },
   "2921274": {
     "name": "穆斯費爾守護像",
+    "isBoss": false
+  },
+  "2921275": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921276": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921277": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921278": {
+    "name": "Sword of Judgment",
+    "isBoss": false
+  },
+  "2921279": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921280": {
+    "name": "Muspel Guardian Statue",
+    "isBoss": false
+  },
+  "2921281": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921284": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921285": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921286": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921288": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921289": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921290": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921291": {
+    "name": "Scarlet Portal",
+    "isBoss": false
+  },
+  "2921292": {
+    "name": "Green Portal",
+    "isBoss": false
+  },
+  "2921293": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2921294": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2921295": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2921296": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2921297": {
+    "name": "Atiel",
     "isBoss": false
   },
   "2921298": {
@@ -32625,8 +38288,216 @@
     "name": "傲慢亞提埃爾",
     "isBoss": false
   },
+  "2921301": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2921302": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2921303": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2921304": {
+    "name": "Atiel",
+    "isBoss": false
+  },
+  "2921305": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921306": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921307": {
+    "name": "Iscariel",
+    "isBoss": false
+  },
+  "2921308": {
+    "name": "Forbidden Hexbeast Griosa",
+    "isBoss": false
+  },
+  "2921309": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921310": {
+    "name": "Forbidden Hexbeast Griosa",
+    "isBoss": false
+  },
+  "2921311": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921312": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921313": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921314": {
+    "name": "???",
+    "isBoss": false
+  },
   "2921315": {
     "name": "穆斯費爾守護像",
+    "isBoss": false
+  },
+  "2921316": {
+    "name": "Forbidden Hexbeast Griosa",
+    "isBoss": false
+  },
+  "2921317": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921318": {
+    "name": "Sword of Judgment",
+    "isBoss": false
+  },
+  "2921319": {
+    "name": "Sacred Flame Barrier of Protection",
+    "isBoss": false
+  },
+  "2921320": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921321": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921322": {
+    "name": "Kapu",
+    "isBoss": false
+  },
+  "2921323": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921324": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921325": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921326": {
+    "name": "Mau Sentry's Soul",
+    "isBoss": false
+  },
+  "2921327": {
+    "name": "Ascended Atheron",
+    "isBoss": false
+  },
+  "2921328": {
+    "name": "Ascended Atheron",
+    "isBoss": false
+  },
+  "2921329": {
+    "name": "Ascended Atheron",
+    "isBoss": false
+  },
+  "2921330": {
+    "name": "Ascended Atheron",
+    "isBoss": false
+  },
+  "2921331": {
+    "name": "Ascended Atheron",
+    "isBoss": false
+  },
+  "2921332": {
+    "name": "Atheron's Crystal",
+    "isBoss": false
+  },
+  "2921333": {
+    "name": "Atheron's Crystal",
+    "isBoss": false
+  },
+  "2921334": {
+    "name": "Ascended Atheron",
+    "isBoss": false
+  },
+  "2921335": {
+    "name": "Ascended Atheron",
+    "isBoss": false
+  },
+  "2921336": {
+    "name": "Ascended Atheron",
+    "isBoss": false
+  },
+  "2921337": {
+    "name": "Ascended Atheron",
+    "isBoss": false
+  },
+  "2921338": {
+    "name": "Ascended Atheron",
+    "isBoss": false
+  },
+  "2921339": {
+    "name": "Ascended Atheron",
+    "isBoss": false
+  },
+  "2921340": {
+    "name": "Ascended Atheron",
+    "isBoss": false
+  },
+  "2921341": {
+    "name": "Willful Turgen",
+    "isBoss": false
+  },
+  "2921342": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921343": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921344": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921345": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921346": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921347": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921348": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921349": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921350": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921351": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921352": {
+    "name": "Electrifying Core",
+    "isBoss": false
+  },
+  "2921353": {
+    "name": "Electrifying Core",
     "isBoss": false
   },
   "2921354": {
@@ -32645,8 +38516,172 @@
     "name": "巴克隆尖刺藤蔓",
     "isBoss": false
   },
+  "2921358": {
+    "name": "Vakron",
+    "isBoss": false
+  },
+  "2921359": {
+    "name": "Sword of Judgment",
+    "isBoss": false
+  },
+  "2921360": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921361": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921362": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921363": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921364": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921365": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921366": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921367": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921368": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921369": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921370": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921371": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921372": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921373": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921374": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921375": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921376": {
+    "name": "Willful Turgen",
+    "isBoss": false
+  },
+  "2921377": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921378": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921379": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921380": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921381": {
+    "name": "???",
+    "isBoss": false
+  },
   "2921382": {
     "name": "咆哮",
+    "isBoss": false
+  },
+  "2921383": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921384": {
+    "name": "Basilus the False",
+    "isBoss": false
+  },
+  "2921385": {
+    "name": "Shield of Corruption",
+    "isBoss": false
+  },
+  "2921386": {
+    "name": "Shield of Judgment",
+    "isBoss": false
+  },
+  "2921387": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921388": {
+    "name": "Lava Glob",
+    "isBoss": false
+  },
+  "2921389": {
+    "name": "Willful Turgen",
+    "isBoss": false
+  },
+  "2921390": {
+    "name": "Kapu",
+    "isBoss": false
+  },
+  "2921391": {
+    "name": "Sword of Judgment",
+    "isBoss": false
+  },
+  "2921392": {
+    "name": "Gargaum",
+    "isBoss": false
+  },
+  "2921393": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921394": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921395": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921396": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921397": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921398": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921399": {
+    "name": "???",
     "isBoss": false
   },
   "2921400": {
@@ -32661,16 +38696,72 @@
     "name": "火焰彈轟炸",
     "isBoss": true
   },
+  "2921403": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921404": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921405": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921406": {
+    "name": "Vakron's Thorn Root",
+    "isBoss": false
+  },
+  "2921407": {
+    "name": "Eternal Gartua",
+    "isBoss": false
+  },
+  "2921408": {
+    "name": "Eternal Gartua",
+    "isBoss": false
+  },
   "2921409": {
     "name": "奧德石礦石",
+    "isBoss": false
+  },
+  "2921410": {
+    "name": "Eternal Gartua",
     "isBoss": false
   },
   "2921411": {
     "name": "None",
     "isBoss": false
   },
+  "2921412": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921414": {
+    "name": "Detoxifying Rafflesia",
+    "isBoss": false
+  },
+  "2921415": {
+    "name": "Gluttonous Tiere",
+    "isBoss": false
+  },
+  "2921416": {
+    "name": "Gluttonous Tiere",
+    "isBoss": false
+  },
+  "2921417": {
+    "name": "Detoxifying Rafflesia",
+    "isBoss": false
+  },
   "2921418": {
     "name": "巴克隆尖刺藤蔓",
+    "isBoss": false
+  },
+  "2921419": {
+    "name": "Vakron's Thorn Vines",
+    "isBoss": false
+  },
+  "2921420": {
+    "name": "Vakron's Thorn Vines",
     "isBoss": false
   },
   "2921425": {
@@ -32697,8 +38788,80 @@
     "name": "巴克隆尖刺束縛",
     "isBoss": true
   },
+  "2921431": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921432": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921433": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921434": {
+    "name": "???",
+    "isBoss": false
+  },
+  "2921442": {
+    "name": "泰爾拉斯",
+    "isBoss": true
+  },
+  "2921443": {
+    "name": "泰爾拉斯",
+    "isBoss": true
+  },
+  "2921448": {
+    "name": "泰爾拉斯",
+    "isBoss": true
+  },
+  "2921453": {
+    "name": "泰爾拉斯",
+    "isBoss": true
+  },
+  "2921454": {
+    "name": "泰爾拉斯",
+    "isBoss": true
+  },
+  "2921455": {
+    "name": "泰爾拉斯",
+    "isBoss": true
+  },
+  "2921456": {
+    "name": "泰爾拉斯",
+    "isBoss": true
+  },
+  "2921458": {
+    "name": "泰爾拉斯",
+    "isBoss": true
+  },
   "2921511": {
     "name": "傲慢亞提埃爾",
+    "isBoss": false
+  },
+  "2921576": {
+    "name": "泰爾拉斯",
+    "isBoss": true
+  },
+  "2921579": {
+    "name": "吉凱爾權能",
+    "isBoss": false
+  },
+  "2921580": {
+    "name": "德拉多納卵",
+    "isBoss": false
+  },
+  "2921581": {
+    "name": "洞穴德拉多納幼體",
+    "isBoss": false
+  },
+  "2921582": {
+    "name": "德拉多納卵",
+    "isBoss": false
+  },
+  "2921583": {
+    "name": "德拉多納大塊頭",
     "isBoss": false
   },
   "2980000": {
