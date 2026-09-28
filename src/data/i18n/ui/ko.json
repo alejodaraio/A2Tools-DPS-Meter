@@ -116,6 +116,7 @@
     "showTrainingBattles": "훈련 전투 표시",
     "hideTrainingBattles": "훈련 전투 숨기기",
     "trainBadge": "훈련",
+    "pbTip": "이 대상에 대한 개인 최고 DPS",
     "liveBadge": "진행 중",
     "filterBoss": "보스 이름...",
     "filterPlayer": "플레이어 클래스...",

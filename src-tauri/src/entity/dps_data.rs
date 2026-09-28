@@ -21,6 +21,9 @@ pub struct DpsData {
     /// Live current HP of the current target from the in-place HP feed, or -1 if
     /// none has been observed. When >= 0 the bar uses this real value directly.
     pub target_current_hp: i64,
+    /// NPC code of the current single target (0 = unknown / multi-target), so
+    /// the frontend can compare against personal bests on that NPC.
+    pub target_mob_code: i32,
 }
 
 impl DpsData {
@@ -35,6 +38,7 @@ impl DpsData {
             target_max_hp: 0,
             target_total_damage: 0,
             target_current_hp: -1,
+            target_mob_code: 0,
         }
     }
 }

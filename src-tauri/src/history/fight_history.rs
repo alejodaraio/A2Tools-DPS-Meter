@@ -118,6 +118,8 @@ impl FightHistoryManager {
             if path.extension().is_some_and(|e| e == "json") {
                 if let Ok(json) = std::fs::read_to_string(&path) {
                     if let Ok(record) = serde_json::from_str::<FightRecord>(&json) {
+                        let (local_name, local_damage, local_active_ms, local_dps) =
+                            record.local_stats().unwrap_or_default();
                         summaries.push(FightSummary {
                             id: record.id,
                             boss_name: record.boss_name,
@@ -131,6 +133,10 @@ impl FightHistoryManager {
                             is_live: false,
                             app_version: record.app_version,
                             mob_code: record.mob_code,
+                            local_name,
+                            local_damage,
+                            local_active_ms,
+                            local_dps,
                         });
                     }
                 }

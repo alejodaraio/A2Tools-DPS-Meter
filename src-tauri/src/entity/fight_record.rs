@@ -28,6 +28,10 @@ pub struct FightRecord {
     /// NPC mob type code for i18n boss name resolution (new field).
     #[serde(default)]
     pub mob_code: i32,
+    /// Entity id of the local player in this fight (0 in fights saved before
+    /// this field; see `FightRecord::local_stats` for how those are handled).
+    #[serde(default)]
+    pub local_actor_id: i32,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -50,6 +54,61 @@ pub struct FightSummary {
     pub app_version: String,
     #[serde(default)]
     pub mob_code: i32,
+    /// The local player in this fight: name, damage and active-time DPS. Empty
+    /// / 0 when they could not be identified. Drives personal bests per NPC.
+    #[serde(default)]
+    pub local_name: String,
+    #[serde(default)]
+    pub local_damage: i64,
+    /// Active time behind `local_dps`. A couple of hits inside one second read
+    /// as their whole damage per second, so personal bests require a minimum.
+    #[serde(default)]
+    pub local_active_ms: i64,
+    #[serde(default)]
+    pub local_dps: f64,
+}
+
+impl FightRecord {
+    /// The local player's (name, damage, active ms, active-time DPS) in this fight.
+    ///
+    /// Newer records name the local actor outright. Older ones don't, but the
+    /// local player is the one name `obscure_nickname` leaves intact, so the
+    /// only actor without a `*` in its name is taken — and nothing when that is
+    /// ambiguous. Active time follows the same rule as the live meter
+    /// (`data_storage::ACTIVE_GAP_MS`), from the per-hit timestamps.
+    pub fn local_stats(&self) -> Option<(String, i64, i64, f64)> {
+        let id = if self.local_actor_id > 0 {
+            self.local_actor_id
+        } else {
+            let clear: Vec<_> = self
+                .actors
+                .iter()
+                .filter(|a| a.nickname.chars().count() > 1 && !a.nickname.contains('*'))
+                .collect();
+            if clear.len() != 1 {
+                return None;
+            }
+            clear[0].actor_id
+        };
+        let name = self.actors.iter().find(|a| a.actor_id == id)?.nickname.clone();
+
+        let mut damage = 0i64;
+        let mut hits: Vec<i64> = Vec::new();
+        for skill in self.details.skills.iter().filter(|s| s.actor_id == id) {
+            damage += skill.dmg as i64;
+            hits.extend_from_slice(&skill.hit_timestamps);
+        }
+        if damage <= 0 {
+            return None;
+        }
+        hits.sort_unstable();
+        let mut spans = Vec::new();
+        for ts in hits {
+            crate::combat::data_storage::note_active_hit(&mut spans, ts);
+        }
+        let active = crate::combat::data_storage::active_ms(&spans);
+        Some((name, damage, active, damage as f64 / (active.max(1000) as f64 / 1000.0)))
+    }
 }
 
 /// Obscure a nickname for privacy: keep first char and last char, mask the middle.

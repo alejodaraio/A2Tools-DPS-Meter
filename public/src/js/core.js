@@ -906,6 +906,7 @@ class DpsApp {
       targetMaxHp,
       targetTotalDamage,
       targetCurrentHp,
+      targetMobCode,
     } = this.buildRowsFromPayload(raw);
     if (this.refreshPending) {
       const pendingAgeMs = Math.max(0, now - (Number(this.refreshPendingStartedAt) || 0));
@@ -1079,6 +1080,7 @@ class DpsApp {
     this.latestRowsById = new Map(rowsToRender.map((row) => [String(row.id), row]));
     this.hoverTooltipCacheByRowId.clear();
     this.updateMeterTotalBar(rowsToRender);
+    this.updatePersonalBest(rows, targetMobCode);
     this.meterUI.updateFromRows(rowsToRender);
   }
 
@@ -1106,6 +1108,7 @@ class DpsApp {
     const targetCurrentHp = Number.isFinite(Number(payload?.targetCurrentHp))
       ? Number(payload.targetCurrentHp)
       : -1;
+    const targetMobCode = Number(payload?.targetMobCode) || 0;
 
     return {
       rows,
@@ -1117,6 +1120,7 @@ class DpsApp {
       targetMaxHp,
       targetTotalDamage,
       targetCurrentHp,
+      targetMobCode,
     };
   }
 
@@ -4091,6 +4095,28 @@ class DpsApp {
       value: dps,
       text: `${this.formatDpsThousands(dps)}${this.i18n?.t("meter.dpsSuffix", "/s") ?? "/s"}`,
     };
+  }
+
+  // Your personal best on the current NPC (personalBests.js, from the saved
+  // fight history the bridge refreshes every 10 s) and how you compare now.
+  updatePersonalBest(rows, targetMobCode) {
+    const el = this.meterPbEl || (this.meterPbEl = document.querySelector(".meterPb"));
+    if (!el) return;
+    const me = (Array.isArray(rows) ? rows : []).find((r) => Number(r?.id) === Number(this.localPlayerId));
+    const pb = me && targetMobCode > 0
+      ? window.personalBests?.best?.(window._cachedFightHistory, targetMobCode, me.name)
+      : null;
+    if (!pb) {
+      el.style.display = "none";
+      return;
+    }
+    const best = Number(pb.localDps) || 0;
+    const delta = best > 0 ? ((Number(me.dps) || 0) / best - 1) * 100 : 0;
+    el.style.display = "";
+    el.classList.toggle("isAbove", delta >= 0);
+    el.classList.toggle("isBelow", delta < 0);
+    el.querySelector(".meterPbValue").textContent = this.formatDpsThousands(best);
+    el.querySelector(".meterPbDelta").textContent = `${delta >= 0 ? "+" : ""}${delta.toFixed(0)}%`;
   }
 
   updateMeterTotalBar(rows) {

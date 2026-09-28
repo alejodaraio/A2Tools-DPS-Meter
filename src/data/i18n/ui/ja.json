@@ -116,6 +116,7 @@
     "showTrainingBattles": "訓練戦闘を表示",
     "hideTrainingBattles": "訓練戦闘を非表示",
     "trainBadge": "訓練",
+    "pbTip": "このターゲットに対する自己ベストDPS",
     "liveBadge": "ライブ",
     "filterBoss": "ボス名...",
     "filterPlayer": "プレイヤーのクラス...",

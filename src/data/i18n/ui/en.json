@@ -116,6 +116,7 @@
     "showTrainingBattles": "Show Training Battles",
     "hideTrainingBattles": "Hide Training Battles",
     "trainBadge": "Training",
+    "pbTip": "Your best DPS against this target",
     "liveBadge": "Live",
     "filterBoss": "Boss name...",
     "filterPlayer": "Player class...",

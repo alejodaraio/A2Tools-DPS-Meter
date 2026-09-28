@@ -243,6 +243,14 @@ const createHistoryUI = ({ onOpenFight } = {}) => {
       badge.textContent = t("history.trainBadge", "Training");
       nameEl.appendChild(badge);
     }
+    // Your best fight against this NPC (personalBests.js).
+    if (window.personalBests?.bestIds?.(allFights)?.has(fight.id)) {
+      const badge = document.createElement("span");
+      badge.className = "historyTrainBadge historyPbBadge";
+      badge.textContent = "PB";
+      badge.title = t("history.pbTip", "Your best DPS against this target");
+      nameEl.appendChild(badge);
+    }
 
     const metaEl = document.createElement("div");
     metaEl.className = "historyRowMeta";
@@ -262,6 +270,13 @@ const createHistoryUI = ({ onOpenFight } = {}) => {
     if (!grouped) metaEl.appendChild(timeEl);
     metaEl.appendChild(durEl);
     metaEl.appendChild(dmgEl);
+    // Your own active-time DPS in this fight, when you could be identified.
+    if (fight.localName && Number(fight.localDps) > 0) {
+      const myEl = document.createElement("span");
+      myEl.className = "historyRowMyDps";
+      myEl.textContent = `${fight.localName} ${formatDamage(fight.localDps)}${t("meter.dpsSuffix", "/s")}`;
+      metaEl.appendChild(myEl);
+    }
 
     const iconsEl = document.createElement("div");
     iconsEl.className = "historyRowIcons";

@@ -284,6 +284,11 @@ impl DpsCalculator {
             -1
         };
         dps_data.target_current_hp = target_current_hp;
+        dps_data.target_mob_code = if self.current_target != 0 {
+            self.data_storage.get_mob_data().get(&self.current_target).copied().unwrap_or(0)
+        } else {
+            0
+        };
 
         // Collect actors from selected targets
         let mut combined_actors: HashMap<i32, i64> = HashMap::new();
@@ -863,6 +868,7 @@ impl DpsCalculator {
                 is_train,
                 app_version: crate::entity::fight_record::APP_VERSION.to_string(),
                 mob_code,
+                local_actor_id: local_id,
             };
 
             if is_ended {

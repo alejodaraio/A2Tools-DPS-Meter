@@ -949,6 +949,23 @@ body.mainPlayerDpsBold .meter .item .content .dps > p {
 .meterTotalBar .meterTotalDmg { color: rgba(255, 255, 255, 0.5); }
 .meterTotalBar .meterTotalSep { color: rgba(255, 255, 255, 0.18); }
 
+/* Personal best on the current NPC, and how the live DPS compares to it. */
+.meterPb {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: var(--hud-tech);
+  font-variation-settings: "wght" 600, "wdth" 87.5;
+  font-variant-numeric: tabular-nums;
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.5);
+}
+.meterPb .meterPbLabel { color: rgba(255, 255, 255, 0.35); letter-spacing: 0.04em; }
+.meterPb .meterPbValue { color: rgba(255, 255, 255, 0.7); }
+.meterPb.isAbove .meterPbDelta { color: #6fd08c; }
+.meterPb.isBelow .meterPbDelta { color: rgba(255, 255, 255, 0.45); }
+.meter.slim .meterPb { font-size: 9.5px; }
+
 .footerBtns {
   position: static;
   display: flex;
@@ -5488,6 +5505,16 @@ body.legacyUi .list .item .dps .dpsContribution {
   font-variation-settings: "wght" 700, "wdth" 87.5;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.78);
+}
+
+/* Your own DPS in the fight, and the personal-best marker. */
+.historyPanel .historyRowMyDps {
+  color: rgba(255, 255, 255, 0.55);
+}
+.historyPanel .historyPbBadge {
+  color: #1c1400;
+  background: #e6b84a;
+  margin-left: 6px;
 }
 
 .historyPanel .historyRowIcons {
