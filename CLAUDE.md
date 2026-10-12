@@ -53,6 +53,7 @@ var is unset (captures are user traffic and are not committed):
 | `capture_replay` | `A2_REPLAY_CAPTURE`, `A2_REPLAY_AURA_CAPTURE` | party names, summon owners, roster |
 | `self_status` | `A2_SELF_STATUS_CAPTURE` | local player bound from `4A 36` before any `33 36` |
 | `buffs_capture` | `A2_BUFF_CAPTURE` | buff uptimes vs the damage-multiplier steps |
+| `radar_capture` | `A2_RADAR_CAPTURE`, `A2_RADAR_LIVE_CAPTURE` | Sapphire on the radar next to the player, removed when depleted; spawn points saved and the map recognised in a later mid-zone session |
 
 There is no JS test suite and no linter — `node --check public/src/js/<file>.js`
 catches syntax errors; behaviour has to be checked in the running app.
@@ -77,6 +78,8 @@ catches syntax errors; behaviour has to be checked in the running app.
 Raw captures come from Settings → Diagnostics → "Enable packet logging", which
 writes `%APPDATA%\com.a2tools.dps-meter\packets_<timestamp>.txt`
 (`TIMESTAMP|Client:<port>|HEX` per TCP payload; a new file per app start).
+Client→server payloads go to `packets_<timestamp>_out.txt`; they are
+encrypted, so every protocol fact has to come from the server side.
 Two examples decode them with the app's own framing (varint length − 3, LZ4
 `FF FF` bundles):
 
@@ -92,6 +95,8 @@ cargo run --example self_id_probe -- <capture> <mode> ...
 #   around <id> <before_ms> <after_ms> <HH:MM:SS.mmm>...   non-combat packets near times
 #   buffs <id>               decoded 2A 38 / 2C 38 buff adds/removes with names
 #   selfrecords              every 33 36 self record
+#   ops [from] [to]          opcode histogram: count, sizes, first/last time
+#   dump <op>|all [from] [to]   hex of every packet with an opcode (e.g. 3436)
 cargo run --example replay_dps -- <capture> [from_ts] [to_ts]
 #   runs the real parser + calculator: per-target damage, gaps, DPS at several
 #   gap thresholds, meter rows, multiplier split, buff uptimes, name check
@@ -141,7 +146,11 @@ battle history; `list_fights` summaries are cached until the directory
 changes), `i18n/` (NPC/skill names loaded from `src/data/i18n/**`, reloaded on
 `set_language`), `config/settings.rs` (flat key-value settings in
 `%APPDATA%\com.a2tools.dps-meter\settings.json`), `combat/buffs.rs`,
-`combat/mob_cache.rs`, `platform/` (Windows-only: admin check, global hotkeys,
+`combat/mob_cache.rs`, `combat/radar.rs` (world objects + self position for
+the Radar window, `public/radar.html`; spawn points seen per map persist in
+`radar_points.json`, because the server only sends objects within ~60 m; the
+objects in view go to `radar_live.json` with a session fingerprint, like the
+mob cache, since a spawn is never re-sent to a meter restarted next to it), `platform/` (Windows-only: admin check, global hotkeys,
 AION 2 window detection, screenshot-to-clipboard), `logging/` (tracing setup,
 optional raw-packet logging).
 
@@ -154,7 +163,7 @@ shifted by +1 in a June 2026 patch; parsers accept both values where noted.
 |---|---|
 | `04 38` | damage/heal record: target, switch, flag, actor, skill u32, …, `[0 pad] <power scalar> <damage>` |
 | `05 38` | compact skill/damage record |
-| `33 36` | **self record**: your entity id + name. Only on zone load. |
+| `33 36` | **self record**: your entity id + name. Only on zone load. Also the map id: `<map u32> <map u32> <x y z> <u32> 00 00 <u16> <z f32> 01 DE 02` |
 | `45 36` / `44 36` | another player's id + name (mask-gated name field) |
 | `40 36` / `41 36` | mob/summon spawn: NPC code, max HP, summon `parent_key`. Only when the entity enters view. |
 | `41 36` / `42 36` | death (flag 3 = combat death; only seen for mobs so far) |
@@ -163,6 +172,11 @@ shifted by +1 in a June 2026 patch; parsers accept both values where noted.
 | `02 97` | party roster: names, level, gear score, combat power, server (account dbid, not entity id) |
 | `2A 38` | buff add: target, ?, ?, seq, effect u32, duration_ms u32, `00×4`, epoch ms u64, caster |
 | `2C 38` | buff remove (short form): target, `01 00`, seq, `01` |
+| `2B 38` / `2A 38` | end with `02 <x y z>`: the position of the entity concerned, ~1 Hz — the only source of the local player's position |
+| `02 38` | `<self> 00 <u32> <u16 counter> <self> <heading f32> <4 bytes>`: your facing, ~1 Hz, Unreal yaw in degrees (0° = +X, 90° = +Y); other shapes/entities share the opcode |
+| `34 36` | world object (gather node, …) enters view: id, kind u16, code u32, `x y z` f32 (cm), heading. Known codes (`radar.js` `KNOWN`, all kind 4): 1301199 Hidden Cube; gatherables 1550000 Odyle, 1550004 Orichalcum, 1550012 Asvata, 1550020 Sapphire, 1550021 Diamond, 1550033 Calendula, 1550045 Ohkra. Any other code is named from the radar's list (`radar_labels.json`) |
+| `35 36` | object leaves: id, reason (`04` depleted, `01` out of view), 2 bytes |
+| `38 36` / `3A 36` | gathering: `<obj> <self> 01` start, `<obj> <self> <n>` n-th gather done |
 
 Consequences baked into the code:
 

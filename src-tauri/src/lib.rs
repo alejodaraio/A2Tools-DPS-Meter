@@ -79,6 +79,26 @@ fn get_skill_details(state: tauri::State<'_, AppState>, target_id: i32, actor_id
 }
 
 #[tauri::command]
+fn get_radar(state: tauri::State<'_, AppState>) -> combat::radar::RadarSnapshot {
+    state.data_storage.radar().snapshot()
+}
+
+#[tauri::command]
+fn get_radar_labels(state: tauri::State<'_, AppState>) -> std::collections::HashMap<u32, combat::radar::RadarLabel> {
+    combat::radar::load_labels(&state.app_data_dir.join("radar_labels.json"))
+}
+
+/// Name (or, with `label: null`, un-name) an object code on the radar.
+#[tauri::command]
+fn set_radar_label(
+    state: tauri::State<'_, AppState>,
+    code: u32,
+    label: Option<combat::radar::RadarLabel>,
+) -> Result<std::collections::HashMap<u32, combat::radar::RadarLabel>, String> {
+    combat::radar::set_label(&state.app_data_dir.join("radar_labels.json"), code, label).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
 fn get_details_context(state: tauri::State<'_, AppState>) -> DetailsContext {
     state.dps_calculator.lock().get_details_context()
 }
@@ -1074,6 +1094,40 @@ fn open_history_window_inner(app: &tauri::AppHandle) -> Result<(), String> {
     Ok(())
 }
 
+/// The Radar window: a small transparent always-on-top disc showing world
+/// objects (gather nodes, Hidden Cubes) around the player. It is its own page,
+/// `radar.html`, rather than a view of the shared bundle — it needs none of the
+/// meter, and polls `get_radar` on its own. `async`: see `open_settings_window`.
+#[tauri::command]
+async fn open_radar_window(app: tauri::AppHandle) -> Result<(), String> {
+    if let Some(existing) = app.get_webview_window("radar") {
+        let _ = existing.unminimize();
+        let _ = existing.show();
+        return Ok(());
+    }
+    let window = tauri::WebviewWindowBuilder::new(
+        &app,
+        "radar",
+        tauri::WebviewUrl::App("radar.html".into()),
+    )
+    .title("A2Tools DPS Meter — Radar")
+    .decorations(false)
+    .transparent(true)
+    .shadow(false)
+    .always_on_top(true)
+    .resizable(true)
+    .skip_taskbar(true)
+    .inner_size(280.0, 380.0)
+    .min_inner_size(200.0, 240.0)
+    .build()
+    .map_err(|e| e.to_string())?;
+
+    if !restore_window_geometry(&app, &window, "radar") {
+        center_on_overlay_monitor(&app, &window);
+    }
+    Ok(())
+}
+
 /// Close whichever tool window asked. Fight windows are frameless and there can
 /// be several, so each closes itself rather than the overlay guessing which.
 #[tauri::command]
@@ -1142,21 +1196,20 @@ fn capture_screenshot(app: tauri::AppHandle, x: i32, y: i32, width: i32, height:
 }
 
 #[tauri::command]
-fn start_drag(app: tauri::AppHandle) {
+fn start_drag(window: tauri::WebviewWindow) {
     #[cfg(windows)]
     {
         use windows::Win32::Foundation::{HWND, WPARAM, LPARAM};
         use windows::Win32::UI::WindowsAndMessaging::{PostMessageW, WM_NCLBUTTONDOWN};
         use windows::Win32::UI::Input::KeyboardAndMouse::ReleaseCapture;
 
-        if let Some(window) = app.get_webview_window("main") {
-            if let Ok(raw) = window.hwnd() {
-                unsafe {
-                    let _ = ReleaseCapture();
-                    const HTCAPTION: usize = 2;
-                    let hwnd = HWND(raw.0);
-                    let _ = PostMessageW(Some(hwnd), WM_NCLBUTTONDOWN, WPARAM(HTCAPTION), LPARAM(0));
-                }
+        // The calling window: the overlay, or the radar.
+        if let Ok(raw) = window.hwnd() {
+            unsafe {
+                let _ = ReleaseCapture();
+                const HTCAPTION: usize = 2;
+                let hwnd = HWND(raw.0);
+                let _ = PostMessageW(Some(hwnd), WM_NCLBUTTONDOWN, WPARAM(HTCAPTION), LPARAM(0));
             }
         }
     }
@@ -1440,6 +1493,7 @@ pub fn run() {
             let npc_lookup = Arc::new(npc_lookup);
 
             let data_storage = Arc::new(DataStorage::new());
+            data_storage.radar().load_points(&app_data_dir.join("radar_points.json"));
             let ping_tracker = Arc::new(PingTracker::new());
             let port_detector = Arc::new(CombatPortDetector::new());
 
@@ -1607,6 +1661,7 @@ pub fn run() {
             // Periodic DPS update emission (every 500ms)
             let handle = app.handle().clone();
             let mut mob_cache = combat::mob_cache::MobCache::new(&app_data_dir);
+            let mut radar_live = combat::radar::LiveCache::new(&app_data_dir);
             tauri::async_runtime::spawn(async move {
                 let mut interval = tokio::time::interval(Duration::from_millis(500));
                 let mut tick_count: u64 = 0;
@@ -1616,12 +1671,27 @@ pub fn run() {
                     tick_count += 1;
 
                     if let Some(state) = handle.try_state::<AppState>() {
+                        // Remembered radar spawn points (every 10 s, when changed).
+                        if tick_count % 20 == 0 {
+                            let to_save = state.data_storage.radar().take_points_to_save();
+                            if let Some((path, json)) = to_save {
+                                if let Err(e) = std::fs::write(&path, json) {
+                                    tracing::warn!("radar: saving {} failed: {}", path.display(), e);
+                                }
+                            }
+                        }
                         // Mob identities survive a meter restart (every 2 s).
                         if tick_count % 4 == 0 {
                             mob_cache.tick(
                                 &state.data_storage,
                                 &state.npc_lookup,
                                 state.port_detector.current_port(),
+                            );
+                            // Radar objects in view survive a meter restart too.
+                            radar_live.tick(
+                                &state.data_storage,
+                                state.port_detector.current_port(),
+                                chrono::Utc::now().timestamp_millis(),
                             );
                         }
                         let t0 = std::time::Instant::now();
@@ -1715,7 +1785,7 @@ pub fn run() {
                             // (details-*) are deliberately absent: they are
                             // opened to be read and closed, and keying geometry
                             // by fight id would grow settings without bound.
-                            for label in ["details", "settings", "history"] {
+                            for label in ["details", "settings", "history", "radar"] {
                                 // While Details is pinned to a monitor its rect
                                 // comes from the setting, not from the user.
                                 // Saving it poisons the windowed geometry: turn
@@ -1794,6 +1864,10 @@ pub fn run() {
             get_dps_snapshot,
             get_skill_details,
             get_details_context,
+            get_radar,
+            get_radar_labels,
+            set_radar_label,
+            open_radar_window,
             get_fight_history,
             save_fight,
             load_fight,

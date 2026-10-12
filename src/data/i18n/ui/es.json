@@ -371,5 +371,8 @@
       "normal": "Normal",
       "hard": "Difícil"
     }
+  },
+  "radar": {
+    "title": "Radar"
   }
 }

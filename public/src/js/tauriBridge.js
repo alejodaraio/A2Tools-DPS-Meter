@@ -283,6 +283,9 @@
       }
       return invoke("details_window_ready").catch(() => {});
     },
+    openRadarWindow() {
+      return invoke("open_radar_window").catch((e) => console.error("[A2Tools] openRadarWindow", e));
+    },
     openSettingsWindow() {
       return invoke("open_settings_window").catch((e) => console.error("[A2Tools] openSettingsWindow", e));
     },

@@ -326,6 +326,9 @@ pub struct DataStorage {
     /// Set when a zone change clears combat; the dps calculator consumes it to
     /// drop its cached snapshot / saved-target state on the next cycle.
     combat_reset_requested: AtomicBool,
+    /// Its own lock: radar updates arrive at a steady trickle and must not
+    /// contend with the damage path, and a combat reset must not clear them.
+    radar: parking_lot::Mutex<crate::combat::radar::RadarTracker>,
 }
 
 struct Inner {
@@ -425,6 +428,7 @@ impl DataStorage {
             last_damage_ms: AtomicI64::new(0),
             last_zone_reset_ms: AtomicI64::new(0),
             combat_reset_requested: AtomicBool::new(false),
+            radar: Default::default(),
         }
     }
 
@@ -476,7 +480,15 @@ impl DataStorage {
     }
 
     pub fn set_local_player_id(&self, id: Option<i64>) {
-        self.inner.write().local_player_id = id;
+        let changed = std::mem::replace(&mut self.inner.write().local_player_id, id) != id;
+        // A new self id means a new zone/session: every object id is stale.
+        if changed {
+            self.radar.lock().clear();
+        }
+    }
+
+    pub fn radar(&self) -> parking_lot::MutexGuard<'_, crate::combat::radar::RadarTracker> {
+        self.radar.lock()
     }
 
     pub fn local_player_id(&self) -> Option<i64> {

@@ -43,6 +43,8 @@ settings.properties
 # request them). Upstream adds these at release time from outside git, so a
 # clean tree shipped without them; this fork keeps them in the repo.
 !/public/assets/
+# The Radar window's page — source, served as-is next to index.html.
+!/public/radar.html
 /assets/
 /data/
 /i18n/

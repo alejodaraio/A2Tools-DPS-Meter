@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Radar</title>
+    <!--
+      The Radar window (label "radar", opened by `open_radar_window`). A page of
+      its own rather than a view of index.html: it needs none of the meter and
+      its window is transparent, so it paints only the panel below.
+    -->
+    <style>
+      :root {
+        --panel: rgba(10, 14, 22, 0.82);
+        --line: rgba(255, 255, 255, 0.12);
+        --text: rgba(255, 255, 255, 0.88);
+        --muted: rgba(255, 255, 255, 0.5);
+        --accent: #5aa9ff;
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        height: 100%;
+        background: transparent;
+        color: var(--text);
+        font: 12px/1.35 "Pretendard Variable", "Segoe UI", system-ui, sans-serif;
+        overflow: hidden;
+        user-select: none;
+      }
+      .panel {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 5px 6px 5px 10px;
+        border-bottom: 1px solid var(--line);
+        cursor: move;
+      }
+      .title { flex: 1; font-weight: 600; letter-spacing: 0.02em; }
+      .btn {
+        border: 1px solid transparent;
+        background: none;
+        color: var(--muted);
+        font: inherit;
+        font-size: 11px;
+        padding: 2px 5px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .btn:hover { color: #fff; border-color: var(--line); }
+      .btn.on { color: var(--accent); }
+      .scope { position: relative; flex: 1; min-height: 120px; }
+      canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .status {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 6px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 11px;
+        pointer-events: none;
+      }
+      .list {
+        max-height: 34%;
+        overflow-y: auto;
+        border-top: 1px solid var(--line);
+        padding: 3px 0;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 10px 1fr auto auto;
+        gap: 6px;
+        align-items: center;
+        padding: 2px 10px;
+        font-variant-numeric: tabular-nums;
+      }
+      .dot { width: 8px; height: 8px; border-radius: 50%; }
+      .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .dim { color: var(--muted); }
+      .empty { padding: 4px 10px; color: var(--muted); }
+      .row { cursor: pointer; }
+      .row:hover { background: rgba(255, 255, 255, 0.06); }
+      .editor {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 7px 10px;
+        border-top: 1px solid var(--line);
+      }
+      .editor[hidden] { display: none; }
+      .editor .line { display: flex; align-items: center; gap: 5px; }
+      .editor input {
+        flex: 1;
+        min-width: 0;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        color: var(--text);
+        font: inherit;
+        padding: 3px 6px;
+      }
+      .swatch {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        padding: 0;
+        cursor: pointer;
+      }
+      .swatch.on { border-color: #fff; }
+    </style>
+  </head>
+  <body>
+    <div class="panel">
+      <div class="header">
+        <span class="title">Radar</span>
+        <button class="btn" id="rangeBtn" title="Range">100 m</button>
+        <button class="btn" id="modeBtn" title="▲ facing up / N north up">▲</button>
+        <button class="btn" id="rotateBtn" title="Rotate the map 90° (match the in-game minimap)">⟳ 0°</button>
+        <button class="btn" id="mirrorBtn" title="Mirror left/right (match the in-game minimap)">⇋</button>
+        <button class="btn" id="allBtn" title="Show unknown objects with their code (to find new ones)">all</button>
+        <button class="btn" id="closeBtn" title="Close">✕</button>
+      </div>
+      <div class="scope">
+        <canvas id="scope"></canvas>
+        <div class="status" id="status"></div>
+      </div>
+      <div class="list" id="list" title="Click a row to name it"></div>
+      <div class="editor" id="editor" hidden>
+        <div class="line">
+          <span class="dim" id="editorCode"></span>
+          <input id="editorName" maxlength="40" placeholder="Name (e.g. Diamond)" />
+        </div>
+        <div class="line">
+          <span id="editorSwatches" class="line"></span>
+          <button class="btn" id="editorShape"></button>
+        </div>
+        <div class="line">
+          <button class="btn on" id="editorSave">Save</button>
+          <button class="btn" id="editorRemove">Remove</button>
+          <button class="btn" id="editorCancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <script src="/src/js/radar.js"></script>
+  </body>
+</html>

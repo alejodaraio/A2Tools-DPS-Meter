@@ -1915,6 +1915,23 @@ class DpsApp {
       });
       historyBtn.setAttribute("data-no-drag", "true");
     }
+
+    // The radar is a window of its own (radar.html); this only opens or raises it.
+    const radarBtn = document.querySelector(".radarBtn");
+    if (radarBtn) {
+      const openRadar = () => window.javaBridge?.openRadarWindow?.();
+      radarBtn.addEventListener("click", () => {
+        if (this.isWindowDragging) return;
+        openRadar();
+      });
+      radarBtn.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openRadar();
+        }
+      });
+      radarBtn.setAttribute("data-no-drag", "true");
+    }
   }
 
   setupSettingsPanel() {

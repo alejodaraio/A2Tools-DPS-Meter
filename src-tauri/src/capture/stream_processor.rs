@@ -280,12 +280,71 @@ impl StreamProcessor {
         self.parse_zone_change_packet(packet);
         self.parse_self_status_packet(packet);
         self.parse_buff_packet(packet);
+        self.parse_radar_packet(packet);
 
         if !parsed_damage && !parsed_name && !parsed_summon && !parsed_ownership && !parsed_hp {
             self.parse_dot_packet(packet);
         }
 
         parsed_damage || parsed_name
+    }
+
+    // ===== RADAR (34 36 / 35 36 objects, self position) =====
+
+    /// World objects and the local player's position; layouts and evidence in
+    /// `combat::radar`.
+    fn parse_radar_packet(&self, packet: &[u8]) {
+        use crate::combat::radar;
+        let length_info = read_varint(packet, 0);
+        if length_info.length <= 0 {
+            return;
+        }
+        let offset = length_info.length as usize;
+        let (Some(&a), Some(&b)) = (packet.get(offset), packet.get(offset + 1)) else {
+            return;
+        };
+        let body = &packet[offset + 2..];
+        let now = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .map(|d| d.as_millis() as i64)
+            .unwrap_or(0);
+        match (a, b) {
+            (0x34, 0x36) => {
+                if let Some(s) = radar::parse_object_spawn(body) {
+                    tracing::debug!("radar: object {} kind {} code {} at {:?}", s.id, s.kind, s.code, s.pos);
+                    self.data_storage.radar().object_spawned(s.id, s.kind, s.code, s.pos, now);
+                }
+            }
+            (0x35, 0x36) => {
+                if let Some((id, reason)) = radar::parse_object_despawn(body) {
+                    self.data_storage.radar().object_removed(id, reason == 0x04, now);
+                }
+            }
+            (0x33, 0x36) => {
+                if let Some(map) = radar::parse_map_from_self_record(body) {
+                    tracing::info!("radar: map {}", map);
+                    self.data_storage.radar().set_map(map);
+                }
+            }
+            (0x2A, 0x38) | (0x2B, 0x38) => {
+                let Some(self_id) = self.data_storage.local_player_id() else { return };
+                if let Some(pos) = radar::parse_self_position(body, self_id as u32) {
+                    self.data_storage.radar().set_self_pos(pos, now);
+                }
+            }
+            (0x02, 0x38) => {
+                let Some(self_id) = self.data_storage.local_player_id() else { return };
+                if let Some(deg) = radar::parse_self_heading(body, self_id as u32) {
+                    self.data_storage.radar().set_self_heading(deg);
+                }
+            }
+            (0x23, 0x36) => {
+                if let Some(pos) = radar::parse_self_teleport(body) {
+                    self.data_storage.radar().self_teleported(pos, now);
+                }
+            }
+            _ => {}
+        }
     }
 
     // ===== BUFFS (2A 38 add / 2C 38 remove) =====
