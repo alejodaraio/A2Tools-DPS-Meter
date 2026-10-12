@@ -158,6 +158,9 @@ static PACKET_LOGGER: Mutex<Option<PacketFileLogger>> = Mutex::new(None);
 struct PacketFileLogger {
     writer: std::io::BufWriter<std::fs::File>,
     path: PathBuf,
+    /// Client->server payloads (`packets_<stamp>_out.txt`). Kept out of the main
+    /// file because every capture reader assumes it holds server->client only.
+    out_writer: Option<std::io::BufWriter<std::fs::File>>,
 }
 
 pub fn set_packet_log_enabled(enabled: bool, log_dir: &std::path::Path) {
@@ -176,9 +179,19 @@ pub fn set_packet_log_enabled(enabled: bool, log_dir: &std::path::Path) {
             );
             let _ = writer.write_all(header.as_bytes());
             let _ = writer.flush();
+            let out_writer = std::fs::OpenOptions::new()
+                .create(true).write(true)
+                .open(log_dir.join(format!("packets_{}_out.txt", stamp)))
+                .ok()
+                .map(|f| {
+                    let mut w = std::io::BufWriter::new(f);
+                    let _ = w.write_all(header.as_bytes());
+                    let _ = w.flush();
+                    w
+                });
             {
                 let mut guard = PACKET_LOGGER.lock();
-                *guard = Some(PacketFileLogger { writer, path: path.clone() });
+                *guard = Some(PacketFileLogger { writer, path: path.clone(), out_writer });
             }
             tracing::info!("Raw packet logging started: {}", path.display());
         }
@@ -209,6 +222,22 @@ pub fn log_packet(cap: &CapturedPayload) {
         let line = format!("{}|{}|{}\n", ts, key, hex);
         if logger.writer.write_all(line.as_bytes()).is_ok() {
             let _ = logger.writer.flush();
+        }
+    }
+}
+
+/// Log a client->server payload of the locked game flow to the `_out` file,
+/// keyed by the server port it was sent to.
+pub fn log_outgoing_packet(cap: &CapturedPayload) {
+    if !PACKET_LOG_ENABLED.load(Ordering::Relaxed) { return; }
+    let mut guard = PACKET_LOGGER.lock();
+    if let Some(writer) = guard.as_mut().and_then(|l| l.out_writer.as_mut()) {
+        let ts = chrono::Local::now().format("%+");
+        let hex: String = cap.data.iter().map(|b| format!("{:02X}", b)).collect();
+        let line = format!("{}|Server:{}|{}
+", ts, cap.dst_port, hex);
+        if writer.write_all(line.as_bytes()).is_ok() {
+            let _ = writer.flush();
         }
     }
 }

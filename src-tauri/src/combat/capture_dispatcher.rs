@@ -178,6 +178,7 @@ impl CaptureDispatcher {
             // Only parse server->client (src == locked port)
             if let Some(port) = current_port {
                 if cap.src_port != port {
+                    crate::logging::logger::log_outgoing_packet(&cap);
                     continue;
                 }
             }

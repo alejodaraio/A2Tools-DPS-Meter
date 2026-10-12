@@ -453,6 +453,36 @@ fn main() {
                 println!("{key} {a:02X} {b:02X} {enc:<6} x{n:<5} with_id={with_id:<5} {sample}");
             }
         }
+        "ops" => {
+            // Opcode histogram in a time window: count, first/last time, sizes.
+            let from = args.get(3).map(|s| s.as_str()).unwrap_or("");
+            let to = args.get(4).map(|s| s.as_str()).unwrap_or("~");
+            let mut by_op: BTreeMap<(u8, u8), (usize, String, String, usize, usize)> = BTreeMap::new();
+            for p in pk.iter().filter(|p| p.ts.as_str() >= from && p.ts.as_str() < to) {
+                let Some((a, b, _)) = opcode(&p.data) else { continue };
+                let e = by_op.entry((a, b)).or_insert((0, p.ts.clone(), String::new(), usize::MAX, 0));
+                e.0 += 1;
+                e.2 = p.ts.clone();
+                e.3 = e.3.min(p.data.len());
+                e.4 = e.4.max(p.data.len());
+            }
+            for ((a, b), (n, first, last, lo, hi)) in by_op {
+                println!("{a:02X} {b:02X} x{n:<6} len {lo}-{hi}  {} .. {}", &first[11..23], &last[11..23]);
+            }
+        }
+        "dump" => {
+            // Hex of every packet with the given opcode (e.g. 4136) in a window.
+            // `all` dumps every opcode.
+            let op = u16::from_str_radix(&args[3], 16).ok();
+            let from = args.get(4).map(|s| s.as_str()).unwrap_or("");
+            let to = args.get(5).map(|s| s.as_str()).unwrap_or("~");
+            for p in pk.iter().filter(|p| p.ts.as_str() >= from && p.ts.as_str() < to) {
+                let Some((a, b, _)) = opcode(&p.data) else { continue };
+                if op.is_some_and(|op| ((a as u16) << 8 | b as u16) != op) { continue; }
+                let hex: Vec<String> = p.data.iter().map(|x| format!("{:02X}", x)).collect();
+                println!("{} {}", &p.ts[11..23], hex.join(" "));
+            }
+        }
         _ => eprintln!("unknown mode"),
     }
 }
