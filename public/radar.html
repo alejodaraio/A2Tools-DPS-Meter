@@ -118,6 +118,28 @@
         cursor: pointer;
       }
       .swatch.on { border-color: #fff; }
+      .filter {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        background: var(--panel);
+        backdrop-filter: blur(6px);
+      }
+      .filter[hidden] { display: none; }
+      .filter .line { display: flex; gap: 4px; padding: 6px 10px; border-bottom: 1px solid var(--line); }
+      .filter .items { flex: 1; overflow-y: auto; padding: 3px 0; }
+      .frow {
+        display: grid;
+        grid-template-columns: 14px 10px 1fr auto;
+        gap: 7px;
+        align-items: center;
+        padding: 3px 10px;
+        cursor: pointer;
+      }
+      .frow:hover { background: rgba(255, 255, 255, 0.06); }
+      .frow input { margin: 0; accent-color: var(--accent); }
     </style>
   </head>
   <body>
@@ -129,11 +151,20 @@
         <button class="btn" id="rotateBtn" title="Rotate the map 90° (match the in-game minimap)">⟳ 0°</button>
         <button class="btn" id="mirrorBtn" title="Mirror left/right (match the in-game minimap)">⇋</button>
         <button class="btn" id="allBtn" title="Show unknown objects with their code (to find new ones)">all</button>
+        <button class="btn" id="filterBtn" title="Choose what the radar shows">⚙</button>
         <button class="btn" id="closeBtn" title="Close">✕</button>
       </div>
       <div class="scope">
         <canvas id="scope"></canvas>
         <div class="status" id="status"></div>
+        <div class="filter" id="filterPanel" hidden>
+          <div class="line">
+            <span class="title">Show on radar</span>
+            <button class="btn" id="filterAll">all</button>
+            <button class="btn" id="filterNone">none</button>
+          </div>
+          <div class="items" id="filterList"></div>
+        </div>
       </div>
       <div class="list" id="list" title="Click a row to name it"></div>
       <div class="editor" id="editor" hidden>

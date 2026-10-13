@@ -83,6 +83,24 @@ fn get_radar(state: tauri::State<'_, AppState>) -> combat::radar::RadarSnapshot 
     state.data_storage.radar().snapshot()
 }
 
+/// The Radar window's view preferences (range, orientation, filter …), kept
+/// as the page sends them. Stored here rather than in the webview's
+/// localStorage, which is per origin: the dev server and the installed build
+/// each had their own, so the same app showed different things.
+#[tauri::command]
+fn get_radar_prefs(state: tauri::State<'_, AppState>) -> Option<serde_json::Value> {
+    let text = std::fs::read_to_string(state.app_data_dir.join("radar_prefs.json")).ok()?;
+    serde_json::from_str(&text).ok()
+}
+
+#[tauri::command]
+fn set_radar_prefs(state: tauri::State<'_, AppState>, prefs: serde_json::Value) -> Result<(), String> {
+    let path = state.app_data_dir.join("radar_prefs.json");
+    let tmp = path.with_extension("json.tmp");
+    std::fs::write(&tmp, prefs.to_string()).map_err(|e| e.to_string())?;
+    std::fs::rename(&tmp, &path).map_err(|e| e.to_string())
+}
+
 #[tauri::command]
 fn get_radar_labels(state: tauri::State<'_, AppState>) -> std::collections::HashMap<u32, combat::radar::RadarLabel> {
     combat::radar::load_labels(&state.app_data_dir.join("radar_labels.json"))
@@ -1105,25 +1123,52 @@ async fn open_radar_window(app: tauri::AppHandle) -> Result<(), String> {
         let _ = existing.show();
         return Ok(());
     }
+    build_radar_window(&app)
+}
+
+/// Identifier of the radar-only build (`tauri.radar.conf.json`): the same
+/// backend, no meter overlay, the Radar as its only window.
+const RADAR_ONLY_IDENTIFIER: &str = "com.a2tools.radar";
+
+/// The meter's data directory, next to the radar build's own. On the radar
+/// build's first run, remembered spawn points and object names come from
+/// there, so nothing learnt with the meter is lost.
+fn import_meter_radar_files(app_data_dir: &std::path::Path) {
+    let Some(meter_dir) = app_data_dir.parent().map(|p| p.join("com.a2tools.dps-meter")) else { return };
+    for file in ["radar_points.json", "radar_labels.json"] {
+        let (from, to) = (meter_dir.join(file), app_data_dir.join(file));
+        if !to.exists() && from.exists() {
+            match std::fs::copy(&from, &to) {
+                Ok(_) => tracing::info!("radar: imported {} from the meter", file),
+                Err(e) => tracing::warn!("radar: importing {} failed: {}", file, e),
+            }
+        }
+    }
+}
+
+fn build_radar_window(app: &tauri::AppHandle) -> Result<(), String> {
+    // As the A2Radar app it is the only window: name it after the app and put
+    // it on the taskbar, or there would be no way back to it.
+    let standalone = app.config().identifier == RADAR_ONLY_IDENTIFIER;
     let window = tauri::WebviewWindowBuilder::new(
-        &app,
+        app,
         "radar",
         tauri::WebviewUrl::App("radar.html".into()),
     )
-    .title("A2Tools DPS Meter — Radar")
+    .title(if standalone { "A2Radar" } else { "A2Tools DPS Meter — Radar" })
     .decorations(false)
     .transparent(true)
     .shadow(false)
     .always_on_top(true)
     .resizable(true)
-    .skip_taskbar(true)
+    .skip_taskbar(!standalone)
     .inner_size(280.0, 380.0)
     .min_inner_size(200.0, 240.0)
     .build()
     .map_err(|e| e.to_string())?;
 
-    if !restore_window_geometry(&app, &window, "radar") {
-        center_on_overlay_monitor(&app, &window);
+    if !restore_window_geometry(app, &window, "radar") {
+        center_on_overlay_monitor(app, &window);
     }
     Ok(())
 }
@@ -1446,6 +1491,10 @@ pub fn run() {
             let app_data_dir = app.path().app_data_dir()
                 .unwrap_or_else(|_| std::path::PathBuf::from("."));
             let _ = std::fs::create_dir_all(&app_data_dir);
+            let radar_only = app.config().identifier == RADAR_ONLY_IDENTIFIER;
+            if radar_only {
+                import_meter_radar_files(&app_data_dir);
+            }
 
             // Load resources — try multiple paths (dev vs production)
             let skill_lookup = SkillLookup::new();
@@ -1539,6 +1588,13 @@ pub fn run() {
 
             app.manage(state);
 
+            if radar_only {
+                tracing::info!("radar-only build: opening the Radar as the only window");
+                if let Err(e) = build_radar_window(app.handle()) {
+                    tracing::error!("radar window failed: {}", e);
+                }
+            }
+
             // Reopen the Details window if it was left enabled. Done here rather
             // than from JS because the backend already has settings loaded — the
             // frontend reads them asynchronously and would race the first paint.
@@ -1625,38 +1681,42 @@ pub fn run() {
             let (toggle_mods, toggle_vk) = platform::hotkeys::parse_hotkey_label(&toggle_label)
                 .unwrap_or((0x0002 | 0x0001, 0x26)); // Default: Ctrl+Alt+Up
 
-            hotkey_manager.start(
-                reload_mods, reload_vk,
-                toggle_mods, toggle_vk,
-                {
-                    let h = hotkey_handle.clone();
-                    move || {
-                        tracing::info!("Hotkey: reload triggered");
-                        if let Some(state) = h.try_state::<AppState>() {
-                            state.dps_calculator.lock().restart_target_selection(true);
-                            state.data_storage.reset_nicknames();
+            // Not in the radar build: both hotkeys act on the meter, and holding
+            // them would steal them from a meter running alongside.
+            if !radar_only {
+                hotkey_manager.start(
+                    reload_mods, reload_vk,
+                    toggle_mods, toggle_vk,
+                    {
+                        let h = hotkey_handle.clone();
+                        move || {
+                            tracing::info!("Hotkey: reload triggered");
+                            if let Some(state) = h.try_state::<AppState>() {
+                                state.dps_calculator.lock().restart_target_selection(true);
+                                state.data_storage.reset_nicknames();
+                            }
+                            // Notify frontend to clear UI
+                            let _ = h.emit("combat-reset", ());
+                            let _ = h.emit("dps-update", &entity::dps_data::DpsData::new());
                         }
-                        // Notify frontend to clear UI
-                        let _ = h.emit("combat-reset", ());
-                        let _ = h.emit("dps-update", &entity::dps_data::DpsData::new());
-                    }
-                },
-                {
-                    let h = hotkey_handle;
-                    move || {
-                        // Toggle window visibility
-                        if let Some(window) = h.get_webview_window("main") {
-                            if window.is_visible().unwrap_or(false) {
-                                let _ = window.hide();
-                            } else {
-                                let _ = window.show();
-                                let _ = window.set_always_on_top(true);
-                                let _ = window.set_focus();
+                    },
+                    {
+                        let h = hotkey_handle;
+                        move || {
+                            // Toggle window visibility
+                            if let Some(window) = h.get_webview_window("main") {
+                                if window.is_visible().unwrap_or(false) {
+                                    let _ = window.hide();
+                                } else {
+                                    let _ = window.show();
+                                    let _ = window.set_always_on_top(true);
+                                    let _ = window.set_focus();
+                                }
                             }
                         }
-                    }
-                },
-            );
+                    },
+                );
+            }
 
             // Periodic DPS update emission (every 500ms)
             let handle = app.handle().clone();
@@ -1867,6 +1927,8 @@ pub fn run() {
             get_radar,
             get_radar_labels,
             set_radar_label,
+            get_radar_prefs,
+            set_radar_prefs,
             open_radar_window,
             get_fight_history,
             save_fight,

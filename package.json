@@ -8,6 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "tauri": "tauri",
+    "radar:dev": "tauri dev --config src-tauri/tauri.radar.conf.json",
+    "radar:build": "tauri build --config src-tauri/tauri.radar.conf.json",
     "rename-msi": "node -e \"const fs=require('fs'),p=require('path'),d='src-tauri/target/release/bundle/msi';fs.readdirSync(d).filter(f=>f.endsWith('.msi')).forEach(f=>{const n=f.replace(/ /g,'-');if(n!==f){fs.renameSync(p.join(d,f),p.join(d,n));console.log(f+' -> '+n)}})\""
   },
   "dependencies": {

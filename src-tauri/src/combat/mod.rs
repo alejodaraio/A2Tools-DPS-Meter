@@ -5,3 +5,4 @@ pub mod capture_dispatcher;
 pub mod mob_cache;
 pub mod buffs;
 pub mod radar;
+pub mod position_estimate;

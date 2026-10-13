@@ -74,6 +74,46 @@ fn sapphire_is_tracked_then_removed_when_depleted() {
     assert!(snap.points.len() > end.points.len(), "new sightings were added");
 }
 
+/// The position estimator against the server's own positions: the capture
+/// is replayed as if the player had no mantra (server positions past the
+/// first are only ground truth) and the error is measured every time a real
+/// position arrives. `A2_RADAR_ESTIMATE_CAPTURES` is a `;`-separated list.
+/// On the 2026-10-12 captures (Python prototype) the median was ~13 m.
+#[test]
+fn position_is_estimated_without_the_mantra() {
+    let Ok(paths) = std::env::var("A2_RADAR_ESTIMATE_CAPTURES") else {
+        eprintln!("A2_RADAR_ESTIMATE_CAPTURES unset — skipping");
+        return;
+    };
+    for path in paths.split(';').filter(|p| !p.is_empty()) {
+        let storage = Arc::new(DataStorage::new());
+        storage.radar().estimate_only();
+        let mut errs: Vec<f32> = Vec::new();
+        let mut last_truth = 0;
+        replay(path, &storage, |_| {
+            let r = storage.radar();
+            let Some((truth, t)) = r.truth() else { return };
+            if t == last_truth {
+                return;
+            }
+            last_truth = t;
+            let snap = r.snapshot();
+            if let (true, Some(me)) = (snap.self_pos_estimated, snap.self_pos) {
+                let e = me.dist2d(&truth) / 100.0;
+                if e > 200.0 && std::env::var("A2_DEBUG").is_ok() {
+                    println!("  t={t} err={e:.0} me=({:.0},{:.0}) truth=({:.0},{:.0})", me.x / 100.0, me.y / 100.0, truth.x / 100.0, truth.y / 100.0);
+                }
+                errs.push(e);
+            }
+        });
+        errs.sort_by(f32::total_cmp);
+        assert!(!errs.is_empty(), "{path}: never estimated");
+        let q = |f: f32| errs[((errs.len() - 1) as f32 * f) as usize];
+        println!("{path}: n={} p50={:.1} m p75={:.1} m p90={:.1} m max={:.0} m", errs.len(), q(0.5), q(0.75), q(0.9), q(1.0));
+        assert!(q(0.5) < 25.0, "{path}: median error {:.1} m", q(0.5));
+    }
+}
+
 fn replay(path: &str, storage: &Arc<DataStorage>, mut on_line: impl FnMut(&str)) {
     let mut p = StreamProcessor::new(storage.clone(), Arc::new(SkillLookup::new()), Arc::new(NpcLookup::new()));
     let mut streams: HashMap<String, PacketAccumulator> = HashMap::new();
@@ -84,6 +124,7 @@ fn replay(path: &str, storage: &Arc<DataStorage>, mut on_line: impl FnMut(&str))
             continue;
         }
         on_line(ts);
+        p.set_override_timestamp(chrono::DateTime::parse_from_rfc3339(ts).ok().map(|d| d.timestamp_millis()));
         let Some(bytes) = (0..hex.len()).step_by(2).map(|i| u8::from_str_radix(&hex[i..i + 2], 16).ok()).collect::<Option<Vec<u8>>>() else { continue };
         let acc = streams.entry(key.to_string()).or_insert_with(PacketAccumulator::new);
         acc.append(&bytes);

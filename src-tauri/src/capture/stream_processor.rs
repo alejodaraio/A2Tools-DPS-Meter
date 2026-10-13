@@ -304,10 +304,12 @@ impl StreamProcessor {
             return;
         };
         let body = &packet[offset + 2..];
-        let now = std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)
-            .map(|d| d.as_millis() as i64)
-            .unwrap_or(0);
+        let now = self.override_timestamp.unwrap_or_else(|| {
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .map(|d| d.as_millis() as i64)
+                .unwrap_or(0)
+        });
         match (a, b) {
             (0x34, 0x36) => {
                 if let Some(s) = radar::parse_object_spawn(body) {
@@ -326,16 +328,46 @@ impl StreamProcessor {
                     self.data_storage.radar().set_map(map);
                 }
             }
+            // A buff someone put on themselves / a skill cast / the mantra
+            // tick: whether it is us is the radar's call (`is_self`), since
+            // our id can be unknown for a while without the mantra.
             (0x2A, 0x38) | (0x2B, 0x38) => {
-                let Some(self_id) = self.data_storage.local_player_id() else { return };
-                if let Some(pos) = radar::parse_self_position(body, self_id as u32) {
-                    self.data_storage.radar().set_self_pos(pos, now);
+                if let Some((id, pos)) = radar::parse_self_cast_position(body) {
+                    let self_id = self.data_storage.local_player_id().map(|id| id as u32);
+                    self.data_storage.radar().self_cast(id, self_id, pos, None, now);
                 }
             }
             (0x02, 0x38) => {
-                let Some(self_id) = self.data_storage.local_player_id() else { return };
-                if let Some(deg) = radar::parse_self_heading(body, self_id as u32) {
-                    self.data_storage.radar().set_self_heading(deg);
+                if let Some((id, deg, pos)) = radar::parse_facing(body) {
+                    let self_id = self.data_storage.local_player_id().map(|id| id as u32);
+                    let mut radar = self.data_storage.radar();
+                    match pos {
+                        Some(pos) => radar.self_cast(id, self_id, pos, Some(deg), now),
+                        None => radar.self_facing(id, self_id, deg, now),
+                    }
+                }
+            }
+            // Gathering: we stand at the object.
+            (0x38 | 0x3A, 0x36) => {
+                if let Some((obj, who)) = radar::parse_gathering(body) {
+                    let self_id = self.data_storage.local_player_id().map(|id| id as u32);
+                    self.data_storage.radar().gathering(obj, who, self_id, now);
+                }
+            }
+            // Others moving / coming into view: clues to where we are when
+            // the server sends no position of ours (see position_estimate).
+            (0x1A..=0x1E | 0x28 | 0x29 | 0x2E | 0x2F, 0x37) => {
+                if let Some((id, pos)) = radar::parse_entity_move(body) {
+                    if self.data_storage.local_player_id() != Some(id as i64) {
+                        self.data_storage.radar().entity_moved(id, pos, now);
+                    }
+                }
+            }
+            (0x41 | 0x45, 0x36) => {
+                if let Some((id, pos)) = radar::parse_entity_spawn_pos(body) {
+                    if self.data_storage.local_player_id() != Some(id as i64) {
+                        self.data_storage.radar().entity_spawned(id, pos, now);
+                    }
                 }
             }
             (0x23, 0x36) => {

@@ -30,7 +30,11 @@
     1550004: { name: "Orichalcum", color: "#ffcc33" },
     1550012: { name: "Asvata", color: "#3ddc84" },
     1550021: { name: "Diamond", color: "#e8f4ff" },
+    1550022: { name: "Ruby", color: "#ff3b3b" },
+    1550040: { name: "Raydam", color: "#ff3b3b" },
+    1550032: { name: "Azpha", color: "#c77dff" },
     1550033: { name: "Calendula", color: "#3ddc84" },
+    1550041: { name: "Morfa", color: "#3ddc84" },
     1550045: { name: "Ohkra", color: "#ff8a3d" },
     // Confirmed 2026-10-12: stood 3–6 m from it for minutes (map 1013).
     1301199: { name: "Hidden Cube", color: "#ff3b3b", shape: "square" },
@@ -50,12 +54,30 @@
   const POLL_MS = 250;
   const STALE_MS = 5000;
 
-  const prefs = { range: 100, rotate: 0, mirror: false, all: false, headingUp: true, headingMirror: false };
-  try {
-    Object.assign(prefs, JSON.parse(localStorage.getItem("radar.prefs") || "{}"));
-  } catch {}
+  // headingMirror defaults on: in-game, facing-up only matched with the
+  // mirror on. `v` bumps re-apply a changed default once over saved prefs.
+  const PREFS_VERSION = 2;
+  // `hidden`: codes unticked in the ⚙ panel.
+  const prefs = { range: 100, rotate: 0, mirror: false, all: false, headingUp: true, headingMirror: true, hidden: [] };
+  const applySaved = (saved) => {
+    if (!saved || typeof saved !== "object") return;
+    if ((saved.v || 1) < 2) delete saved.headingMirror;
+    Object.assign(prefs, saved, { v: PREFS_VERSION });
+  };
+  // Kept by the backend (radar_prefs.json) so the dev server and the
+  // installed build — different origins, different localStorage — agree.
+  // localStorage is only the first-run source and an offline fallback.
+  try { applySaved(JSON.parse(localStorage.getItem("radar.prefs") || "null")); } catch {}
+  const loadPrefs = async () => {
+    try {
+      const saved = await invoke("get_radar_prefs");
+      if (saved) applySaved(saved);
+      else savePrefs();
+    } catch {}
+  };
   const savePrefs = () => {
     try { localStorage.setItem("radar.prefs", JSON.stringify(prefs)); } catch {}
+    invoke?.("set_radar_prefs", { prefs }).catch(() => {});
   };
 
   const canvas = document.getElementById("scope");
@@ -69,6 +91,8 @@
   const allBtn = document.getElementById("allBtn");
 
   let snapshot = null;
+  // Packet capture needs it; in the radar-only build nothing else would say so.
+  let isAdmin = true;
   // Heading drawn right now, chasing snapshot.selfHeading.
   let shownHeading = null;
 
@@ -153,6 +177,9 @@
       : ["N", "NE", "E", "SE", "S", "SW", "W", "NW"][i];
   };
 
+  // Distances from an estimated position are rough.
+  const approx = () => (snapshot?.selfPosEstimated ? "~" : "");
+
   const ago = (ms) => {
     const s = Math.max(0, (Date.now() - ms) / 1000);
     if (s < 90) return `${Math.round(s)}s`;
@@ -181,7 +208,7 @@
     if (!snapshot?.selfPos) return [];
     const me = snapshot.selfPos;
     return markers()
-      .filter((o) => prefs.all || info(o.code))
+      .filter((o) => (prefs.all || info(o.code)) && !prefs.hidden.includes(o.code))
       .map((o) => {
         const dx = o.pos.x - me.x;
         const dy = o.pos.y - me.y;
@@ -194,6 +221,9 @@
           info: info(o.code),
         };
       })
+      // The range is what the radar shows: nothing beyond it, on the disc or
+      // in the list.
+      .filter((o) => o.distM <= prefs.range)
       .sort((a, b) => a.distM - b.distM);
   };
 
@@ -238,6 +268,20 @@
       ctx.fillText("N", cx + (nx / len) * (radius + 6) - 3, cy + (ny / len) * (radius + 6) + 4);
     }
 
+    // Estimated position (no position from the server lately — any class but
+    // a Chanter with its mantra up): a haze the size of the likely error.
+    if (snapshot?.selfPosEstimated && snapshot.selfPosErrorM) {
+      const r = Math.min(radius, snapshot.selfPosErrorM * pxPerM);
+      ctx.fillStyle = "rgba(255,255,255,0.08)";
+      ctx.strokeStyle = "rgba(255,255,255,0.3)";
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
     // Self: an arrow along the facing when it is known, else a dot.
     ctx.fillStyle = "#fff";
     ctx.beginPath();
@@ -259,28 +303,27 @@
     const objs = visibleObjects();
     for (const o of objs) {
       const len = Math.hypot(o.sx, o.sy) || 1;
-      const rPx = Math.min(o.distM * pxPerM, radius);
+      const rPx = o.distM * pxPerM;
       const px = cx + (o.sx / len) * rPx;
       const py = cy + (o.sy / len) * rPx;
-      const outside = o.distM > prefs.range;
       const color = o.info?.color || UNKNOWN_COLOR;
       ctx.globalAlpha = o.live ? 1 : 0.7;
       ctx.fillStyle = color;
       ctx.strokeStyle = color;
       ctx.lineWidth = 1.5;
       ctx.beginPath();
-      // Live: filled. Remembered: an outline. Beyond range: small, on the rim.
-      const size = outside ? 3 : o.live ? 5 : 4;
+      // Live: filled. Remembered: an outline.
+      const size = o.live ? 5 : 4;
       if (o.info?.shape === "square") ctx.rect(px - size, py - size, size * 2, size * 2);
       else ctx.arc(px, py, size, 0, Math.PI * 2);
-      if (o.live && !outside) ctx.fill();
+      if (o.live) ctx.fill();
       else ctx.stroke();
       ctx.lineWidth = 1;
-      // Labels only inside the range, so a wide view stays readable.
-      if (!outside && (o.live || o.distM > prefs.range * 0.08)) {
+      // No label right on top of the player, where they would pile up.
+      if (o.live || o.distM > prefs.range * 0.08) {
         const label = o.info?.name || String(o.code);
         ctx.fillStyle = "rgba(255,255,255,0.85)";
-        ctx.fillText(`${label} ${Math.round(o.distM)}m`, px + 7, py + 3);
+        ctx.fillText(`${label} ${approx()}${Math.round(o.distM)}m`, px + 7, py + 3);
       }
       ctx.globalAlpha = 1;
     }
@@ -291,7 +334,7 @@
 
   function renderList(objs) {
     if (!objs.length) {
-      listEl.innerHTML = `<div class="empty">${snapshot?.selfPos ? "Nothing tracked yet" : ""}</div>`;
+      listEl.innerHTML = `<div class="empty">${snapshot?.selfPos ? `Nothing within ${prefs.range} m` : ""}</div>`;
       return;
     }
     listEl.innerHTML = objs
@@ -313,7 +356,7 @@
         return `<div class="row" data-code="${o.code}"><span class="dot" style="${dot}"></span>` +
           `<span class="name">${name} <span class="dim">${state}</span></span>` +
           `<span class="dim">${direction(o.sx, o.sy)}${dz}</span>` +
-          `<span>${Math.round(o.distM)} m</span></div>`;
+          `<span>${approx()}${Math.round(o.distM)} m</span></div>`;
       })
       .join("");
   }
@@ -324,9 +367,14 @@
     } else if (!snapshot) {
       statusEl.textContent = "Waiting for data…";
     } else if (!snapshot.selfPos) {
-      statusEl.textContent = "Waiting for your position…";
+      // Capture often works without admin too (it depends on how Npcap was
+      // installed), so only blame it while nothing is coming in.
+      statusEl.textContent = isAdmin ? "Waiting for your position…" : "No data yet — try running as administrator";
     } else if (snapshot.map == null) {
       statusEl.textContent = "Map unknown — saved points show once it is recognised";
+    } else if (snapshot.selfPosEstimated) {
+      // Exact again on any buff on yourself, a skill or a dodge.
+      statusEl.textContent = `Estimated ±${Math.round(snapshot.selfPosErrorM || 0)} m — dodge or use a skill to fix it`;
     } else if (Date.now() - snapshot.selfPosMs > STALE_MS) {
       statusEl.textContent = `Position ${Math.round((Date.now() - snapshot.selfPosMs) / 1000)} s old`;
     } else {
@@ -340,21 +388,37 @@
     } catch {
       snapshot = null;
     }
-    if (snapshot?.selfHeading == null) shownHeading = null;
-    else if (shownHeading == null) shownHeading = snapshot.selfHeading;
+    const target = snapshot?.selfHeading;
+    if (target == null) {
+      shownHeading = null;
+      turn = null;
+    } else if (shownHeading == null) {
+      shownHeading = target;
+    } else if (target !== lastTarget) {
+      // A new facing: turn to it quickly. The server sends facing only once a
+      // second, so the disc already trails the character by up to that much;
+      // spreading the turn over the gap (tried first) added up to another
+      // second on top and drifted out of sync while turning — disorienting.
+      turn = { from: shownHeading, delta: ((target - shownHeading + 540) % 360) - 180, start: performance.now() };
+    }
+    lastTarget = target;
     draw();
   }
 
-  // Ease the shown heading toward the latest one (shortest way round), so
-  // 1 Hz facing updates turn the disc smoothly instead of snapping it.
-  function animate() {
-    const target = snapshot?.selfHeading;
-    if (target != null && shownHeading != null) {
-      const diff = ((target - shownHeading + 540) % 360) - 180;
-      if (Math.abs(diff) > 0.3) {
-        shownHeading = (shownHeading + diff * 0.2 + 360) % 360;
-        draw();
-      }
+  // Facing interpolation (see poll): where the current turn started and how
+  // far it goes. Tuned in game: 200 ms ease-out felt abrupt, the whole ~1 s
+  // gap lagged into dizziness; 450 ms easing in and out sits between.
+  let turn = null;
+  const TURN_MS = 450;
+  let lastTarget = null;
+
+  function animate(now) {
+    if (turn) {
+      const t = Math.min(1, (now - turn.start) / TURN_MS);
+      const eased = (1 - Math.cos(Math.PI * t)) / 2;
+      shownHeading = (turn.from + turn.delta * eased + 360) % 360;
+      if (t >= 1) turn = null;
+      draw();
     }
     requestAnimationFrame(animate);
   }
@@ -407,6 +471,7 @@
       console.error("[radar] set_radar_label", err);
     }
     editor.hidden = true;
+    if (!filterPanel.hidden) renderFilter();
     draw();
   };
   document.getElementById("editorSave").addEventListener("click", () => {
@@ -421,11 +486,59 @@
     if (e.key === "Escape") editor.hidden = true;
   });
 
+  // ⚙ panel: every registered marker (built-in + named), each with a box to
+  // show or hide it on the radar.
+  const filterBtn = document.getElementById("filterBtn");
+  const filterPanel = document.getElementById("filterPanel");
+  const filterList = document.getElementById("filterList");
+
+  const registered = () => {
+    const codes = new Set([...Object.keys(KNOWN), ...Object.keys(labels)].map(Number));
+    return [...codes]
+      .map((code) => ({ code, ...info(code) }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  };
+
+  const renderFilter = () => {
+    filterList.innerHTML = registered()
+      .map((m) => {
+        const radius = m.shape === "square" ? "1px" : "50%";
+        return `<label class="frow"><input type="checkbox" data-code="${m.code}"` +
+          `${prefs.hidden.includes(m.code) ? "" : " checked"} />` +
+          `<span class="dot" style="background:${m.color};border-radius:${radius}"></span>` +
+          `<span class="name">${esc(m.name)}</span><span class="dim">#${m.code}</span></label>`;
+      })
+      .join("");
+  };
+
+  filterBtn.addEventListener("click", () => {
+    filterPanel.hidden = !filterPanel.hidden;
+    filterBtn.classList.toggle("on", !filterPanel.hidden);
+    if (!filterPanel.hidden) renderFilter();
+  });
+  filterList.addEventListener("change", (e) => {
+    const code = Number(e.target.dataset.code);
+    if (!code) return;
+    prefs.hidden = prefs.hidden.filter((c) => c !== code);
+    if (!e.target.checked) prefs.hidden.push(code);
+    savePrefs(); draw();
+  });
+  document.getElementById("filterAll").addEventListener("click", () => {
+    prefs.hidden = [];
+    savePrefs(); renderFilter(); draw();
+  });
+  document.getElementById("filterNone").addEventListener("click", () => {
+    prefs.hidden = registered().map((m) => m.code);
+    savePrefs(); renderFilter(); draw();
+  });
+
   syncButtons();
   window.addEventListener("resize", draw);
   draw();
   if (invoke) {
     loadLabels().then(draw);
+    loadPrefs().then(() => { syncButtons(); draw(); });
+    invoke("is_admin").then((v) => { isAdmin = v !== false; draw(); }).catch(() => {});
     poll();
     setInterval(poll, POLL_MS);
     requestAnimationFrame(animate);

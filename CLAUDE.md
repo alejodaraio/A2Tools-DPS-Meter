@@ -30,7 +30,24 @@ npm run tauri dev        # full dev run: Rust backend + Vite frontend
 npm run dev              # frontend-only (Vite), no Rust backend — rarely useful alone
 npm run tauri build      # production build; MSI lands in src-tauri/target/release/bundle/msi/
 npm run rename-msi       # strip spaces from the built MSI filename (used post-build)
+npm run radar:dev        # radar-only app (same backend, no meter overlay)
+npm run radar:build      # radar-only build "A2Radar": A2Radar.exe + MSI (green radar icon)
 ```
+
+The radar-only app is this same codebase with `src-tauri/tauri.radar.conf.json`
+merged over `tauri.conf.json`: its own product name and binary (A2Radar),
+icons (`src-tauri/icons-radar/`, regenerate with `npx tauri icon
+src-tauri/icons-radar/source.png -o src-tauri/icons-radar`), identifier
+(`com.a2tools.radar`, so its own `%APPDATA%` folder — keep it, the saved
+points live there) and MSI, no `main` window. `run()` sees the identifier, opens the Radar as the only window and
+skips the global hotkeys; on first run it copies `radar_points.json` and
+`radar_labels.json` from the meter's folder. The radar keeps its view
+preferences in `radar_prefs.json` through the backend, not localStorage: the
+dev server (`localhost:1420`) and a built app (`tauri.localhost`) are
+different origins with separate localStorage, which made the same app show
+different things. Everything that touches `main`
+is already behind `get_webview_window("main")`, which is what makes this work —
+keep it that way.
 
 Rust tests live under `src-tauri/`:
 
@@ -54,6 +71,7 @@ var is unset (captures are user traffic and are not committed):
 | `self_status` | `A2_SELF_STATUS_CAPTURE` | local player bound from `4A 36` before any `33 36` |
 | `buffs_capture` | `A2_BUFF_CAPTURE` | buff uptimes vs the damage-multiplier steps |
 | `radar_capture` | `A2_RADAR_CAPTURE`, `A2_RADAR_LIVE_CAPTURE` | Sapphire on the radar next to the player, removed when depleted; spawn points saved and the map recognised in a later mid-zone session |
+| `radar_capture` | `A2_RADAR_ESTIMATE_CAPTURES` (`;`-separated) | position estimator vs the mantra positions, as if playing another class: median error (11–17 m on the 2026-10-12 captures) |
 
 There is no JS test suite and no linter — `node --check public/src/js/<file>.js`
 catches syntax errors; behaviour has to be checked in the running app.
@@ -97,6 +115,9 @@ cargo run --example self_id_probe -- <capture> <mode> ...
 #   selfrecords              every 33 36 self record
 #   ops [from] [to]          opcode histogram: count, sizes, first/last time
 #   dump <op>|all [from] [to]   hex of every packet with an opcode (e.g. 3436)
+#   nearpos <id> [radius_m]  packets carrying an x/y near the local player's position
+#   viewrange <id>           distance from the player at which objects enter/leave view
+#   viewevents <id>          raw me/enter/leave/tp/npc/mv lines for offline analysis
 cargo run --example replay_dps -- <capture> [from_ts] [to_ts]
 #   runs the real parser + calculator: per-target damage, gaps, DPS at several
 #   gap thresholds, meter rows, multiplier split, buff uptimes, name check
@@ -146,7 +167,10 @@ battle history; `list_fights` summaries are cached until the directory
 changes), `i18n/` (NPC/skill names loaded from `src/data/i18n/**`, reloaded on
 `set_language`), `config/settings.rs` (flat key-value settings in
 `%APPDATA%\com.a2tools.dps-meter\settings.json`), `combat/buffs.rs`,
-`combat/mob_cache.rs`, `combat/radar.rs` (world objects + self position for
+`combat/mob_cache.rs`, `combat/position_estimate.rs` (the player's position
+when the server sends none — any class but a Chanter with its mantra up —
+from the view radii of objects, mobs and players; ~13 m median error, shown
+as a haze and `~` distances), `combat/radar.rs` (world objects + self position for
 the Radar window, `public/radar.html`; spawn points seen per map persist in
 `radar_points.json`, because the server only sends objects within ~60 m; the
 objects in view go to `radar_live.json` with a session fingerprint, like the
@@ -163,7 +187,7 @@ shifted by +1 in a June 2026 patch; parsers accept both values where noted.
 |---|---|
 | `04 38` | damage/heal record: target, switch, flag, actor, skill u32, …, `[0 pad] <power scalar> <damage>` |
 | `05 38` | compact skill/damage record |
-| `33 36` | **self record**: your entity id + name. Only on zone load. Also the map id: `<map u32> <map u32> <x y z> <u32> 00 00 <u16> <z f32> 01 DE 02` |
+| `33 36` | **self record**: your entity id + name. Only on zone load. Also a map id: `<map u32> <map u32> <x y z> <u32> 00 00 <u16> <z f32> 01 DE 02` — not purely the map (one field came back as 1013 and later 1052), so the radar merges ids whose saved points coincide |
 | `45 36` / `44 36` | another player's id + name (mask-gated name field) |
 | `40 36` / `41 36` | mob/summon spawn: NPC code, max HP, summon `parent_key`. Only when the entity enters view. |
 | `41 36` / `42 36` | death (flag 3 = combat death; only seen for mobs so far) |
@@ -172,9 +196,9 @@ shifted by +1 in a June 2026 patch; parsers accept both values where noted.
 | `02 97` | party roster: names, level, gear score, combat power, server (account dbid, not entity id) |
 | `2A 38` | buff add: target, ?, ?, seq, effect u32, duration_ms u32, `00×4`, epoch ms u64, caster |
 | `2C 38` | buff remove (short form): target, `01 00`, seq, `01` |
-| `2B 38` / `2A 38` | end with `02 <x y z>`: the position of the entity concerned, ~1 Hz — the only source of the local player's position |
-| `02 38` | `<self> 00 <u32> <u16 counter> <self> <heading f32> <4 bytes>`: your facing, ~1 Hz, Unreal yaw in degrees (0° = +X, 90° = +Y); other shapes/entities share the opcode |
-| `34 36` | world object (gather node, …) enters view: id, kind u16, code u32, `x y z` f32 (cm), heading. Known codes (`radar.js` `KNOWN`, all kind 4): 1301199 Hidden Cube; gatherables 1550000 Odyle, 1550004 Orichalcum, 1550012 Asvata, 1550020 Sapphire, 1550021 Diamond, 1550033 Calendula, 1550045 Ohkra. Any other code is named from the radar's list (`radar_labels.json`) |
+| `2B 38` / `2A 38` | end with `<x y z>` (after `… 02` in a tick, `01 00` in an add): the position of the entity concerned. Ours when target = caster = us (a buff on yourself, a dodge) — exact, ~1–2 m. The ~1 Hz cadence is the Chanter's *Undefeated Mantra* (effect 181900411) ticking; other classes get one per self-buff and are estimated in between (`position_estimate.rs`) |
+| `02 38` | `<self> 00 <u32> <u16 counter> <self> <heading f32> [<x y z>] <4 bytes>`: short form = the mantra tick (u32 = skill 18190041, Chanter only); with `x y z` = a skill cast, exact position + facing for any class; Unreal yaw in degrees (0° = +X, 90° = +Y); other shapes/entities share the opcode |
+| `34 36` | world object (gather node, …) enters view: id, kind u16, code u32, `x y z` f32 (cm), heading. Known codes (`radar.js` `KNOWN`, all kind 4): 1301199 Hidden Cube; gatherables 1550000 Odyle, 1550004 Orichalcum, 1550012 Asvata, 1550020 Sapphire, 1550021 Diamond, 1550032 Azpha, 1550033 Calendula, 1550041 Morfa, 1550045 Ohkra. Any other code is named from the radar's list (`radar_labels.json`) |
 | `35 36` | object leaves: id, reason (`04` depleted, `01` out of view), 2 bytes |
 | `38 36` / `3A 36` | gathering: `<obj> <self> 01` start, `<obj> <self> <n>` n-th gather done |
 

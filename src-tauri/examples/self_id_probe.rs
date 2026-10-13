@@ -483,6 +483,212 @@ fn main() {
                 println!("{} {}", &p.ts[11..23], hex.join(" "));
             }
         }
+        "nearpos" => {
+            // Which packets carry an x/y within <radius_m> of the local
+            // player's position (known from 2B/2A 38), per opcode and offset
+            // from the end. `nearpos <self_id> [radius_m]`.
+            let id: u32 = args[3].parse().unwrap();
+            let radius = args.get(4).and_then(|s| s.parse::<f32>().ok()).unwrap_or(10.0) * 100.0;
+            let f = |d: &[u8], i: usize| f32::from_le_bytes(d[i..i + 4].try_into().unwrap());
+            let mut me: Option<(f32, f32, i64)> = None;
+            let mut by_op: BTreeMap<(u8, u8, bool, usize), (usize, String, String)> = BTreeMap::new();
+            for p in &pk {
+                let Some((a, b, at)) = opcode(&p.data) else { continue };
+                let d = &p.data;
+                let t = ms(&p.ts);
+                let is_self = varint(d, at).is_some_and(|(v, _)| v == id);
+                if (a, b) == (0x2B, 0x38) || (a, b) == (0x2A, 0x38) {
+                    if is_self && d.len() > at + 14 && d[d.len() - 13] == 0x02 {
+                        let (x, y) = (f(d, d.len() - 12), f(d, d.len() - 8));
+                        if x.is_finite() && y.is_finite() && x.abs() < 1e6 && y.abs() < 1e6 && (x != 0.0 || y != 0.0) {
+                            me = Some((x, y, t));
+                        }
+                    }
+                }
+                let Some((mx, my, mt)) = me else { continue };
+                if t - mt > 5000 { continue; }
+                // Encodings tried: f32 cm (tag 0), f32 m (1), i32 cm (2),
+                // i32 mm (3), f64 cm (4), i16 m (5). The tag goes in the
+                // offset column as end-<n>/<tag>.
+                for i in at..d.len().saturating_sub(7) {
+                    let i32_at = |k: usize| i32::from_le_bytes(d[k..k + 4].try_into().unwrap()) as f32;
+                    let mut cands = vec![
+                        (0usize, f(d, i), f(d, i + 4)),
+                        (1, f(d, i) * 100.0, f(d, i + 4) * 100.0),
+                        (2, i32_at(i), i32_at(i + 4)),
+                        (3, i32_at(i) / 10.0, i32_at(i + 4) / 10.0),
+                    ];
+                    if i + 16 <= d.len() {
+                        let g = |k: usize| f64::from_le_bytes(d[k..k + 8].try_into().unwrap()) as f32;
+                        cands.push((4, g(i), g(i + 8)));
+                    }
+                    let h = |k: usize| i16::from_le_bytes(d[k..k + 2].try_into().unwrap()) as f32 * 100.0;
+                    cands.push((5, h(i), h(i + 2)));
+                    let hit = cands.into_iter().find(|&(_, x, y)| {
+                        x.is_finite() && y.is_finite() && x.abs() >= 1000.0 && y.abs() >= 1000.0 && (x - mx).hypot(y - my) < radius
+                    });
+                    if let Some((tag, _, _)) = hit {
+                        let e = by_op.entry((a, b, is_self, (d.len() - i) * 10 + tag)).or_insert((0, String::new(), String::new()));
+                        e.0 += 1;
+                        if e.1.is_empty() {
+                            e.1 = p.ts[11..23].to_string();
+                            e.2 = d.iter().map(|x| format!("{:02X}", x)).collect::<Vec<_>>().join(" ");
+                        }
+                        break;
+                    }
+                }
+            }
+            for ((a, b, s, from_end), (n, ts, hex)) in by_op {
+                println!("{a:02X} {b:02X} self_first={s:<5} end-{}/{} x{n:<5} {ts} {hex}", from_end / 10, from_end % 10);
+            }
+        }
+        "selfpos" => {
+            // Every record ending in `02 <x y z>` whose target is <self_id>
+            // (2A/2B 38), with its caster, and every 02 38 about <self_id>
+            // carrying a plausible x y z after the facing.
+            // `selfpos <self_id>` -> `<ms> <op> <caster|-> <x> <y>`.
+            let id: u32 = args[3].parse().unwrap();
+            let f = |d: &[u8], i: usize| f32::from_le_bytes(d[i..i + 4].try_into().unwrap());
+            let idb = enc_varint(id);
+            for p in &pk {
+                let Some((a, b, at)) = opcode(&p.data) else { continue };
+                let d = &p.data;
+                if !varint(d, at).is_some_and(|(v, _)| v == id) { continue; }
+                let t = ms(&p.ts);
+                match (a, b) {
+                    (0x2B | 0x2A, 0x38) if d.len() > at + 24 => {
+                        let (x, y) = (f(d, d.len() - 12), f(d, d.len() - 8));
+                        if !(x.abs() > 1000.0 && y.abs() > 1000.0 && x.abs() < 2e6 && y.abs() < 2e6) { continue; }
+                        let area = &d[d.len().saturating_sub(24)..d.len() - 12];
+                        let caster = if area.windows(idb.len()).any(|w| w == idb.as_slice()) { "self".to_string() } else { "other".to_string() };
+                        println!("{t} {a:02X}38 {caster} {x} {y} pre={:02X}", d[d.len() - 13]);
+                    }
+                    (0x02, 0x38) => {
+                        // <self> 00 <u32> <u16> <self> <heading> [x y z] <4 bytes>
+                        let (_, n) = varint(d, at).unwrap();
+                        let Some((id2, n2)) = varint(d, at + n + 7) else { continue };
+                        if id2 != id { continue; }
+                        let h = at + n + 7 + n2;
+                        if d.len() == h + 4 + 12 + 4 {
+                            let (x, y) = (f(d, h + 4), f(d, h + 8));
+                            if x.abs() > 1000.0 && y.abs() > 1000.0 && x.abs() < 2e6 && y.abs() < 2e6 {
+                                println!("{t} 0238 skill {x} {y} heading={}", f(d, h));
+                            }
+                        }
+                    }
+                    _ => {}
+                }
+            }
+        }
+        "viewevents" => {
+            // Raw lines for offline analysis: `me <ms> <x> <y>` (2B/2A 38),
+            // `enter <ms> <id> <kind> <code> <x> <y>`, `leave <ms> <id> <reason>`,
+            // `tp <ms>` (23 36 entity 0). `viewevents <self_id>`.
+            let id: u32 = args[3].parse().unwrap();
+            let f = |d: &[u8], i: usize| f32::from_le_bytes(d[i..i + 4].try_into().unwrap());
+            for p in &pk {
+                let Some((a, b, at)) = opcode(&p.data) else { continue };
+                let d = &p.data;
+                let t = ms(&p.ts);
+                match (a, b) {
+                    (0x2B | 0x2A, 0x38) => {
+                        if varint(d, at).is_some_and(|(v, _)| v == id) && d.len() > at + 14 && d[d.len() - 13] == 0x02 {
+                            println!("me {t} {} {}", f(d, d.len() - 12), f(d, d.len() - 8));
+                        }
+                    }
+                    (0x34, 0x36) => {
+                        let Some((oid, n)) = varint(d, at) else { continue };
+                        let k = at + n + 6;
+                        if d.len() < k + 12 { continue; }
+                        let kind = u16::from_le_bytes([d[at + n], d[at + n + 1]]);
+                        let code = u32::from_le_bytes(d[at + n + 2..at + n + 6].try_into().unwrap());
+                        println!("enter {t} {oid} {kind} {code} {} {}", f(d, k), f(d, k + 4));
+                    }
+                    (0x35, 0x36) => {
+                        let Some((oid, n)) = varint(d, at) else { continue };
+                        if d.len() == at + n + 3 {
+                            println!("leave {t} {oid} {}", d[at + n]);
+                        }
+                    }
+                    (0x23, 0x36) => {
+                        if d.len() >= at + 18 && d[at..at + 6].iter().all(|&x| x == 0) {
+                            println!("tp {t}");
+                        }
+                    }
+                    // Mob/NPC (41 36) and player (45 36) spawns: the first
+                    // plausible x y z in the record. `npc <ms> <op> <id> <x> <y>`.
+                    (0x1A..=0x1E | 0x28 | 0x29 | 0x2E | 0x2F, 0x37) => {
+                        let Some((eid, n)) = varint(d, at) else { continue };
+                        if eid == id { continue; }
+                        let ok = |v: f32| v.is_finite() && v.abs() > 1000.0 && v.abs() < 1e6;
+                        if let Some(i) = (at + n..(at + n + 6).min(d.len().saturating_sub(11)))
+                            .find(|&i| ok(f(d, i)) && ok(f(d, i + 4)) && f(d, i + 8).is_finite() && f(d, i + 8).abs() < 1e6)
+                        {
+                            println!("mv {t} {a:02X} {eid} {} {}", f(d, i), f(d, i + 4));
+                        }
+                    }
+                    (0x41 | 0x45, 0x36) => {
+                        let Some((eid, n)) = varint(d, at) else { continue };
+                        let ok = |v: f32| v.is_finite() && v.abs() > 1000.0 && v.abs() < 1e6;
+                        if let Some(i) = (at + n..d.len().saturating_sub(11))
+                            .find(|&i| ok(f(d, i)) && ok(f(d, i + 4)) && f(d, i + 8).is_finite() && f(d, i + 8).abs() < 1e6)
+                        {
+                            println!("npc {t} {a:02X} {eid} {} {}", f(d, i), f(d, i + 4));
+                        }
+                    }
+                    _ => {}
+                }
+            }
+        }
+        "viewrange" => {
+            // Distance from the local player (2B/2A 38, at most 1.2 s old) at
+            // which world objects enter (34 36) and leave (35 36, by reason).
+            // `viewrange <self_id>`.
+            let id: u32 = args[3].parse().unwrap();
+            let f = |d: &[u8], i: usize| f32::from_le_bytes(d[i..i + 4].try_into().unwrap());
+            let mut me: Option<(f32, f32, i64)> = None;
+            let mut objs: HashMap<u32, (f32, f32)> = HashMap::new();
+            let mut hist: BTreeMap<(String, i64), usize> = BTreeMap::new();
+            for p in &pk {
+                let Some((a, b, at)) = opcode(&p.data) else { continue };
+                let d = &p.data;
+                let t = ms(&p.ts);
+                match (a, b) {
+                    (0x2B | 0x2A, 0x38) => {
+                        if varint(d, at).is_some_and(|(v, _)| v == id) && d.len() > at + 14 && d[d.len() - 13] == 0x02 {
+                            me = Some((f(d, d.len() - 12), f(d, d.len() - 8), t));
+                        }
+                    }
+                    (0x34, 0x36) => {
+                        let Some((oid, n)) = varint(d, at) else { continue };
+                        let k = at + n + 6;
+                        if d.len() < k + 12 { continue; }
+                        let (x, y) = (f(d, k), f(d, k + 4));
+                        if !x.is_finite() || x.abs() > 1e7 { continue; }
+                        let kind = u16::from_le_bytes([d[at + n], d[at + n + 1]]);
+                        objs.insert(oid, (x, y));
+                        if let Some((mx, my, _)) = me.filter(|m| t - m.2 <= 1200) {
+                            let (dx, dy) = ((x - mx).abs() / 100.0, (y - my).abs() / 100.0);
+                            // Distance and Chebyshev (square-cell) distance, per kind.
+                            *hist.entry((format!("enter_k{kind}"), dx.hypot(dy) as i64)).or_default() += 1;
+                            *hist.entry((format!("enterC_k{kind}"), dx.max(dy) as i64)).or_default() += 1;
+                        }
+                    }
+                    (0x35, 0x36) => {
+                        let Some((oid, n)) = varint(d, at) else { continue };
+                        if d.len() != at + n + 3 { continue; }
+                        let Some((x, y)) = objs.remove(&oid) else { continue };
+                        if let Some((mx, my, _)) = me.filter(|m| t - m.2 <= 1200) {
+                            *hist.entry((format!("leave{:02X}", d[at + n]), ((x - mx).hypot(y - my) / 100.0) as i64)).or_default() += 1;
+                        }
+                    }
+                    _ => {}
+                }
+            }
+            for ((ev, m), n) in hist {
+                println!("{ev:<8} {m:>4} m  x{n}");
+            }
+        }
         _ => eprintln!("unknown mode"),
     }
 }
