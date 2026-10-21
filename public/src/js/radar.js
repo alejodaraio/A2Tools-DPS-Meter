@@ -51,6 +51,11 @@
     try { labels = (await invoke("get_radar_labels")) || {}; } catch {}
   };
   const RANGES_M = [50, 100, 200, 400, 800, 1600];
+  // Zoom (mouse wheel, + / −): finer steps, about ×1.4 each.
+  const ZOOM_M = [25, 35, 50, 70, 100, 140, 200, 280, 400, 560, 800, 1100, 1600];
+  // The route's area is the range: re-plan once the zooming stops, not on
+  // every wheel notch.
+  const ROUTE_REPLAN_MS = 800;
   // Fast enough not to add to the ~1 Hz facing's own lag.
   const POLL_MS = 100;
   const STALE_MS = 5000;
@@ -112,12 +117,35 @@
     routeBtn.classList.toggle("on", prefs.route);
   };
 
-  rangeBtn.addEventListener("click", () => {
-    const i = RANGES_M.indexOf(prefs.range);
-    prefs.range = RANGES_M[(i + 1) % RANGES_M.length];
-    route = null;
+  let replanTimer = null;
+  const setRange = (m) => {
+    if (m === prefs.range) return;
+    prefs.range = m;
+    clearTimeout(replanTimer);
+    replanTimer = setTimeout(() => { route = null; updateRoute(); draw(); }, ROUTE_REPLAN_MS);
     savePrefs(); syncButtons(); draw();
+  };
+  // Next of the coarse steps above the current range (which zoom may have
+  // left between two of them), wrapping around.
+  rangeBtn.addEventListener("click", () => {
+    setRange(RANGES_M.find((m) => m > prefs.range) ?? RANGES_M[0]);
   });
+  // dir < 0 zooms in (shorter range).
+  const zoom = (dir) => {
+    let i = ZOOM_M.findIndex((m) => m >= prefs.range);
+    if (i < 0) i = ZOOM_M.length - 1;
+    // Between two steps: zooming in goes to the lower one.
+    if (ZOOM_M[i] !== prefs.range && dir < 0) i -= 1;
+    else i += dir;
+    setRange(ZOOM_M[Math.max(0, Math.min(ZOOM_M.length - 1, i))]);
+  };
+  document.querySelector(".scope").addEventListener("wheel", (e) => {
+    if (!filterPanel.hidden) return;
+    e.preventDefault();
+    zoom(e.deltaY < 0 ? -1 : 1);
+  }, { passive: false });
+  document.getElementById("zoomIn").addEventListener("click", () => zoom(-1));
+  document.getElementById("zoomOut").addEventListener("click", () => zoom(1));
   rotateBtn.addEventListener("click", () => {
     prefs.rotate = (prefs.rotate + 90) % 360;
     savePrefs(); syncButtons(); draw();
@@ -497,7 +525,7 @@
       ctx.beginPath();
       ctx.arc(cx, cy, (radius * i) / 4, 0, Math.PI * 2);
       ctx.stroke();
-      if (i % 2 === 0) ctx.fillText(`${(prefs.range * i) / 4}`, cx + 3, cy - (radius * i) / 4 + 11);
+      if (i % 2 === 0) ctx.fillText(`${Math.round((prefs.range * i) / 4)}`, cx + 3, cy - (radius * i) / 4 + 11);
     }
     ctx.beginPath();
     ctx.moveTo(cx - radius, cy); ctx.lineTo(cx + radius, cy);

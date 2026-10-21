@@ -152,6 +152,23 @@
         pointer-events: none;
       }
       .routeinfo[hidden] { display: none; }
+      .zoom {
+        position: absolute;
+        right: 6px;
+        bottom: 6px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        z-index: 1;
+      }
+      .zoom .btn {
+        width: 20px;
+        padding: 0;
+        font-size: 13px;
+        line-height: 18px;
+        background: rgba(255, 255, 255, 0.06);
+        border-color: var(--line);
+      }
       .stop {
         display: inline-block;
         min-width: 14px;
@@ -188,6 +205,10 @@
         <canvas id="scope"></canvas>
         <div class="status" id="status"></div>
         <div class="routeinfo" id="routeInfo" hidden></div>
+        <div class="zoom">
+          <button class="btn" id="zoomIn" title="Zoom in (mouse wheel)">+</button>
+          <button class="btn" id="zoomOut" title="Zoom out (mouse wheel)">−</button>
+        </div>
         <div class="filter" id="filterPanel" hidden>
           <div class="line">
             <span class="title">Show on radar</span>
