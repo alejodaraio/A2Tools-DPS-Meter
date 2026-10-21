@@ -175,8 +175,10 @@ the Radar window, `public/radar.html`; spawn points seen per map persist in
 `radar_points.json`, because the server only sends objects within ~60 m; the
 objects in view go to `radar_live.json` with a session fingerprint, like the
 mob cache, since a spawn is never re-sent to a meter restarted next to it;
-the radar's route button plans a nearest-neighbour + 2-opt walk through the
-shown points entirely in `radar.js`), `platform/` (Windows-only: admin check, global hotkeys,
+the radar's route button (all in `radar.js`) plans a closed loop through
+the shown points within the range around where it was switched on —
+nearest neighbour + 2-opt — and keeps leading around it; the rules (skips,
+detours, re-anchoring) are in the comment above `ROUTE_ABSENT_M`), `platform/` (Windows-only: admin check, global hotkeys,
 AION 2 window detection, screenshot-to-clipboard), `logging/` (tracing setup,
 optional raw-packet logging).
 
