@@ -126,6 +126,24 @@ struct SavedPoints {
     /// Map ids found to be the same world as another: id -> the one kept.
     #[serde(default)]
     aliases: HashMap<u32, u32>,
+    /// Codes shown only while in view, never remembered (see `live_only`).
+    #[serde(default = "default_live_only", rename = "liveOnly")]
+    live_only: Vec<u32>,
+}
+
+/// Elyos Kisk (named by the user, 2026-10-22): players place them anywhere,
+/// so where one stood says nothing about where the next will.
+fn default_live_only() -> Vec<u32> {
+    vec![1_100_035]
+}
+
+/// Saved points per code (every map) and the live-only codes, for the
+/// radar's "Saved points" tab.
+#[derive(Clone, Debug, Default, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SavedSummary {
+    pub counts: HashMap<u32, u32>,
+    pub live_only: Vec<u32>,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -175,6 +193,9 @@ pub struct RadarTracker {
     map: Option<u32>,
     points: Vec<SpawnPoint>,
     aliases: HashMap<u32, u32>,
+    /// Codes never remembered as spawn points: things placed by players
+    /// (Kisks) rather than spawning in fixed places.
+    live_only: HashSet<u32>,
     points_path: Option<PathBuf>,
     dirty: bool,
     /// Sightings while the map is unknown, recorded once it is known. Never
@@ -185,10 +206,15 @@ pub struct RadarTracker {
 impl RadarTracker {
     /// Load remembered points; from now on they are saved to the same file.
     pub fn load_points(&mut self, path: &Path) {
+        self.live_only = default_live_only().into_iter().collect();
         if let Ok(text) = std::fs::read_to_string(path) {
             match serde_json::from_str::<SavedPoints>(&text) {
                 Ok(saved) => {
+                    self.live_only = saved.live_only.into_iter().collect();
+                    let before = saved.points.len();
                     self.points = saved.points;
+                    self.points.retain(|p| !self.live_only.contains(&p.code));
+                    self.dirty = self.points.len() != before;
                     self.aliases = saved.aliases;
                 }
                 Err(e) => tracing::warn!("radar: ignoring unreadable {}: {}", path.display(), e),
@@ -205,7 +231,9 @@ impl RadarTracker {
         }
         let path = self.points_path.clone()?;
         self.dirty = false;
-        let saved = SavedPoints { version: 1, points: self.points.clone(), aliases: self.aliases.clone() };
+        let mut live_only: Vec<u32> = self.live_only.iter().copied().collect();
+        live_only.sort_unstable();
+        let saved = SavedPoints { version: 1, points: self.points.clone(), aliases: self.aliases.clone(), live_only };
         serde_json::to_string(&saved).ok().map(|json| (path, json))
     }
 
@@ -589,8 +617,46 @@ impl RadarTracker {
             .position(|p| p.map == map && p.code == code && p.pos.dist2d(pos) < SAME_POINT_CM)
     }
 
+    /// Saved points per code over every map, and the live-only codes.
+    pub fn saved_summary(&self) -> SavedSummary {
+        let mut counts = HashMap::new();
+        for p in &self.points {
+            *counts.entry(p.code).or_insert(0) += 1;
+        }
+        let mut live_only: Vec<u32> = self.live_only.iter().copied().collect();
+        live_only.sort_unstable();
+        SavedSummary { counts, live_only }
+    }
+
+    /// Drop every saved point of `code`, on every map. How many went.
+    pub fn forget_code(&mut self, code: u32) -> usize {
+        let before = self.points.len();
+        self.points.retain(|p| p.code != code);
+        let gone = before - self.points.len();
+        if gone > 0 {
+            tracing::info!("radar: forgot {} saved points of {}", gone, code);
+            self.dirty = true;
+        }
+        gone
+    }
+
+    /// Stop (or start again) remembering where `code` is seen. Turning it on
+    /// also forgets what was saved so far.
+    pub fn set_live_only(&mut self, code: u32, on: bool) {
+        let changed = if on { self.live_only.insert(code) } else { self.live_only.remove(&code) };
+        if on {
+            self.forget_code(code);
+        }
+        if changed {
+            self.dirty = true;
+        }
+    }
+
     fn record_point(&mut self, kind: u16, code: u32, pos: Vec3, now_ms: i64) {
         let Some(map) = self.map else { return };
+        if self.live_only.contains(&code) {
+            return;
+        }
         match self.find_point(code, &pos) {
             Some(i) => {
                 let p = &mut self.points[i];
@@ -996,6 +1062,26 @@ mod tests {
         assert_eq!(parse_map_from_self_record(&today), Some(1013));
         let sept = hex("00 00 E9 03 00 00 E9 03 00 00 F3 F9 99 C7 2F 29 04 C8 00 ED 0D 47 E8 FE 03 00 00 00 E0 07 00 4E 05 47 01 DE 02 0B 64 64");
         assert_eq!(parse_map_from_self_record(&sept), Some(1001));
+    }
+
+    #[test]
+    fn live_only_codes_are_shown_but_never_remembered() {
+        let mut t = RadarTracker::default();
+        t.set_map(1013);
+        t.set_live_only(1_100_035, true);
+        t.object_spawned(1, 4, 1_100_035, Vec3 { x: 0.0, y: 0.0, z: 0.0 }, 1);
+        t.object_spawned(2, 4, 1_550_021, Vec3 { x: 5_000.0, y: 0.0, z: 0.0 }, 1);
+        let snap = t.snapshot();
+        assert_eq!(snap.objects.len(), 2, "the Kisk is on the radar while in view");
+        assert_eq!(snap.points.len(), 1, "only the Diamond is remembered");
+        assert_eq!(t.saved_summary().counts.get(&1_100_035), None);
+
+        t.set_live_only(1_100_035, false);
+        t.object_spawned(3, 4, 1_100_035, Vec3 { x: 9_000.0, y: 0.0, z: 0.0 }, 2);
+        assert_eq!(t.saved_summary().counts.get(&1_100_035), Some(&1));
+        assert_eq!(t.forget_code(1_100_035), 1);
+        assert_eq!(t.forget_code(1_100_035), 0);
+        assert_eq!(t.saved_summary().counts.get(&1_550_021), Some(&1));
     }
 
     #[test]

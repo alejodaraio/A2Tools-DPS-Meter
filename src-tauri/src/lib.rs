@@ -106,6 +106,25 @@ fn get_radar_labels(state: tauri::State<'_, AppState>) -> std::collections::Hash
     combat::radar::load_labels(&state.app_data_dir.join("radar_labels.json"))
 }
 
+/// Saved points per code (every map) and the live-only codes.
+#[tauri::command]
+fn get_radar_saved(state: tauri::State<'_, AppState>) -> combat::radar::SavedSummary {
+    state.data_storage.radar().saved_summary()
+}
+
+/// Forget every saved point of one code; returns how many went.
+#[tauri::command]
+fn forget_radar_points(state: tauri::State<'_, AppState>, code: u32) -> usize {
+    state.data_storage.radar().forget_code(code)
+}
+
+/// Show `code` only while in view and never remember it (Kisks: players put
+/// them anywhere). Turning it on forgets its saved points.
+#[tauri::command]
+fn set_radar_live_only(state: tauri::State<'_, AppState>, code: u32, on: bool) {
+    state.data_storage.radar().set_live_only(code, on);
+}
+
 /// Name (or, with `label: null`, un-name) an object code on the radar.
 #[tauri::command]
 fn set_radar_label(
@@ -1927,6 +1946,9 @@ pub fn run() {
             get_radar,
             get_radar_labels,
             set_radar_label,
+            get_radar_saved,
+            forget_radar_points,
+            set_radar_live_only,
             get_radar_prefs,
             set_radar_prefs,
             open_radar_window,

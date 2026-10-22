@@ -172,7 +172,9 @@ when the server sends none — any class but a Chanter with its mantra up —
 from the view radii of objects, mobs and players; ~13 m median error, shown
 as a haze and `~` distances), `combat/radar.rs` (world objects + self position for
 the Radar window, `public/radar.html`; spawn points seen per map persist in
-`radar_points.json`, because the server only sends objects within ~60 m; the
+`radar_points.json`, because the server only sends objects within ~60 m —
+except "live only" codes kept in the same file, default Elyos Kisk, which
+players place anywhere; the
 objects in view go to `radar_live.json` with a session fingerprint, like the
 mob cache, since a spawn is never re-sent to a meter restarted next to it;
 the radar's route button (all in `radar.js`) plans a closed loop through
@@ -202,7 +204,7 @@ shifted by +1 in a June 2026 patch; parsers accept both values where noted.
 | `2C 38` | buff remove (short form): target, `01 00`, seq, `01` |
 | `2B 38` / `2A 38` | end with `<x y z>` (after `… 02` in a tick, `01 00` in an add): the position of the entity concerned. Ours when target = caster = us (a buff on yourself, a dodge) — exact, ~1–2 m. The ~1 Hz cadence is the Chanter's *Undefeated Mantra* (effect 181900411) ticking; other classes get one per self-buff and are estimated in between (`position_estimate.rs`) |
 | `02 38` | `<self> 00 <u32> <u16 counter> <self> <heading f32> [<x y z>] <4 bytes>`: short form = the mantra tick (u32 = skill 18190041, Chanter only); with `x y z` = a skill cast, exact position + facing for any class; Unreal yaw in degrees (0° = +X, 90° = +Y); other shapes/entities share the opcode |
-| `34 36` | world object (gather node, …) enters view: id, kind u16, code u32, `x y z` f32 (cm), heading. Known codes (`radar.js` `KNOWN`, all kind 4): 1301199 Hidden Cube; gatherables 1550000 Odyle, 1550004 Orichalcum, 1550012 Asvata, 1550020 Sapphire, 1550021 Diamond, 1550032 Azpha, 1550033 Calendula, 1550041 Morfa, 1550045 Ohkra. Any other code is named from the radar's list (`radar_labels.json`) |
+| `34 36` | world object (gather node, …) enters view: id, kind u16, code u32, `x y z` f32 (cm), heading. Known codes (`radar.js` `KNOWN`): 1100035 Elyos Kisk; kind 4: 1301199 Hidden Cube; gatherables 1550000 Odyle, 1550004 Orichalcum, 1550012 Asvata, 1550020 Sapphire, 1550021 Diamond, 1550022 Ruby, 1550032 Azpha, 1550033 Calendula, 1550040 Raydam, 1550041 Morfa, 1550045 Ohkra. Any other code is named from the radar's list (`radar_labels.json`) |
 | `35 36` | object leaves: id, reason (`04` depleted, `01` out of view), 2 bytes |
 | `38 36` / `3A 36` | gathering: `<obj> <self> 01` start, `<obj> <self> <n>` n-th gather done |
 

@@ -38,6 +38,8 @@
     1550045: { name: "Ohkra", color: "#ff8a3d" },
     // Confirmed 2026-10-12: stood 3–6 m from it for minutes (map 1013).
     1301199: { name: "Hidden Cube", color: "#ff3b3b", shape: "square" },
+    // Named by the user in game (2026-10-22). Not a gather node.
+    1100035: { name: "Elyos Kisk", color: "#5aa9ff", shape: "square" },
   };
   const UNKNOWN_COLOR = "rgba(255,255,255,0.45)";
   const SWATCHES = ["#5aa9ff", "#ff3b3b", "#e8f4ff", "#3ddc84", "#ffcc33", "#c77dff", "#ff8a3d"];
@@ -879,7 +881,102 @@
   filterBtn.addEventListener("click", () => {
     filterPanel.hidden = !filterPanel.hidden;
     filterBtn.classList.toggle("on", !filterPanel.hidden);
-    if (!filterPanel.hidden) renderFilter();
+    if (!filterPanel.hidden) {
+      renderFilter();
+      if (!savedPane.hidden) renderSaved();
+    }
+  });
+
+  // "Saved points" tab: what is remembered per code over every map, with a
+  // button to forget a code's points and a "live only" box for codes whose
+  // places mean nothing (Kisks, placed by players anywhere).
+  const tabShow = document.getElementById("tabShow");
+  const tabSaved = document.getElementById("tabSaved");
+  const savedPane = document.getElementById("savedPane");
+  const savedList = document.getElementById("savedList");
+  const filterAllBtn = document.getElementById("filterAll");
+  const filterNoneBtn = document.getElementById("filterNone");
+
+  const showTab = (saved) => {
+    tabShow.classList.toggle("on", !saved);
+    tabSaved.classList.toggle("on", saved);
+    filterList.hidden = saved;
+    savedPane.hidden = !saved;
+    filterAllBtn.hidden = saved;
+    filterNoneBtn.hidden = saved;
+    if (saved) renderSaved();
+  };
+  tabShow.addEventListener("click", () => showTab(false));
+  tabSaved.addEventListener("click", () => showTab(true));
+
+  async function renderSaved() {
+    let summary;
+    try {
+      summary = await invoke("get_radar_saved");
+    } catch (err) {
+      savedList.innerHTML = `<div class="empty">Could not read the saved points</div>`;
+      return;
+    }
+    const liveOnly = new Set(summary.liveOnly);
+    const codes = new Set([...Object.keys(summary.counts).map(Number), ...liveOnly]);
+    const rows = [...codes]
+      .map((code) => ({ code, count: summary.counts[code] || 0, info: info(code) }))
+      .sort((a, b) => (b.info ? 1 : 0) - (a.info ? 1 : 0) || b.count - a.count || a.code - b.code);
+    if (!rows.length) {
+      savedList.innerHTML = `<div class="empty">Nothing saved yet</div>`;
+      return;
+    }
+    savedList.innerHTML = rows
+      .map((r) => {
+        const color = r.info?.color || UNKNOWN_COLOR;
+        const radius = r.info?.shape === "square" ? "1px" : "50%";
+        const name = r.info ? esc(r.info.name) : `#${r.code}`;
+        return `<div class="srow" data-code="${r.code}">` +
+          `<span class="dot" style="background:${color};border-radius:${radius}"></span>` +
+          `<span class="name">${name}${r.info ? ` <span class="dim">#${r.code}</span>` : ""}</span>` +
+          `<span class="dim">${r.count}</span>` +
+          `<label title="Show only while in view, never remember where it was seen">` +
+          `<input type="checkbox" class="liveonly"${liveOnly.has(r.code) ? " checked" : ""} />live only</label>` +
+          `<button class="btn forget" title="Forget every saved point of this code"${r.count ? "" : " disabled"}>forget</button>` +
+          `</div>`;
+      })
+      .join("");
+  }
+
+  savedList.addEventListener("change", async (e) => {
+    if (!e.target.classList.contains("liveonly")) return;
+    const code = Number(e.target.closest(".srow").dataset.code);
+    try {
+      await invoke("set_radar_live_only", { code, on: e.target.checked });
+    } catch (err) {
+      console.error("[radar] set_radar_live_only", err);
+    }
+    route = null;
+    renderSaved();
+  });
+  // Forgetting cannot be undone: the first click arms the button, a second
+  // one within 3 s does it.
+  savedList.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".forget");
+    if (!btn || btn.disabled) return;
+    if (!btn.classList.contains("armed")) {
+      btn.classList.add("armed");
+      btn.textContent = "sure?";
+      setTimeout(() => {
+        if (!btn.isConnected) return;
+        btn.classList.remove("armed");
+        btn.textContent = "forget";
+      }, 3000);
+      return;
+    }
+    const code = Number(btn.closest(".srow").dataset.code);
+    try {
+      await invoke("forget_radar_points", { code });
+    } catch (err) {
+      console.error("[radar] forget_radar_points", err);
+    }
+    route = null;
+    renderSaved();
   });
   filterList.addEventListener("change", (e) => {
     const code = Number(e.target.dataset.code);
