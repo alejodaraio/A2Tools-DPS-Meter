@@ -61,6 +61,9 @@
   // Fast enough not to add to the ~1 Hz facing's own lag.
   const POLL_MS = 100;
   const STALE_MS = 5000;
+  // Facing older than this gets a hint: it only updates with the mantra
+  // (~1 Hz) or a skill cast, so the disc may point where we no longer look.
+  const HEADING_STALE_MS = 10000;
 
   // headingMirror defaults on: in-game, facing-up only matched with the
   // mirror on. `v` bumps re-apply a changed default once over saved prefs.
@@ -634,6 +637,37 @@
     if (!f || !mine) return UNKNOWN_PLAYER_COLOR;
     return f === mine ? PLAYER_COLOR : ENEMY_COLOR;
   };
+  // A party member beyond the range: an arrowhead on the rim pointing their
+  // way, with name and distance; dimmed when their last position is old.
+  function drawPartyOnRim(pl, sx, sy, distM, cx, cy, radius) {
+    const len = Math.hypot(sx, sy) || 1;
+    const ux = sx / len;
+    const uy = sy / len;
+    const r = radius - 7;
+    const px = cx + ux * r;
+    const py = cy + uy * r;
+    const a = Math.atan2(uy, ux);
+    const ageS = Math.max(0, (Date.now() - pl.seenMs) / 1000);
+    ctx.globalAlpha = ageS > 30 ? 0.5 : 1;
+    ctx.fillStyle = PARTY_COLOR;
+    ctx.strokeStyle = "rgba(0,0,0,0.6)";
+    ctx.beginPath();
+    ctx.moveTo(px + Math.cos(a) * 7, py + Math.sin(a) * 7);
+    ctx.lineTo(px + Math.cos(a + 2.4) * 6, py + Math.sin(a + 2.4) * 6);
+    ctx.lineTo(px + Math.cos(a - 2.4) * 6, py + Math.sin(a - 2.4) * 6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    const km = distM >= 1000 ? `${(distM / 1000).toFixed(1)}km` : `${Math.round(distM)}m`;
+    const label = `${pl.name || "?"} ${km}${ageS > 30 ? ` (${Math.round(ageS)}s)` : ""}`;
+    // Inside the disc, on the side away from the rim.
+    const w = ctx.measureText(label).width;
+    const tx = px - ux * 12 - (ux > 0.3 ? w : ux < -0.3 ? 0 : w / 2);
+    const ty = py - uy * 12 + 3;
+    ctx.fillText(label, tx, ty);
+    ctx.globalAlpha = 1;
+  }
+
   function drawPlayers(cx, cy, radius, pxPerM) {
     const me = snapshot.selfPos;
     // Learnt from the party: keep it for when we play solo.
@@ -647,8 +681,12 @@
       const dx = pl.pos.x - me.x;
       const dy = pl.pos.y - me.y;
       const distM = Math.hypot(dx, dy) / 100;
-      if (distM > prefs.range) continue;
       const [sx, sy] = toScreen(dx, dy);
+      if (distM > prefs.range) {
+        // Party members past the range: on the rim, towards them.
+        if (pl.party) drawPartyOnRim(pl, sx, sy, distM, cx, cy, radius);
+        continue;
+      }
       const px = cx + (sx / 100) * pxPerM;
       const py = cy + (sy / 100) * pxPerM;
       const color = playerColor(pl);
@@ -801,6 +839,8 @@
     } else if (snapshot.selfPosEstimated) {
       // Exact again on any buff on yourself, a skill or a dodge.
       statusEl.textContent = `Estimated ±${Math.round(snapshot.selfPosErrorM || 0)} m — dodge or use a skill to fix it`;
+    } else if (headingUp() && Date.now() - snapshot.selfHeadingMs > HEADING_STALE_MS) {
+      statusEl.textContent = `Facing from ${ago(snapshot.selfHeadingMs)} ago — use a skill after turning`;
     } else if (Date.now() - snapshot.selfPosMs > STALE_MS) {
       statusEl.textContent = `Position ${Math.round((Date.now() - snapshot.selfPosMs) / 1000)} s old`;
     } else {

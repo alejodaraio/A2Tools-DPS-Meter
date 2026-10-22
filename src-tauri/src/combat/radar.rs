@@ -93,6 +93,9 @@ impl Vec3 {
     }
 }
 
+/// How long a movement is remembered for `last_position`.
+const LAST_MOVE_KEEP_MS: i64 = 5 * 60 * 1000;
+
 /// Another player in view: spawned by `45 36`, moved by the `37` movement
 /// records, gone with `47 36`. Sent within ~50 m — party members at any
 /// distance (2026-10-12: every player seen 80 m+ away but two was in the
@@ -180,6 +183,9 @@ pub struct RadarSnapshot {
     pub self_pos: Option<Vec3>,
     /// Facing, degrees 0..360 (0 = +X, 90 = +Y).
     pub self_heading: Option<f32>,
+    /// When `self_heading` arrived (epoch ms): the last known facing is kept
+    /// however old, and the UI says when it is stale.
+    pub self_heading_ms: i64,
     /// When `self_pos` was last updated (epoch ms), so the UI can show staleness.
     pub self_pos_ms: i64,
     /// `self_pos` is an estimate (no position from the server lately), give
@@ -201,6 +207,14 @@ pub struct RadarSnapshot {
 pub struct RadarTracker {
     objects: HashMap<i32, RadarObject>,
     players: HashMap<u32, RadarPlayer>,
+    /// Last movement of every entity, for party members the radar has no
+    /// spawn of (they are sent from anywhere). Pruned by age.
+    last_move: HashMap<u32, (Vec3, i64)>,
+    /// Party members' positions from `1c 92`, by dbid, with their zone.
+    party_pos: HashMap<u64, (Vec3, i64, u32)>,
+    /// Our zone in `1c 92` terms, learnt from a party member in view (same
+    /// place as us); forgotten when we teleport.
+    self_zone: Option<u32>,
     self_pos: Option<(Vec3, i64)>,
     self_heading: Option<(f32, i64)>,
     estimator: PositionEstimator,
@@ -390,6 +404,10 @@ impl RadarTracker {
     /// they are only sent while near, so they say roughly where we are.
     pub fn entity_moved(&mut self, id: u32, pos: Vec3, now_ms: i64) {
         self.others.insert(id);
+        if self.last_move.len() > 4_000 {
+            self.last_move.retain(|_, (_, t)| now_ms - *t < LAST_MOVE_KEEP_MS);
+        }
+        self.last_move.insert(id, (pos, now_ms));
         if let Some(p) = self.players.get_mut(&id) {
             p.pos = pos;
             p.seen_ms = now_ms;
@@ -413,6 +431,33 @@ impl RadarTracker {
     pub fn player_spawned(&mut self, id: u32, pos: Vec3, server: Option<u16>, now_ms: i64) {
         self.players.insert(id, RadarPlayer { id, name: None, party: false, server, pos, seen_ms: now_ms });
         self.entity_spawned(id, pos, now_ms);
+    }
+
+    /// `1c 92`: where a party member is, wherever that is, and in which zone.
+    pub fn party_moved(&mut self, dbid: u64, pos: Vec3, zone: u32, now_ms: i64) {
+        self.party_pos.insert(dbid, (pos, now_ms, zone));
+    }
+
+    /// A party member's last `1c 92` position, when (epoch ms), and whether
+    /// it is in our zone (`None`: ours is not known, assume so).
+    pub fn party_position(&self, dbid: u64) -> Option<(Vec3, i64, Option<bool>)> {
+        self.party_pos
+            .get(&dbid)
+            .map(|&(p, t, z)| (p, t, self.self_zone.map(|ours| z == ours)))
+    }
+
+    /// A party member is in view, so in our zone: theirs is ours.
+    pub fn party_member_in_view(&mut self, dbid: u64) {
+        if let Some(&(_, _, z)) = self.party_pos.get(&dbid) {
+            if z != 0 {
+                self.self_zone = Some(z);
+            }
+        }
+    }
+
+    /// Where an entity last moved to, and when (epoch ms), if lately.
+    pub fn last_position(&self, id: u32) -> Option<(Vec3, i64)> {
+        self.last_move.get(&id).copied()
     }
 
     /// `47 36`: a player left view (reason `01 00` nearly always; `02 0C`,
@@ -598,6 +643,7 @@ impl RadarTracker {
         self.set_self_pos(pos, now_ms);
         // Whoever is around after the jump is sent again.
         self.players.clear();
+        self.self_zone = None;
         if self.map.is_none() {
             self.pending.clear();
         }
@@ -610,6 +656,7 @@ impl RadarTracker {
     pub fn clear(&mut self) {
         self.objects.clear();
         self.players.clear();
+        self.last_move.clear();
         self.self_pos = None;
         self.self_heading = None;
         self.estimator = PositionEstimator::default();
@@ -636,16 +683,16 @@ impl RadarTracker {
         };
         let position = self.position();
         let estimated = position.is_some_and(|p| p.2.is_some());
-        // A facing that stopped coming (mantra off) would point the disc the
-        // wrong way while the position is estimated: drop it, north-up it is.
-        let heading = self
-            .self_heading
-            .filter(|&(_, t)| !position.is_some_and(|p| p.2.is_some() && p.1 - t > 3_000))
-            .map(|(h, _)| h);
+        // The last facing we know, however old: dropping a stale one turned the
+        // disc north-up behind the player's back, and taking it back with the
+        // next exact position flipped the disc around (2026-10-22). The UI
+        // shows its age instead, and a skill cast refreshes it.
+        let heading = self.self_heading.map(|(h, _)| h);
         RadarSnapshot {
             map: self.map,
             self_pos: position.map(|p| p.0),
             self_heading: heading,
+            self_heading_ms: self.self_heading.map_or(0, |h| h.1),
             self_pos_ms: position.map(|p| p.1).unwrap_or(0),
             self_pos_estimated: estimated,
             self_pos_error_m: position.and_then(|p| p.2),
@@ -993,30 +1040,57 @@ pub fn parse_entity_move(body: &[u8]) -> Option<(u32, Vec3)> {
     Some((id, pos))
 }
 
-/// A player spawn's (`45 36`) world id: faction × 1000 + server. Two forms
-/// (2026-10-22, 62 players, each the same in every one of their spawns):
+/// A player spawn's (`45 36`) world id: faction × 1000 + server (1401,
+/// 2403, …; the user's enemies were all 1xxx, allies 2xxx — and the Elyos
+/// Kisk is the enemy's, so 1 = Elyos, 2 = Asmodian).
 ///
-/// ```text
-/// in a legion:  <srv u16> <u16> 00 00 00 00 <srv u16> <len u8> <legion name>
-/// no legion:    <srv u16> <u8> 11 <u8> <3 bytes> <u8> <u8> FF×8
-/// ```
-///
-/// 1401 / 2401 split them in two; the user's enemies were all 1401, an ally
-/// 2401 — and the Elyos Kisk is the enemy's, so 1 = Elyos, 2 = Asmodian.
+/// Read from the player's dbid, `<id u32 ≥ 0x10000> 00 00 <server u16>`, which
+/// sits 417–429 bytes before the end of the record: on 1467 spawns of 456
+/// players (2026-10-22) it gave every one a single faction. A spawn too short
+/// for that falls back to the legion block, `<srv u16> <u16> 00 00 00 00 <srv
+/// u16> <len> <name>` (the legion's server — the faction matches). A third
+/// guess, for legion-less players, made an ally (dxc) an enemy and is gone.
 pub fn parse_player_server(body: &[u8]) -> Option<u16> {
     let u16_at = |i: usize| u16::from_le_bytes([body[i], body[i + 1]]);
     let plausible = |v: u16| (1_000..10_000).contains(&v);
-    for s in 0..body.len().saturating_sub(11) {
-        let v = u16_at(s);
-        if plausible(v) && body[s + 4..s + 8] == [0; 4] && u16_at(s + 8) == v {
-            return Some(v);
-        }
+    let len = body.len();
+    let from_dbid = (len.saturating_sub(600)..len.saturating_sub(300))
+        .filter(|&i| {
+            let id = u32::from_le_bytes(body[i..i + 4].try_into().unwrap());
+            (0x1_0000..0x100_0000).contains(&id) && body[i + 4..i + 6] == [0, 0] && plausible(u16_at(i + 6))
+        })
+        .min_by_key(|&i| (len - i).abs_diff(SPAWN_DBID_FROM_END))
+        .map(|i| u16_at(i + 6));
+    if from_dbid.is_some() {
+        return from_dbid;
     }
-    let ff = [0xFFu8; 8];
-    (9..body.len().saturating_sub(8))
-        .filter(|&k| body[k..k + 8] == ff && body[k - 6] == 0x11)
-        .map(|k| u16_at(k - 9))
-        .find(|&v| plausible(v))
+    (0..len.saturating_sub(11))
+        .find(|&s| plausible(u16_at(s)) && body[s + 4..s + 8] == [0; 4] && u16_at(s + 8) == u16_at(s))
+        .map(u16_at)
+}
+
+/// Where a spawn's dbid usually sits, counted from the end of the record.
+const SPAWN_DBID_FROM_END: usize = 422;
+
+/// `1c 92` body: a party member, every ~2 s and from any distance (what the
+/// game's minimap shows; 2026-10-22, followed a member out to 292 m):
+///
+/// ```text
+/// <dbid u64> <level u32> <zone u32> <u32> <u32> <x y z f32> <legion …>
+/// ```
+///
+/// The zone was 0x14 for everyone on the field map, 0 while a member was
+/// leaving and 0x385 once they were in the legion hall — where `x y z` are
+/// the hall's, meaningless on our map. -> (dbid, position, zone).
+pub fn parse_party_member_update(body: &[u8]) -> Option<(u64, Vec3, u32)> {
+    if body.len() < 36 || body[4..6] != [0, 0] {
+        return None;
+    }
+    let dbid = u64::from_le_bytes(body[..8].try_into().ok()?);
+    let server = (dbid >> 48) as u16;
+    let zone = u32::from_le_bytes(body[12..16].try_into().ok()?);
+    let pos = Vec3::read(body, 24).filter(far_from_origin)?;
+    (1_000..10_000).contains(&server).then_some((dbid, pos, zone))
 }
 
 /// `47 36` body: `<player varint> <reason> <byte>` -> the player.
@@ -1147,14 +1221,39 @@ mod tests {
     }
 
     #[test]
+    fn party_member_position_from_1c_92() {
+        // Gray, 2026-10-22, 105 m from us.
+        let body: Vec<u8> = (0..72)
+            .step_by(2)
+            .map(|i| u8::from_str_radix(&"4b9a0400000061090800000014000000010000006002000077620c47f61505c76aeabc46"[i..i + 2], 16).unwrap())
+            .collect();
+        let (dbid, pos, zone) = parse_party_member_update(&body).unwrap();
+        assert_eq!((dbid >> 48, zone), (2401, 0x14));
+        assert!(pos.x > 30_000.0 && pos.y < -20_000.0, "{pos:?}");
+        let mut t = RadarTracker::default();
+        t.party_moved(dbid, pos, zone, 5);
+        assert_eq!(t.party_position(dbid).map(|(_, t, same)| (t, same)), Some((5, None)), "our zone unknown");
+        // Another member in view tells us our zone; this one then left for the hall.
+        t.party_moved(7, pos, 0x14, 6);
+        t.party_member_in_view(7);
+        t.party_moved(dbid, pos, 0x385, 7);
+        assert_eq!(t.party_position(dbid).map(|(_, _, same)| same), Some(Some(false)));
+    }
+
+    #[test]
     fn player_server_from_both_spawn_forms() {
-        // Tails of real `45 36` spawns (2026-10-22): Praga (legion HIGH) and
-        // Kethyler (no legion).
         let hex = |s: &str| (0..s.len()).step_by(2).map(|i| u8::from_str_radix(&s[i..i + 2], 16).unwrap()).collect::<Vec<u8>>();
+        // A full-length spawn: Gray's dbid (2401) 421 bytes from the end, a
+        // legion block of another server further up, zero runs that look like
+        // ids around it.
+        let mut gray = vec![0u8; 1509];
+        gray[100..117].copy_from_slice(&hex("7905920000000000790504484947480100"));
+        gray[1509 - 421..1509 - 413].copy_from_slice(&hex("4b9a040000006109"));
+        gray[1509 - 450..1509 - 442].copy_from_slice(&hex("0c00000000000d00"));
+        assert_eq!(parse_player_server(&gray), Some(2401));
+        // A short one: the legion block (Praga, HIGH).
         let praga = [&[0x18u8, 0x42, 0xb7, 0x00][..], &hex("7905920000000000790504484947480100")].concat();
         assert_eq!(parse_player_server(&praga), Some(1401));
-        let kethyler = hex("a96b22017905151110f5c7c901ffffffffffffffff8075");
-        assert_eq!(parse_player_server(&kethyler), Some(1401));
         assert_eq!(parse_player_server(&hex("0102030405060708090a0b0c")), None);
     }
 
@@ -1283,8 +1382,23 @@ mod tests {
         let vector = hex("AE 62 00 E5 A8 12 01 2C 02 AE 62 75 A6 C3 C1 B7 ED C7 42 E2 07 2B 40 00 00 00 00 90 4E 01 F4 03");
         assert_eq!(parse_self_heading(&vector, 12590), None);
         let mut t = RadarTracker::default();
-        t.set_self_heading(-39.6, 0);
+        t.set_self_heading(-39.6, 7);
         assert_eq!(t.snapshot().self_heading.map(|d| d.round()), Some(320.0));
+        // Minutes later, a position from a buff: the facing is kept, with its age.
+        t.set_self_pos(Vec3 { x: 100_000.0, y: 30_000.0, z: 0.0 }, 200_000);
+        let snap = t.snapshot();
+        assert_eq!((snap.self_heading.map(|d| d.round()), snap.self_heading_ms), (Some(320.0), 7));
+    }
+
+    #[test]
+    fn learning_our_id_mid_zone_keeps_what_is_in_view() {
+        use crate::combat::data_storage::DataStorage;
+        let s = DataStorage::new();
+        s.radar().player_spawned(8547, Vec3 { x: 82_000.0, y: 5_000.0, z: 0.0 }, Some(2401), 1);
+        s.set_local_player_id(Some(8154));
+        assert_eq!(s.radar().snapshot().players.len(), 1, "same session: Gray stays");
+        s.set_local_player_id(Some(9000));
+        assert!(s.radar().snapshot().players.is_empty(), "a new id is a new session");
     }
 
     #[test]

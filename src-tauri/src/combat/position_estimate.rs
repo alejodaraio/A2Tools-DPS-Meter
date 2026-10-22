@@ -29,9 +29,11 @@ use std::collections::HashMap;
 /// Run speed allowance between clues (m/s). Mounts go faster; the estimate
 /// then lags and re-acquires.
 const SPEED_MPS: f32 = 8.0;
-/// Fastest plausible travel (a mount, ~23 m/s measured), for discarding
-/// clues that cannot be near us.
-const MOUNT_MPS: f32 = 30.0;
+/// Fastest plausible travel, for discarding clues that cannot be near us:
+/// a mount ~23 m/s, flying ~50 m/s between two exact positions (2026-10-22).
+const MOUNT_MPS: f32 = 60.0;
+/// Two exact positions at most this far apart in time (ms) give a speed.
+const VELOCITY_SPAN_MS: i64 = 20_000;
 /// Mob/player movement is only sent within this distance (m).
 const MOVER_RANGE_M: f32 = 46.0;
 /// Mob/player spawns arrive within this distance (m).
@@ -111,6 +113,9 @@ pub struct PositionEstimator {
     /// Until when to stay on a node we gathered at.
     hold_until: i64,
     last_solve: i64,
+    /// Speed between the last two server positions (m/s), when faster than a
+    /// run: riding or flying. Kept until a server position says we slowed.
+    velocity: Option<f32>,
 }
 
 impl PositionEstimator {
@@ -120,7 +125,15 @@ impl PositionEstimator {
 
     /// A real position from the server: start from it.
     pub fn anchor(&mut self, x_cm: f32, y_cm: f32, t: i64) {
-        self.anchor = Some((x_cm / 100.0, y_cm / 100.0, t));
+        let (x, y) = (x_cm / 100.0, y_cm / 100.0);
+        if let Some((px, py, pt)) = self.anchor {
+            let dt = (t - pt) as f32 / 1000.0;
+            if (0.3..=VELOCITY_SPAN_MS as f32 / 1000.0).contains(&dt) {
+                let v = (x - px).hypot(y - py) / dt;
+                self.velocity = (v > SPEED_MPS && v < MOUNT_MPS).then_some(v);
+            }
+        }
+        self.anchor = Some((x, y, t));
         self.est = None;
     }
 
@@ -168,6 +181,12 @@ impl PositionEstimator {
         self.movers.retain(|_, m| now - m.2 < MOVER_TTL_MS);
 
         let age = |t: i64| (now - t).max(0) as f32 / 1000.0;
+        // Riding or flying (measured between two server positions): allow that
+        // speed. Which way we go is not known — turns are not sent — so no
+        // dead reckoning: tried on 2026-10-22, a flight that turned came out
+        // no better (147 / 227 m off either way).
+        let fast = self.velocity;
+        let speed = fast.map_or(SPEED_MPS, |v| (1.3 * v).min(MOUNT_MPS));
         let mut rings: Vec<Ring> = Vec::new();
         for (x, y, code) in live {
             let (_, leave) = view_radii(code);
@@ -175,7 +194,7 @@ impl PositionEstimator {
         }
         for e in &self.edges {
             let (enter, leave) = view_radii(e.code);
-            let s = SPEED_MPS * age(e.t);
+            let s = speed * age(e.t);
             rings.push(if e.entered {
                 Ring { x: e.x, y: e.y, lo: enter - 12.0 - s, hi: enter + 4.0 + s, w: 0.5 }
             } else {
@@ -183,10 +202,10 @@ impl PositionEstimator {
             });
         }
         for &(x, y, t) in self.movers.values() {
-            rings.push(Ring { x, y, lo: 0.0, hi: MOVER_RANGE_M + SPEED_MPS * age(t), w: 0.3 });
+            rings.push(Ring { x, y, lo: 0.0, hi: MOVER_RANGE_M + speed * age(t), w: 0.3 });
         }
         for &(x, y, t) in &self.spawns {
-            rings.push(Ring { x, y, lo: 0.0, hi: SPAWN_RANGE_M + SPEED_MPS * age(t), w: 0.5 });
+            rings.push(Ring { x, y, lo: 0.0, hi: SPAWN_RANGE_M + speed * age(t), w: 0.5 });
         }
         // Where we last were: the estimate, or the server's position if newer.
         // Neither when the meter started mid-zone with no buff since.
@@ -215,7 +234,7 @@ impl PositionEstimator {
             (xs[xs.len() / 2], ys[ys.len() / 2])
         };
         let mut found = match prev {
-            Some((px, py, pt)) => solve(&rings, Some((px, py, SPEED_MPS * age(pt) + 2.0)), (px, py)),
+            Some((px, py, pt)) => solve(&rings, Some((px, py, speed * age(pt) + 2.0)), (px, py)),
             None => solve(&rings, None, median()),
         };
         // Lost (most clues broken, e.g. after a fast mount ride): start over
@@ -231,7 +250,13 @@ impl PositionEstimator {
                 found = (px, py, found.2);
             }
         }
-        self.est = Some(Estimate { x: found.0, y: found.1, err_m: found.2, t: now });
+        // Moving fast, the clues lag and the error grows with the time since
+        // the last server position: say so rather than claim a few metres.
+        let err = match (fast, self.anchor) {
+            (Some(_), Some(a)) => found.2.max((0.3 * speed * age(a.2)).min(300.0)),
+            _ => found.2,
+        };
+        self.est = Some(Estimate { x: found.0, y: found.1, err_m: err, t: now });
     }
 }
 

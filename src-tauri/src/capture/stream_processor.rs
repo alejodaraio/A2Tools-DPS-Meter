@@ -281,6 +281,7 @@ impl StreamProcessor {
         self.parse_self_status_packet(packet);
         self.parse_buff_packet(packet);
         self.parse_radar_packet(packet);
+        self.parse_party_roster_92(packet);
 
         if !parsed_damage && !parsed_name && !parsed_summon && !parsed_ownership && !parsed_hp {
             self.parse_dot_packet(packet);
@@ -293,6 +294,28 @@ impl StreamProcessor {
 
     /// World objects and the local player's position; layouts and evidence in
     /// `combat::radar`.
+    /// The party roster as sent since October 2026 (found 2026-10-22; no
+    /// `02 97` came): `00 92` is the whole party, sent when it forms or a
+    /// member leaves; `0D 92` is one member joining (the leader invited
+    /// Cirilla), the same member block — added, nobody dropped.
+    /// See `parse_party_roster_92`.
+    fn parse_party_roster_92(&self, packet: &[u8]) {
+        let length_info = read_varint(packet, 0);
+        if length_info.length <= 0 {
+            return;
+        }
+        let offset = length_info.length as usize;
+        let complete = match packet.get(offset..offset + 2) {
+            Some([0x00, 0x92]) => true,
+            Some([0x0D, 0x92]) => false,
+            _ => return,
+        };
+        if let Some(members) = parse_party_roster_92(&packet[offset + 2..]) {
+            tracing::debug!("Party roster (complete={complete}): {:?}", members.iter().map(|(n, _)| n).collect::<Vec<_>>());
+            self.data_storage.set_party_roster(members, complete);
+        }
+    }
+
     fn parse_radar_packet(&self, packet: &[u8]) {
         use crate::combat::radar;
         let length_info = read_varint(packet, 0);
@@ -379,6 +402,12 @@ impl StreamProcessor {
             (0x47, 0x36) => {
                 if let Some(id) = radar::parse_player_leave(body) {
                     self.data_storage.radar().player_left(id);
+                }
+            }
+            // A party member's position, from anywhere on the map (~every 2 s).
+            (0x1C, 0x92) => {
+                if let Some((dbid, pos, zone)) = radar::parse_party_member_update(body) {
+                    self.data_storage.radar().party_moved(dbid, pos, zone, now);
                 }
             }
             (0x23, 0x36) => {
@@ -2637,6 +2666,7 @@ fn parse_party_roster_at(
                 gear_score,
                 combat_power: combat_power as i64,
                 server_id,
+                dbid,
             },
         ));
 
@@ -2656,6 +2686,66 @@ fn parse_party_roster_at(
         return None;
     }
     Some((members, complete))
+}
+
+/// `00 92` body: the party, one block per member (2026-10-22):
+///
+/// ```text
+/// … 49 0D 24 <GUID, 36 ASCII chars> <dbid u64: id u32, 00 00, server u16>
+///   <name_len u8> <name> <level u32> … <x y z f32> <legion_len u8> <legion>
+///   02 00 00 00 2D 00 00 00 00 00 00 00 <gear score u32> <combat power u64> …
+/// ```
+///
+/// Members are found by the GUID right before the dbid; gear score and
+/// combat power by the constant run before them (0 when it is not there).
+/// An empty party (only us) is still a roster: whoever left is gone.
+pub fn parse_party_roster_92(body: &[u8]) -> Option<Vec<(String, crate::combat::data_storage::PartyMember)>> {
+    use crate::combat::data_storage::PartyMember;
+    let is_guid = |b: &[u8]| b.len() == 36 && b.iter().all(|c| c.is_ascii_hexdigit() || *c == b'-') && b[8] == b'-';
+    let mut members: Vec<(String, PartyMember)> = Vec::new();
+    let mut i = 37;
+    while i + 13 <= body.len() {
+        if body[i - 37] != 0x24 || !is_guid(&body[i - 36..i]) || body[i + 4..i + 6] != [0, 0] {
+            i += 1;
+            continue;
+        }
+        let server_id = u16::from_le_bytes([body[i + 6], body[i + 7]]);
+        let dbid = u64::from_le_bytes(body[i..i + 8].try_into().unwrap());
+        let name_len = body[i + 8] as usize;
+        let name_end = i + 9 + name_len;
+        if !(1..10_000).contains(&server_id) || !(1..=40).contains(&name_len) || name_end + 4 > body.len() {
+            i += 1;
+            continue;
+        }
+        let Ok(name) = std::str::from_utf8(&body[i + 9..name_end]) else {
+            i += 1;
+            continue;
+        };
+        let level = parse_u32_le(body, name_end) as i32;
+        if name.chars().any(char::is_control) || !(1..=200).contains(&level) {
+            i += 1;
+            continue;
+        }
+        let run = [0x2Du8, 0, 0, 0, 0, 0, 0, 0];
+        let tail = name_end + 4..(name_end + 220).min(body.len());
+        let (gear_score, combat_power) = body[tail.clone()]
+            .windows(run.len())
+            .position(|w| w == run)
+            .map(|k| tail.start + k + run.len())
+            .filter(|&at| at + 12 <= body.len())
+            .map(|at| (parse_u32_le(body, at) as i32, u64::from_le_bytes(body[at + 4..at + 12].try_into().unwrap())))
+            .filter(|&(g, cp)| (0..1_000_000).contains(&g) && cp < 100_000_000)
+            .unwrap_or((0, 0));
+        if !members.iter().any(|(n, _)| n == name) {
+            let slot = members.len() as u8 + 1;
+            members.push((
+                name.to_string(),
+                PartyMember { slot, level, gear_score, combat_power: combat_power as i64, server_id, dbid },
+            ));
+        }
+        i = name_end;
+    }
+    (!members.is_empty()).then_some(members)
 }
 
 /// Find a little-endian `u16` equal to `wanted` in `data[from..to]`.

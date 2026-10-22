@@ -195,12 +195,14 @@ shifted by +1 in a June 2026 patch; parsers accept both values where noted.
 | `05 38` | compact skill/damage record |
 | `33 36` | **self record**: your entity id + name. Only on zone load. Also a map id: `<map u32> <map u32> <x y z> <u32> 00 00 <u16> <z f32> 01 DE 02` — not purely the map (one field came back as 1013 and later 1052), so the radar merges ids whose saved points coincide |
 | `45 36` / `44 36` | another player's id + name (mask-gated name field) |
-| `47 36` | a player leaves view: `<id> <reason> <byte>` (`01 00` nearly always). Players are sent within ~50 m, party members from anywhere; the radar draws them (`RadarPlayer`). Faction = thousands digit of the player's server id in the `45 36` spawn (`parse_player_server`: 1401 / 2401 = the two sides of server 401; 1 = Elyos, 2 = Asmodian); ours from the party roster's server ids |
+| `47 36` | a player leaves view: `<id> <reason> <byte>` (`01 00` nearly always). Players are sent within ~50 m, party members from anywhere; the radar draws them (`RadarPlayer`). Faction = thousands digit of the player's server id (`parse_player_server`: from the dbid ~422 bytes before the end of the `45 36` spawn; 14xx = Elyos, 24xx = Asmodian); ours from the party roster's server ids |
 | `40 36` / `41 36` | mob/summon spawn: NPC code, max HP, summon `parent_key`. Only when the entity enters view. |
 | `41 36` / `42 36` | death (flag 3 = combat death; only seen for mobs so far) |
 | `4A 36` | **self status tick** (~1 Hz), first varint = your entity id; never carries anyone else's |
 | `23 36` (entity 0) | zone change / self teleport |
-| `02 97` | party roster: names, level, gear score, combat power, server (account dbid, not entity id) |
+| `02 97` | party roster: names, level, gear score, combat power, server (account dbid, not entity id). Not seen since an October 2026 patch — see `00 92` |
+| `00 92` / `0D 92` | party roster since Oct 2026: `00 92` the whole party (formed, member left), `0D 92` one member joining. Per member `24 <GUID, 36 chars> <dbid u64: id u32, 00 00, server u16> <name> <level u32> …` (`parse_party_roster_92`). Persisted to `party_roster.json` (12 h), since it only comes on changes |
+| `1C 92` | a party member's position every ~2 s from any distance (the minimap): `<dbid u64> <level u32> <zone u32> … <x y z>`; the zone (0x14 on the field, 0x385 in the legion hall) tells other places apart (`parse_party_member_update`) |
 | `2A 38` | buff add: target, ?, ?, seq, effect u32, duration_ms u32, `00×4`, epoch ms u64, caster |
 | `2C 38` | buff remove (short form): target, `01 00`, seq, `01` |
 | `2B 38` / `2A 38` | end with `<x y z>` (after `… 02` in a tick, `01 00` in an add): the position of the entity concerned. Ours when target = caster = us (a buff on yourself, a dodge) — exact, ~1–2 m. The ~1 Hz cadence is the Chanter's *Undefeated Mantra* (effect 181900411) ticking; other classes get one per self-buff and are estimated in between (`position_estimate.rs`) |

@@ -123,7 +123,7 @@ impl SkillCombatData {
 /// because the roster carries the account-level `dbid` rather than the
 /// session-scoped entity id — the name is the only field that joins it to the
 /// in-world entities the meter tracks.
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Default, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct PartyMember {
     /// 1-based party slot.
     pub slot: u8,
@@ -134,6 +134,10 @@ pub struct PartyMember {
     pub combat_power: i64,
     /// World/server id (the bracket tag next to a cross-server player's name).
     pub server_id: u16,
+    /// Account-side character id (server id in the top u16); `1c 92` party
+    /// position updates are keyed by it. 0 when not known.
+    #[serde(default)]
+    pub dbid: u64,
 }
 
 #[derive(Debug, Clone)]
@@ -480,9 +484,13 @@ impl DataStorage {
     }
 
     pub fn set_local_player_id(&self, id: Option<i64>) {
-        let changed = std::mem::replace(&mut self.inner.write().local_player_id, id) != id;
-        // A new self id means a new zone/session: every object id is stale.
-        if changed {
+        let old = std::mem::replace(&mut self.inner.write().local_player_id, id);
+        // A different self id means a new zone/session: every object id is
+        // stale. Learning it for the first time (mid-zone, from `4A 36`) is
+        // the same session: clearing then dropped the players and objects
+        // already in view, which the server never sends again (2026-10-22:
+        // a party member standing next to us vanished from the radar).
+        if old.is_some() && old != id {
             self.radar.lock().clear();
         }
     }

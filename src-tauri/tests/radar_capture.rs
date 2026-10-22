@@ -165,6 +165,7 @@ fn players_in_view_are_near_us() {
         *by_server.entry(*s).or_default() += 1;
     }
     println!("players per server id: {by_server:?}");
+    println!("party at the end: {:?}", storage.get_party_members().keys().collect::<Vec<_>>());
     let known = servers.values().filter(|s| s.is_some()).count();
     assert!(known * 10 >= servers.len() * 9, "server id read for only {known} of {} players", servers.len());
     dists.sort_by(f32::total_cmp);

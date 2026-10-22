@@ -86,9 +86,57 @@ fn get_radar(state: tauri::State<'_, AppState>) -> combat::radar::RadarSnapshot 
     // and its server ids give our faction (a party is one faction).
     let party = state.data_storage.get_party_members();
     snap.self_faction = party.values().map(|m| m.server_id / 1000).find(|f| (1..=9).contains(f));
+    let mut in_view_dbids = Vec::new();
     for p in &mut snap.players {
         p.name = state.data_storage.get_nickname(p.id as i32);
         p.party = p.name.as_ref().is_some_and(|n| party.contains_key(n));
+        if let Some(m) = p.name.as_ref().and_then(|n| party.get(n)).filter(|m| m.dbid != 0) {
+            in_view_dbids.push(m.dbid);
+        }
+    }
+    if !in_view_dbids.is_empty() {
+        let mut radar = state.data_storage.radar();
+        for dbid in in_view_dbids {
+            radar.party_member_in_view(dbid);
+        }
+    }
+    // Party members not in view but still moving somewhere (the server keeps
+    // sending them): their last position, so the radar can point to them.
+    // Ids first: the radar lock is not held while taking the storage's.
+    let me = state.data_storage.local_character_name();
+    let missing: Vec<(String, u16, u64, Option<u32>)> = party
+        .iter()
+        .filter(|(name, _)| me.as_deref() != Some(name.as_str()))
+        .filter(|(name, _)| !snap.players.iter().any(|p| p.name.as_deref() == Some(name.as_str())))
+        .map(|(name, m)| {
+            let id = state.data_storage.find_id_by_nickname(name).map(|id| id as u32);
+            (name.clone(), m.server_id, m.dbid, id)
+        })
+        .collect();
+    if !missing.is_empty() {
+        let radar = state.data_storage.radar();
+        for (name, server, dbid, id) in missing {
+            // The newer of the minimap update (`1c 92`) and a movement record.
+            // In another zone (the legion hall, a dungeon), its position is
+            // that place's: not drawn.
+            let by_party = (dbid != 0).then(|| radar.party_position(dbid)).flatten();
+            if by_party.is_some_and(|(_, _, same)| same == Some(false)) {
+                continue;
+            }
+            let by_party = by_party.map(|(p, t, _)| (p, t));
+            let by_move = id.and_then(|id| radar.last_position(id));
+            let Some((pos, seen_ms)) = [by_party, by_move].into_iter().flatten().max_by_key(|&(_, t)| t) else {
+                continue;
+            };
+            snap.players.push(combat::radar::RadarPlayer {
+                id: id.unwrap_or(0),
+                name: Some(name),
+                party: true,
+                server: Some(server),
+                pos,
+                seen_ms,
+            });
+        }
     }
     snap
 }
@@ -1159,6 +1207,38 @@ async fn open_radar_window(app: tauri::AppHandle) -> Result<(), String> {
 /// backend, no meter overlay, the Radar as its only window.
 const RADAR_ONLY_IDENTIFIER: &str = "com.a2tools.radar";
 
+/// The party roster as last seen (`party_roster.json`). The server sends it
+/// only when the party changes, so without this a restarted meter or radar
+/// knows no party until then: no party filter, no party members on the radar.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct SavedParty {
+    saved_at_ms: i64,
+    members: std::collections::HashMap<String, combat::data_storage::PartyMember>,
+}
+
+/// A party is long-lived, but a roster this old is not trusted.
+const PARTY_ROSTER_MAX_AGE_MS: i64 = 12 * 60 * 60 * 1000;
+
+fn save_party_roster(members: &std::collections::HashMap<String, combat::data_storage::PartyMember>, path: &std::path::Path) {
+    let saved = SavedParty { saved_at_ms: chrono::Utc::now().timestamp_millis(), members: members.clone() };
+    let Ok(json) = serde_json::to_string(&saved) else { return };
+    if let Err(e) = std::fs::write(path, json) {
+        tracing::warn!("party: saving {} failed: {}", path.display(), e);
+    }
+}
+
+fn restore_party_roster(storage: &combat::data_storage::DataStorage, path: &std::path::Path) {
+    let Ok(text) = std::fs::read_to_string(path) else { return };
+    let Ok(saved) = serde_json::from_str::<SavedParty>(&text) else { return };
+    let age = chrono::Utc::now().timestamp_millis() - saved.saved_at_ms;
+    if saved.members.is_empty() || age > PARTY_ROSTER_MAX_AGE_MS {
+        return;
+    }
+    tracing::info!("party: restored {} members from the previous run", saved.members.len());
+    storage.set_party_roster(saved.members.into_iter().collect(), true);
+}
+
 /// The meter's data directory, next to the radar build's own. On the radar
 /// build's first run, remembered spawn points and object names come from
 /// there, so nothing learnt with the meter is lost.
@@ -1572,6 +1652,7 @@ pub fn run() {
 
             let data_storage = Arc::new(DataStorage::new());
             data_storage.radar().load_points(&app_data_dir.join("radar_points.json"));
+            restore_party_roster(&data_storage, &app_data_dir.join("party_roster.json"));
             let ping_tracker = Arc::new(PingTracker::new());
             let port_detector = Arc::new(CombatPortDetector::new());
 
@@ -1755,6 +1836,10 @@ pub fn run() {
                 let mut interval = tokio::time::interval(Duration::from_millis(500));
                 let mut tick_count: u64 = 0;
                 let mut hide_delay: u64 = 0; // ticks to wait before hiding
+                let mut saved_party = handle
+                    .try_state::<AppState>()
+                    .map(|s| s.data_storage.get_party_members())
+                    .unwrap_or_default();
                 loop {
                     interval.tick().await;
                     tick_count += 1;
@@ -1767,6 +1852,15 @@ pub fn run() {
                                 if let Err(e) = std::fs::write(&path, json) {
                                     tracing::warn!("radar: saving {} failed: {}", path.display(), e);
                                 }
+                            }
+                        }
+                        // The party roster too (every 10 s, when changed): the
+                        // server only sends it when the party changes.
+                        if tick_count % 20 == 10 {
+                            let party = state.data_storage.get_party_members();
+                            if party != saved_party {
+                                save_party_roster(&party, &state.app_data_dir.join("party_roster.json"));
+                                saved_party = party;
                             }
                         }
                         // Mob identities survive a meter restart (every 2 s).
