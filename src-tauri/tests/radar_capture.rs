@@ -114,6 +114,69 @@ fn position_is_estimated_without_the_mantra() {
     }
 }
 
+/// Other players on the radar (`45 36` in, movement records, `47 36` out):
+/// whenever our position is exact and fresh, each player shown must be
+/// within view range of us (~50 m; 80 m allowed for movement between
+/// records) — party members excepted, they are sent from anywhere — and
+/// most must have a name.
+///
+///   A2_RADAR_PLAYERS_CAPTURE=/path/to/packets_20261012_152328.txt
+#[test]
+fn players_in_view_are_near_us() {
+    let Ok(path) = std::env::var("A2_RADAR_PLAYERS_CAPTURE") else {
+        eprintln!("A2_RADAR_PLAYERS_CAPTURE unset — skipping");
+        return;
+    };
+    let storage = Arc::new(DataStorage::new());
+    let mut dists: Vec<f32> = Vec::new();
+    let (mut named, mut total, mut peak) = (0usize, 0usize, 0usize);
+    let mut servers: HashMap<u32, Option<u16>> = HashMap::new();
+    let mut last = 0;
+    replay(&path, &storage, |_| {
+        let snap = storage.radar().snapshot();
+        for pl in &snap.players {
+            servers.insert(pl.id, pl.server);
+        }
+        let (Some(me), false) = (snap.self_pos, snap.self_pos_estimated) else { return };
+        if snap.self_pos_ms == last {
+            return;
+        }
+        last = snap.self_pos_ms;
+        peak = peak.max(snap.players.len());
+        let party = storage.get_party_members();
+        for pl in &snap.players {
+            let name = storage.get_nickname(pl.id as i32).unwrap_or_default();
+            if party.contains_key(&name) {
+                continue;
+            }
+            let d = pl.pos.dist2d(&me) / 100.0;
+            if d > 80.0 && std::env::var("A2_DEBUG").is_ok() {
+                println!("  far: player {} {name:?} at {d:.0} m, seen {} ms ago", pl.id, snap.self_pos_ms - pl.seen_ms);
+            }
+            dists.push(d);
+            total += 1;
+            if storage.get_nickname(pl.id as i32).is_some() {
+                named += 1;
+            }
+        }
+    });
+    let mut by_server: HashMap<Option<u16>, usize> = HashMap::new();
+    for s in servers.values() {
+        *by_server.entry(*s).or_default() += 1;
+    }
+    println!("players per server id: {by_server:?}");
+    let known = servers.values().filter(|s| s.is_some()).count();
+    assert!(known * 10 >= servers.len() * 9, "server id read for only {known} of {} players", servers.len());
+    dists.sort_by(f32::total_cmp);
+    assert!(!dists.is_empty(), "no players seen");
+    let q = |f: f32| dists[((dists.len() - 1) as f32 * f) as usize];
+    println!(
+        "players: samples={} peak={} p50={:.0} m p95={:.0} m max={:.0} m named={:.0}%",
+        dists.len(), peak, q(0.5), q(0.95), q(1.0), 100.0 * named as f32 / total as f32
+    );
+    assert!(q(0.95) < 80.0, "p95 distance {:.0} m", q(0.95));
+}
+
 fn replay(path: &str, storage: &Arc<DataStorage>, mut on_line: impl FnMut(&str)) {
     let mut p = StreamProcessor::new(storage.clone(), Arc::new(SkillLookup::new()), Arc::new(NpcLookup::new()));
     let mut streams: HashMap<String, PacketAccumulator> = HashMap::new();

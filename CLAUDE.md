@@ -195,6 +195,7 @@ shifted by +1 in a June 2026 patch; parsers accept both values where noted.
 | `05 38` | compact skill/damage record |
 | `33 36` | **self record**: your entity id + name. Only on zone load. Also a map id: `<map u32> <map u32> <x y z> <u32> 00 00 <u16> <z f32> 01 DE 02` — not purely the map (one field came back as 1013 and later 1052), so the radar merges ids whose saved points coincide |
 | `45 36` / `44 36` | another player's id + name (mask-gated name field) |
+| `47 36` | a player leaves view: `<id> <reason> <byte>` (`01 00` nearly always). Players are sent within ~50 m, party members from anywhere; the radar draws them (`RadarPlayer`). Faction = thousands digit of the player's server id in the `45 36` spawn (`parse_player_server`: 1401 / 2401 = the two sides of server 401; 1 = Elyos, 2 = Asmodian); ours from the party roster's server ids |
 | `40 36` / `41 36` | mob/summon spawn: NPC code, max HP, summon `parent_key`. Only when the entity enters view. |
 | `41 36` / `42 36` | death (flag 3 = combat death; only seen for mobs so far) |
 | `4A 36` | **self status tick** (~1 Hz), first varint = your entity id; never carries anyone else's |

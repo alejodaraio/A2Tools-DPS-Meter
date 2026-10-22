@@ -366,8 +366,19 @@ impl StreamProcessor {
             (0x41 | 0x45, 0x36) => {
                 if let Some((id, pos)) = radar::parse_entity_spawn_pos(body) {
                     if self.data_storage.local_player_id() != Some(id as i64) {
-                        self.data_storage.radar().entity_spawned(id, pos, now);
+                        if a == 0x45 {
+                            let server = radar::parse_player_server(body);
+                            self.data_storage.radar().player_spawned(id, pos, server, now);
+                        } else {
+                            self.data_storage.radar().entity_spawned(id, pos, now);
+                        }
                     }
+                }
+            }
+            // A player left view.
+            (0x47, 0x36) => {
+                if let Some(id) = radar::parse_player_leave(body) {
+                    self.data_storage.radar().player_left(id);
                 }
             }
             (0x23, 0x36) => {

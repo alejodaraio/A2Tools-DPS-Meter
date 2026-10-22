@@ -80,7 +80,17 @@ fn get_skill_details(state: tauri::State<'_, AppState>, target_id: i32, actor_id
 
 #[tauri::command]
 fn get_radar(state: tauri::State<'_, AppState>) -> combat::radar::RadarSnapshot {
-    state.data_storage.radar().snapshot()
+    let mut snap = state.data_storage.radar().snapshot();
+    // Player names come from `45 36` too, but are parsed (and masked) by
+    // the nickname code; the radar only knows ids. The roster is by name,
+    // and its server ids give our faction (a party is one faction).
+    let party = state.data_storage.get_party_members();
+    snap.self_faction = party.values().map(|m| m.server_id / 1000).find(|f| (1..=9).contains(f));
+    for p in &mut snap.players {
+        p.name = state.data_storage.get_nickname(p.id as i32);
+        p.party = p.name.as_ref().is_some_and(|n| party.contains_key(n));
+    }
+    snap
 }
 
 /// The Radar window's view preferences (range, orientation, filter …), kept

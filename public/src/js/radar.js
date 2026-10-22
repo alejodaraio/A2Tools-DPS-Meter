@@ -66,7 +66,7 @@
   // mirror on. `v` bumps re-apply a changed default once over saved prefs.
   const PREFS_VERSION = 2;
   // `hidden`: codes unticked in the ⚙ panel.
-  const prefs = { range: 100, rotate: 0, mirror: false, all: false, headingUp: true, headingMirror: true, hidden: [], route: false };
+  const prefs = { range: 100, rotate: 0, mirror: false, all: false, headingUp: true, headingMirror: true, hidden: [], route: false, players: true, myFaction: null };
   const applySaved = (saved) => {
     if (!saved || typeof saved !== "object") return;
     if ((saved.v || 1) < 2) delete saved.headingMirror;
@@ -605,9 +605,70 @@
       ctx.globalAlpha = 1;
     }
 
+    if (prefs.players && snapshot?.selfPos) drawPlayers(cx, cy, radius, pxPerM);
+
     renderList(objs);
     renderStatus(objs);
     renderRouteInfo();
+  }
+
+  // Other players in view (the server sends them within ~50 m; party members
+  // from anywhere): a triangle with the name — party green, allies white,
+  // enemies red. The faction is the thousands digit of the player's server
+  // id (1401 / 2401: 1 = Elyos, 2 = Asmodian); ours comes from the party
+  // roster, else from the ⚙ panel (remembered either way).
+  const PARTY_COLOR = "#3ddc84";
+  const PLAYER_COLOR = "#f2f2f2";
+  const ENEMY_COLOR = "#ff3b3b";
+  const UNKNOWN_PLAYER_COLOR = "rgba(255,255,255,0.45)";
+  const FACTIONS = { 1: "Elyos", 2: "Asmodian" };
+  const factionOf = (pl) => {
+    const f = pl.server ? Math.floor(pl.server / 1000) : 0;
+    return FACTIONS[f] ? f : null;
+  };
+  const myFaction = () => snapshot?.selfFaction || prefs.myFaction;
+  const playerColor = (pl) => {
+    if (pl.party) return PARTY_COLOR;
+    const f = factionOf(pl);
+    const mine = myFaction();
+    if (!f || !mine) return UNKNOWN_PLAYER_COLOR;
+    return f === mine ? PLAYER_COLOR : ENEMY_COLOR;
+  };
+  function drawPlayers(cx, cy, radius, pxPerM) {
+    const me = snapshot.selfPos;
+    // Learnt from the party: keep it for when we play solo.
+    if (snapshot.selfFaction && prefs.myFaction !== snapshot.selfFaction) {
+      prefs.myFaction = snapshot.selfFaction;
+      savePrefs();
+      if (!filterPanel.hidden) renderFilter();
+    }
+    ctx.font = "10px system-ui, sans-serif";
+    for (const pl of snapshot.players || []) {
+      const dx = pl.pos.x - me.x;
+      const dy = pl.pos.y - me.y;
+      const distM = Math.hypot(dx, dy) / 100;
+      if (distM > prefs.range) continue;
+      const [sx, sy] = toScreen(dx, dy);
+      const px = cx + (sx / 100) * pxPerM;
+      const py = cy + (sy / 100) * pxPerM;
+      const color = playerColor(pl);
+      // Enemies a size up: they are what the player layer is for.
+      const k = color === ENEMY_COLOR ? 1.4 : 1;
+      ctx.fillStyle = color;
+      ctx.strokeStyle = "rgba(0,0,0,0.6)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(px, py - 6 * k);
+      ctx.lineTo(px + 5 * k, py + 4 * k);
+      ctx.lineTo(px - 5 * k, py + 4 * k);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      if (Math.hypot(px - cx, py - cy) < radius - 4) {
+        ctx.fillStyle = color;
+        ctx.fillText(`${pl.name || "?"} ${approx()}${Math.round(distM)}m`, px + 7, py + 3);
+      }
+    }
   }
 
   // The loop, clipped to the disc: the leg from the player to the next stop
@@ -867,7 +928,16 @@
   };
 
   const renderFilter = () => {
-    filterList.innerHTML = registered()
+    const mine = myFaction();
+    const side = mine ? FACTIONS[mine] : "side?";
+    const auto = snapshot?.selfFaction ? " (party)" : "";
+    const playersRow = `<label class="frow"><input type="checkbox" data-players="1"` +
+      `${prefs.players ? " checked" : ""} />` +
+      `<span class="dot" style="background:${ENEMY_COLOR};border-radius:1px"></span>` +
+      `<span class="name">Players <span class="dim">enemies red, party green</span></span>` +
+      `<button class="btn" id="factionBtn" title="Your faction: decides who is an enemy. Set by itself when in a party">` +
+      `you: ${side}${auto}</button></label>`;
+    filterList.innerHTML = playersRow + registered()
       .map((m) => {
         const radius = m.shape === "square" ? "1px" : "50%";
         return `<label class="frow"><input type="checkbox" data-code="${m.code}"` +
@@ -978,7 +1048,18 @@
     route = null;
     renderSaved();
   });
+  filterList.addEventListener("click", (e) => {
+    if (e.target.id !== "factionBtn") return;
+    e.preventDefault();
+    prefs.myFaction = prefs.myFaction === 1 ? 2 : 1;
+    savePrefs(); renderFilter(); draw();
+  });
   filterList.addEventListener("change", (e) => {
+    if (e.target.dataset.players) {
+      prefs.players = e.target.checked;
+      savePrefs(); draw();
+      return;
+    }
     const code = Number(e.target.dataset.code);
     if (!code) return;
     prefs.hidden = prefs.hidden.filter((c) => c !== code);
