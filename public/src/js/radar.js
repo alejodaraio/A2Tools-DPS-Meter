@@ -69,10 +69,16 @@
   // mirror on. `v` bumps re-apply a changed default once over saved prefs.
   const PREFS_VERSION = 2;
   // `hidden`: codes unticked in the ⚙ panel.
-  const prefs = { range: 100, rotate: 0, mirror: false, all: false, headingUp: true, headingMirror: true, hidden: [], route: false, players: true, myFaction: null };
+  const prefs = { range: 100, rotate: 0, mirror: false, all: false, headingUp: true, headingMirror: true, hidden: [], route: false, myFaction: null,
+    // Which players to draw (the ⚙ panel): party, allies (and anyone whose
+    // side is unknown), enemies.
+    showParty: true, showAllies: true, showEnemies: true };
   const applySaved = (saved) => {
     if (!saved || typeof saved !== "object") return;
     if ((saved.v || 1) < 2) delete saved.headingMirror;
+    // One "players" box before the split: off meant all three off.
+    if (saved.players === false) Object.assign(saved, { showParty: false, showAllies: false, showEnemies: false });
+    delete saved.players;
     Object.assign(prefs, saved, { v: PREFS_VERSION });
   };
   // Kept by the backend (radar_prefs.json) so the dev server and the
@@ -102,6 +108,7 @@
   const allBtn = document.getElementById("allBtn");
   const routeBtn = document.getElementById("routeBtn");
   const routeInfoEl = document.getElementById("routeInfo");
+  const earnEl = document.getElementById("earn");
 
   let snapshot = null;
   // Packet capture needs it; in the radar-only build nothing else would say so.
@@ -150,6 +157,12 @@
     zoom(e.deltaY < 0 ? -1 : 1);
   }, { passive: false });
   document.getElementById("zoomIn").addEventListener("click", () => zoom(-1));
+  document.getElementById("earnReset").addEventListener("click", async () => {
+    try {
+      await invoke("reset_radar_earnings");
+    } catch {}
+    poll();
+  });
   document.getElementById("zoomOut").addEventListener("click", () => zoom(1));
   rotateBtn.addEventListener("click", () => {
     prefs.rotate = (prefs.rotate + 90) % 360;
@@ -608,7 +621,7 @@
       ctx.globalAlpha = 1;
     }
 
-    if (prefs.players && snapshot?.selfPos) drawPlayers(cx, cy, radius, pxPerM);
+    if (snapshot?.selfPos) drawPlayers(cx, cy, radius, pxPerM);
 
     renderList(objs);
     renderStatus(objs);
@@ -630,12 +643,20 @@
     return FACTIONS[f] ? f : null;
   };
   const myFaction = () => snapshot?.selfFaction || prefs.myFaction;
-  const playerColor = (pl) => {
-    if (pl.party) return PARTY_COLOR;
+  // "party", "enemy" or "ally" (unknown side counts as an ally: not red).
+  const playerGroup = (pl) => {
+    if (pl.party) return "party";
     const f = factionOf(pl);
     const mine = myFaction();
-    if (!f || !mine) return UNKNOWN_PLAYER_COLOR;
-    return f === mine ? PLAYER_COLOR : ENEMY_COLOR;
+    return f && mine && f !== mine ? "enemy" : "ally";
+  };
+  const playerShown = (pl) =>
+    ({ party: prefs.showParty, ally: prefs.showAllies, enemy: prefs.showEnemies })[playerGroup(pl)];
+  const playerColor = (pl) => {
+    const group = playerGroup(pl);
+    if (group === "party") return PARTY_COLOR;
+    if (group === "enemy") return ENEMY_COLOR;
+    return factionOf(pl) && myFaction() ? PLAYER_COLOR : UNKNOWN_PLAYER_COLOR;
   };
   // A party member beyond the range: an arrowhead on the rim pointing their
   // way, with name and distance; dimmed when their last position is old.
@@ -678,6 +699,7 @@
     }
     ctx.font = "10px system-ui, sans-serif";
     for (const pl of snapshot.players || []) {
+      if (!playerShown(pl)) continue;
       const dx = pl.pos.x - me.x;
       const dy = pl.pos.y - me.y;
       const distM = Math.hypot(dx, dy) / 100;
@@ -848,6 +870,26 @@
     }
   }
 
+  // Kinah / Abyss Points earned since the counter started, and the average
+  // per minute over that time.
+  const fmtNum = (n) => n.toLocaleString("en-US");
+  const fmtShort = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e4 ? `${Math.round(n / 1e3)}k` : String(Math.round(n)));
+  function renderEarnings() {
+    const e = snapshot?.earnings;
+    if (!e?.sinceMs) {
+      earnEl.hidden = true;
+      return;
+    }
+    earnEl.hidden = false;
+    const minutes = Math.max(Date.now() - e.sinceMs, 60_000) / 60_000;
+    document.getElementById("earnKinah").textContent = `+${fmtNum(e.kinah)}`;
+    document.getElementById("earnAp").textContent = `+${fmtNum(e.abyssPoints)}`;
+    document.getElementById("earnKinahRate").textContent = `(${fmtShort(e.kinah / minutes)}/min)`;
+    document.getElementById("earnApRate").textContent = `(${fmtShort(e.abyssPoints / minutes)}/min)`;
+    const min = Math.floor((Date.now() - e.sinceMs) / 60_000);
+    document.getElementById("earnSince").textContent = min >= 60 ? `${Math.floor(min / 60)} h ${min % 60} min` : `${min} min`;
+  }
+
   async function poll() {
     try {
       snapshot = await invoke("get_radar");
@@ -870,6 +912,7 @@
     lastTarget = target;
     updateRoute();
     draw();
+    renderEarnings();
   }
 
   // Facing interpolation (see poll): where the current turn started and how
@@ -971,12 +1014,17 @@
     const mine = myFaction();
     const side = mine ? FACTIONS[mine] : "side?";
     const auto = snapshot?.selfFaction ? " (party)" : "";
-    const playersRow = `<label class="frow"><input type="checkbox" data-players="1"` +
-      `${prefs.players ? " checked" : ""} />` +
-      `<span class="dot" style="background:${ENEMY_COLOR};border-radius:1px"></span>` +
-      `<span class="name">Players <span class="dim">enemies red, party green</span></span>` +
-      `<button class="btn" id="factionBtn" title="Your faction: decides who is an enemy. Set by itself when in a party">` +
-      `you: ${side}${auto}</button></label>`;
+    const playerRow = (key, label, color, extra = "") =>
+      `<label class="frow"><input type="checkbox" data-players="${key}"` +
+      `${prefs[key] ? " checked" : ""} />` +
+      `<span class="dot" style="background:${color};border-radius:1px"></span>` +
+      `<span class="name">${label}</span>${extra}</label>`;
+    const playersRow =
+      playerRow("showParty", "Party", PARTY_COLOR) +
+      playerRow("showAllies", "Allies", PLAYER_COLOR) +
+      playerRow("showEnemies", "Enemies", ENEMY_COLOR,
+        `<button class="btn" id="factionBtn" title="Your faction: decides who is an enemy. Set by itself when in a party">` +
+        `you: ${side}${auto}</button>`);
     filterList.innerHTML = playersRow + registered()
       .map((m) => {
         const radius = m.shape === "square" ? "1px" : "50%";
@@ -1096,7 +1144,7 @@
   });
   filterList.addEventListener("change", (e) => {
     if (e.target.dataset.players) {
-      prefs.players = e.target.checked;
+      prefs[e.target.dataset.players] = e.target.checked;
       savePrefs(); draw();
       return;
     }

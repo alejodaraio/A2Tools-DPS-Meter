@@ -167,6 +167,18 @@
         pointer-events: none;
       }
       .routeinfo[hidden] { display: none; }
+      .earn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 2px 6px 2px 10px;
+        border-bottom: 1px solid var(--line);
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .earn[hidden] { display: none; }
+      .earn b { color: var(--text); font-weight: 600; }
+      .earn .grow { flex: 1; }
       .zoom {
         position: absolute;
         right: 6px;
@@ -215,6 +227,12 @@
         </button>
         <button class="btn" id="filterBtn" title="Choose what the radar shows">⚙</button>
         <button class="btn" id="closeBtn" title="Close">✕</button>
+      </div>
+      <div class="earn" id="earn" hidden>
+        <span>Kinah <b id="earnKinah">0</b> <span id="earnKinahRate"></span></span>
+        <span>AP <b id="earnAp">0</b> <span id="earnApRate"></span></span>
+        <span class="grow" id="earnSince"></span>
+        <button class="btn" id="earnReset" title="Count from zero again">↺</button>
       </div>
       <div class="scope">
         <canvas id="scope"></canvas>

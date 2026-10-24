@@ -176,6 +176,12 @@ fn forget_radar_points(state: tauri::State<'_, AppState>, code: u32) -> usize {
     state.data_storage.radar().forget_code(code)
 }
 
+/// Count kinah / Abyss Points earned from zero again.
+#[tauri::command]
+fn reset_radar_earnings(state: tauri::State<'_, AppState>) {
+    state.data_storage.radar().reset_earnings(chrono::Utc::now().timestamp_millis());
+}
+
 /// Show `code` only while in view and never remember it (Kisks: players put
 /// them anywhere). Turning it on forgets its saved points.
 #[tauri::command]
@@ -2053,6 +2059,7 @@ pub fn run() {
             get_radar_saved,
             forget_radar_points,
             set_radar_live_only,
+            reset_radar_earnings,
             get_radar_prefs,
             set_radar_prefs,
             open_radar_window,

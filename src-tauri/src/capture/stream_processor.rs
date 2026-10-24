@@ -404,6 +404,12 @@ impl StreamProcessor {
                     self.data_storage.radar().player_left(id);
                 }
             }
+            // An inventory count: kinah / Abyss Points earned.
+            (0x1B, 0x56) => {
+                if let Some((item, count)) = radar::parse_inventory_update(body) {
+                    self.data_storage.radar().inventory_changed(item, count, now);
+                }
+            }
             // A party member's position, from anywhere on the map (~every 2 s).
             (0x1C, 0x92) => {
                 if let Some((dbid, pos, zone)) = radar::parse_party_member_update(body) {

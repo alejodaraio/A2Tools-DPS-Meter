@@ -93,6 +93,9 @@ impl Vec3 {
     }
 }
 
+/// A member changing zone this soon (ms) after we teleported went with us.
+const TOGETHER_MS: i64 = 60_000;
+
 /// How long a movement is remembered for `last_position`.
 const LAST_MOVE_KEEP_MS: i64 = 5 * 60 * 1000;
 
@@ -150,6 +153,9 @@ struct SavedPoints {
     /// Codes shown only while in view, never remembered (see `live_only`).
     #[serde(default = "default_live_only", rename = "liveOnly")]
     live_only: Vec<u32>,
+    /// Map id -> its zone in `1c 92` terms (see `zone_of_map`).
+    #[serde(default)]
+    zones: HashMap<u32, u32>,
 }
 
 /// Elyos Kisk (named by the user, 2026-10-22): players place them anywhere,
@@ -174,6 +180,19 @@ pub struct PointView {
     pub point: SpawnPoint,
     /// A live object currently stands on this point.
     pub live: bool,
+}
+
+/// Kinah and Abyss Points earned since the counter started (or was reset).
+#[derive(Clone, Debug, Default, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Earnings {
+    pub kinah: u64,
+    pub abyss_points: u64,
+    /// When counting started (epoch ms; 0 = no total seen yet).
+    pub since_ms: i64,
+    /// The current totals, once the server has sent them.
+    pub kinah_total: Option<u64>,
+    pub abyss_points_total: Option<u64>,
 }
 
 #[derive(Clone, Debug, Default, Serialize)]
@@ -201,6 +220,7 @@ pub struct RadarSnapshot {
     pub self_faction: Option<u16>,
     /// Every remembered spawn point on the current map.
     pub points: Vec<PointView>,
+    pub earnings: Earnings,
 }
 
 #[derive(Default)]
@@ -212,9 +232,20 @@ pub struct RadarTracker {
     last_move: HashMap<u32, (Vec3, i64)>,
     /// Party members' positions from `1c 92`, by dbid, with their zone.
     party_pos: HashMap<u64, (Vec3, i64, u32)>,
+    /// A member's zone before the `0` sent while they teleport.
+    party_zone_before: HashMap<u64, u32>,
     /// Our zone in `1c 92` terms, learnt from a party member in view (same
     /// place as us); forgotten when we teleport.
     self_zone: Option<u32>,
+    /// Map id (canonical) -> zone, learnt the same way and saved: our own
+    /// zone never comes in `1c 92`, so after a teleport, or with nobody in
+    /// view, the map is what tells us whether a member is with us.
+    zone_of_map: HashMap<u32, u32>,
+    /// When we last teleported (epoch ms), to tell a member leaving us from
+    /// both of us going somewhere.
+    self_teleport_ms: i64,
+    /// Kinah / Abyss Points earned (from the inventory totals in `1b 56`).
+    earnings: Earnings,
     self_pos: Option<(Vec3, i64)>,
     self_heading: Option<(f32, i64)>,
     estimator: PositionEstimator,
@@ -254,6 +285,7 @@ impl RadarTracker {
                     self.points.retain(|p| !self.live_only.contains(&p.code));
                     self.dirty = self.points.len() != before;
                     self.aliases = saved.aliases;
+                    self.zone_of_map = saved.zones;
                 }
                 Err(e) => tracing::warn!("radar: ignoring unreadable {}: {}", path.display(), e),
             }
@@ -271,7 +303,13 @@ impl RadarTracker {
         self.dirty = false;
         let mut live_only: Vec<u32> = self.live_only.iter().copied().collect();
         live_only.sort_unstable();
-        let saved = SavedPoints { version: 1, points: self.points.clone(), aliases: self.aliases.clone(), live_only };
+        let saved = SavedPoints {
+            version: 1,
+            points: self.points.clone(),
+            aliases: self.aliases.clone(),
+            live_only,
+            zones: self.zone_of_map.clone(),
+        };
         serde_json::to_string(&saved).ok().map(|json| (path, json))
     }
 
@@ -347,6 +385,7 @@ impl RadarTracker {
             // Live objects belong to the map we just left.
             self.objects.clear();
         }
+        self.self_zone = None;
         self.map = Some(map);
         self.record_pending();
     }
@@ -434,25 +473,82 @@ impl RadarTracker {
     }
 
     /// `1c 92`: where a party member is, wherever that is, and in which zone.
+    ///
+    /// A member changing zone while we stay put left the one we are in
+    /// (2026-10-23: Funky went 0x14 -> 0 -> another zone, to the Abyss): with
+    /// our zone not known yet, that one is ours. Should they be coming to us
+    /// instead, they show up in view and `party_member_in_view` corrects it.
     pub fn party_moved(&mut self, dbid: u64, pos: Vec3, zone: u32, now_ms: i64) {
+        let prev = self.party_pos.get(&dbid).map(|p| p.2).filter(|&z| z != 0);
+        let prev = if zone == 0 { None } else { prev.or_else(|| self.party_zone_before.remove(&dbid)) };
+        if zone == 0 {
+            // Leaving: remember where from, for when the new zone comes.
+            if let Some(&(_, _, z)) = self.party_pos.get(&dbid).filter(|p| p.2 != 0) {
+                self.party_zone_before.insert(dbid, z);
+            }
+        }
+        if let Some(prev) = prev {
+            if prev != zone && self.self_zone.is_none() && now_ms - self.self_teleport_ms > TOGETHER_MS {
+                self.self_zone = Some(prev);
+                if let Some(map) = self.map {
+                    self.zone_of_map.entry(map).or_insert(prev);
+                    self.dirty = true;
+                }
+            }
+        }
         self.party_pos.insert(dbid, (pos, now_ms, zone));
     }
 
     /// A party member's last `1c 92` position, when (epoch ms), and whether
     /// it is in our zone (`None`: ours is not known, assume so).
     pub fn party_position(&self, dbid: u64) -> Option<(Vec3, i64, Option<bool>)> {
-        self.party_pos
-            .get(&dbid)
-            .map(|&(p, t, z)| (p, t, self.self_zone.map(|ours| z == ours)))
+        let ours = self.self_zone.or_else(|| self.map.and_then(|m| self.zone_of_map.get(&m).copied()));
+        self.party_pos.get(&dbid).map(|&(p, t, z)| (p, t, ours.map(|ours| z == ours)))
     }
 
-    /// A party member is in view, so in our zone: theirs is ours.
+    /// A party member is in view, so in our zone: theirs is ours, and this
+    /// map's.
     pub fn party_member_in_view(&mut self, dbid: u64) {
         if let Some(&(_, _, z)) = self.party_pos.get(&dbid) {
             if z != 0 {
                 self.self_zone = Some(z);
+                if let Some(map) = self.map {
+                    if self.zone_of_map.insert(map, z) != Some(z) {
+                        self.dirty = true;
+                    }
+                }
             }
         }
+    }
+
+    /// `1b 56`: an inventory slot's new count. For kinah and Abyss Points,
+    /// every rise is earned (kills, mostly: the totals come right after each
+    /// one); spending only lowers the total, so it is not counted against.
+    pub fn inventory_changed(&mut self, item: u32, count: u64, now_ms: i64) {
+        let e = &mut self.earnings;
+        let (total, earned) = match item {
+            KINAH_ITEM => (&mut e.kinah_total, &mut e.kinah),
+            ABYSS_POINTS_ITEM => (&mut e.abyss_points_total, &mut e.abyss_points),
+            _ => return,
+        };
+        if let Some(prev) = *total {
+            *earned += count.saturating_sub(prev);
+        }
+        *total = Some(count);
+        if e.since_ms == 0 {
+            e.since_ms = now_ms;
+        }
+    }
+
+    /// Start counting earnings again from now (the totals are kept).
+    pub fn reset_earnings(&mut self, now_ms: i64) {
+        self.earnings.kinah = 0;
+        self.earnings.abyss_points = 0;
+        self.earnings.since_ms = if self.earnings.kinah_total.is_some() || self.earnings.abyss_points_total.is_some() {
+            now_ms
+        } else {
+            0
+        };
     }
 
     /// Where an entity last moved to, and when (epoch ms), if lately.
@@ -644,6 +740,7 @@ impl RadarTracker {
         // Whoever is around after the jump is sent again.
         self.players.clear();
         self.self_zone = None;
+        self.self_teleport_ms = now_ms;
         if self.map.is_none() {
             self.pending.clear();
         }
@@ -704,6 +801,7 @@ impl RadarTracker {
             },
             points,
             self_faction: None,
+            earnings: self.earnings.clone(),
         }
     }
 
@@ -1072,6 +1170,28 @@ pub fn parse_player_server(body: &[u8]) -> Option<u16> {
 /// Where a spawn's dbid usually sits, counted from the end of the record.
 const SPAWN_DBID_FROM_END: usize = 422;
 
+/// `1b 56` item codes of the currencies (2026-10-24: the kinah total matched
+/// the inventory's 49,863,823, and the Abyss Points went up by the 3 and 4 the
+/// game showed per kill).
+pub const KINAH_ITEM: u32 = 930_100_031;
+pub const ABYSS_POINTS_ITEM: u32 = 930_100_003;
+
+/// `1b 56` body: an inventory slot changed (`01 00` added, `01 01` count
+/// changed, `01 02` removed):
+///
+/// ```text
+/// 01 <op> 00 <slot u32> <u16> 00 <item u32> <count u64> …
+/// ```
+/// -> (item, count).
+pub fn parse_inventory_update(body: &[u8]) -> Option<(u32, u64)> {
+    if body.len() < 23 || body[0] != 1 || body[1] > 2 {
+        return None;
+    }
+    let item = u32::from_le_bytes(body[11..15].try_into().ok()?);
+    let count = u64::from_le_bytes(body[15..23].try_into().ok()?);
+    Some((item, count))
+}
+
 /// `1c 92` body: a party member, every ~2 s and from any distance (what the
 /// game's minimap shows; 2026-10-22, followed a member out to 292 m):
 ///
@@ -1238,6 +1358,28 @@ mod tests {
         t.party_member_in_view(7);
         t.party_moved(dbid, pos, 0x385, 7);
         assert_eq!(t.party_position(dbid).map(|(_, _, same)| same), Some(Some(false)));
+        // The map remembers its zone: after a teleport, and with nobody in
+        // view, a member in the hall is still not with us.
+        t.set_map(600_010_000);
+        t.party_member_in_view(7);
+        t.self_teleported(pos, 8);
+        assert_eq!(t.party_position(dbid).map(|(_, _, same)| same), Some(Some(false)));
+        assert_eq!(t.party_position(7).map(|(_, _, same)| same), Some(Some(true)));
+        // Another map, never seen with a member: unknown again.
+        t.set_map(600_020_000);
+        assert_eq!(t.party_position(dbid).map(|(_, _, same)| same), Some(None));
+        // There, a member goes off (via 0) while we stay: we are where they were.
+        t.party_moved(9, pos, 0x14, 100_000);
+        assert_eq!(t.party_position(9).map(|(_, _, same)| same), Some(None));
+        t.party_moved(9, pos, 0, 101_000);
+        t.party_moved(9, pos, 0x4f04, 180_000);
+        assert_eq!(t.party_position(9).map(|(_, _, same)| same), Some(Some(false)));
+        // Both of us teleporting together says nothing.
+        let mut t = RadarTracker::default();
+        t.party_moved(9, pos, 0x14, 100_000);
+        t.self_teleported(pos, 100_500);
+        t.party_moved(9, pos, 0x4f04, 110_000);
+        assert_eq!(t.party_position(9).map(|(_, _, same)| same), Some(None));
     }
 
     #[test]
@@ -1268,6 +1410,31 @@ mod tests {
         assert_eq!(snap.players[0].pos.x, 10_500.0);
         t.player_left(1508);
         assert!(t.snapshot().players.is_empty());
+    }
+
+    #[test]
+    fn earnings_from_the_inventory_totals() {
+        // Real `1b 56` bodies (2026-10-24): kinah, then Abyss Points.
+        let hex = |s: &str| s.split(' ').map(|b| u8::from_str_radix(b, 16).unwrap()).collect::<Vec<u8>>();
+        let kinah = hex("01 01 00 48 92 04 00 00 1e 00 00 3f 33 70 37 8f dc f8 02 00 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 0b 00 00");
+        let ap = hex("01 01 00 f0 59 05 00 00 21 00 00 23 33 70 37 4a 54 00 00 00 00 00 00 01 01 00 00 00 00 00 00 00 00 00 00 00 00 00 0b 00 00");
+        assert_eq!(parse_inventory_update(&kinah), Some((KINAH_ITEM, 49_863_823)));
+        assert_eq!(parse_inventory_update(&ap), Some((ABYSS_POINTS_ITEM, 21_578)));
+        let mut t = RadarTracker::default();
+        t.inventory_changed(KINAH_ITEM, 49_863_823, 10);
+        t.inventory_changed(ABYSS_POINTS_ITEM, 21_578, 11);
+        t.inventory_changed(KINAH_ITEM, 49_863_987, 12); // +164
+        t.inventory_changed(ABYSS_POINTS_ITEM, 21_581, 13); // +3
+        t.inventory_changed(KINAH_ITEM, 49_000_000, 14); // spent
+        t.inventory_changed(KINAH_ITEM, 49_000_133, 15); // +133
+        t.inventory_changed(1_234, 5, 16); // anything else
+        let e = t.snapshot().earnings;
+        assert_eq!((e.kinah, e.abyss_points, e.since_ms), (297, 3, 10));
+        assert_eq!((e.kinah_total, e.abyss_points_total), (Some(49_000_133), Some(21_581)));
+        t.reset_earnings(20);
+        t.inventory_changed(ABYSS_POINTS_ITEM, 21_585, 21);
+        let e = t.snapshot().earnings;
+        assert_eq!((e.kinah, e.abyss_points, e.since_ms), (0, 4, 20));
     }
 
     #[test]
