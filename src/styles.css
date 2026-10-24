@@ -6834,7 +6834,7 @@ html.hubWindow .settingsClose { display: none !important; }
   font-weight: 700;
   font-size: 14px;
 }
-.hubBrand img { width: 26px; height: 26px; }
+.hubBrand svg { width: 26px; height: 26px; flex: none; }
 .hubNav { display: flex; flex-direction: column; gap: 2px; }
 .hubNav button {
   display: flex;

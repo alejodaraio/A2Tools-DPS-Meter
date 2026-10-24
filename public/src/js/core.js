@@ -3622,7 +3622,7 @@ class DpsApp {
     });
   }
 
-  // The Hub (A2Tools Hub build): the Settings window's panel as its DPS Meter
+  // The Hub (Abyss Hub build): the Settings window's panel as its DPS Meter
   // tab, with hub.js adding the widget list and the Radar tab around it. It
   // is the app's own window, so nothing here closes it.
   enterHubWindowMode() {
@@ -4541,6 +4541,8 @@ class DpsApp {
       }
       return this.i18n?.t("target.train", "Training Scarecrow") ?? "Training Scarecrow";
     }
+    // The Hub names its overlay after itself (build_main_window).
+    if (window.__A2_APP_NAME__) return window.__A2_APP_NAME__;
     return this.i18n?.t("header.title", "A2Tools DPS Meter") ?? "A2Tools DPS Meter";
   }
 

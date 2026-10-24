@@ -745,7 +745,7 @@ fn open_details_on_monitor_inner(
         tauri::WebviewUrl::App("index.html".into()),
     )
     .initialization_script("window.__A2_VIEW__ = 'details';")
-    .title("A2Tools DPS Meter — Details")
+    .title(format!("{} — Details", app_title(app)))
     .decorations(false)
     .transparent(false)
     // Intentional: the point of this window is to stay readable on a second
@@ -935,7 +935,7 @@ fn build_settings_window(app: &tauri::AppHandle) -> Result<(), String> {
     // Injected before any page script. WebviewUrl::App is a path, so a ?query
     // gets percent-encoded — this is the one channel that is reliable.
     .initialization_script("window.__A2_VIEW__ = 'settings';")
-    .title("A2Tools DPS Meter — Settings")
+    .title(format!("{} — Settings", app_title(app)))
     .decorations(false)
     .transparent(false)
     // Matches Details: the overlay itself is always-on-top, so a settings window
@@ -1163,7 +1163,7 @@ fn open_fight_window(app: &tauri::AppHandle, label: &str) -> Result<(), String> 
         tauri::WebviewUrl::App("index.html".into()),
     )
     .initialization_script("window.__A2_VIEW__ = 'details';")
-    .title("A2Tools DPS Meter — Fight")
+    .title(format!("{} — Fight", app_title(app)))
     .decorations(false)
     .transparent(false)
     .always_on_top(true)
@@ -1197,7 +1197,7 @@ fn open_history_window_inner(app: &tauri::AppHandle) -> Result<(), String> {
         tauri::WebviewUrl::App("index.html".into()),
     )
     .initialization_script("window.__A2_VIEW__ = 'history';")
-    .title("A2Tools DPS Meter — Battle History")
+    .title(format!("{} — Battle History", app_title(app)))
     .decorations(false)
     .transparent(false)
     .always_on_top(true)
@@ -1242,10 +1242,15 @@ const RADAR_ONLY_IDENTIFIER: &str = "com.a2tools.radar";
 /// identifier — the same `%APPDATA%` folder, settings, history and WebView
 /// data — and differs in what it opens: the Hub window, from which each widget
 /// (the meter overlay, the Radar) is switched on and configured.
-const HUB_PRODUCT_NAME: &str = "A2Tools Hub";
+const HUB_PRODUCT_NAME: &str = "Abyss Hub";
 
 fn is_hub(app: &tauri::AppHandle) -> bool {
     app.config().product_name.as_deref() == Some(HUB_PRODUCT_NAME)
+}
+
+/// What window titles start with: the Hub has a name of its own.
+fn app_title(app: &tauri::AppHandle) -> &'static str {
+    if is_hub(app) { HUB_PRODUCT_NAME } else { "A2Tools DPS Meter" }
 }
 
 /// The Hub's widgets, id → window label. Whether each is on is remembered as
@@ -1337,7 +1342,7 @@ fn build_hub_window(app: &tauri::AppHandle) -> Result<(), String> {
         tauri::WebviewUrl::App("index.html".into()),
     )
     .initialization_script("window.__A2_VIEW__ = 'hub';")
-    .title("A2Tools Hub")
+    .title(HUB_PRODUCT_NAME)
     .resizable(true)
     .inner_size(940.0, 720.0)
     .min_inner_size(640.0, 460.0)
@@ -1359,7 +1364,9 @@ fn build_main_window(app: &tauri::AppHandle) -> Result<(), String> {
         "main",
         tauri::WebviewUrl::App("index.html".into()),
     )
-    .title("A2Tools DPS Meter")
+    // The overlay's fallback title (no target yet) is the app's name.
+    .initialization_script(format!("window.__A2_APP_NAME__ = {:?};", HUB_PRODUCT_NAME))
+    .title(format!("{} — DPS Meter", HUB_PRODUCT_NAME))
     .inner_size(400.0, 300.0)
     .decorations(false)
     .transparent(true)
@@ -1482,7 +1489,7 @@ fn build_earnings_window(app: &tauri::AppHandle) -> Result<(), String> {
         "earnings",
         tauri::WebviewUrl::App("earnings.html".into()),
     )
-    .title("A2Tools Hub — Earnings")
+    .title(format!("{} — Earnings", HUB_PRODUCT_NAME))
     .decorations(false)
     .transparent(true)
     .shadow(false)
@@ -1509,7 +1516,7 @@ fn build_radar_window(app: &tauri::AppHandle) -> Result<(), String> {
         "radar",
         tauri::WebviewUrl::App("radar.html".into()),
     )
-    .title(if standalone { "A2Radar" } else { "A2Tools DPS Meter — Radar" })
+    .title(if standalone { "A2Radar".to_string() } else { format!("{} — Radar", app_title(app)) })
     .decorations(false)
     .transparent(true)
     .shadow(false)
@@ -1553,7 +1560,7 @@ fn open_details_windowed(app: &tauri::AppHandle) -> Result<(), String> {
         tauri::WebviewUrl::App("index.html".into()),
     )
     .initialization_script("window.__A2_VIEW__ = 'details';")
-    .title("A2Tools DPS Meter — Details")
+    .title(format!("{} — Details", app_title(app)))
     .decorations(false)
     .transparent(false)
     .always_on_top(true)

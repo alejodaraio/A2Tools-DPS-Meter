@@ -787,36 +787,6 @@
                 </div>
               </div>
             </section>
-            <div class="settingsFooter">
-              <div class="settingsFooterLinks">
-                <button class="discordButton" type="button">
-                  <span class="discordIcon" aria-hidden="true">
-                    <svg viewBox="0 0 126.644 96" role="img" focusable="false" aria-hidden="true">
-                      <path d="M81.15,0c-1.2376,2.1973-2.3489,4.4704-3.3591,6.794-9.5975-1.4396-19.3718-1.4396-28.9945,0-.985-2.3236-2.1216-4.5967-3.3591-6.794-9.0166,1.5407-17.8059,4.2431-26.1405,8.0568C2.779,32.5304-1.6914,56.3725.5312,79.8863c9.6732,7.1476,20.5083,12.603,32.0505,16.0884,2.6014-3.4854,4.8998-7.1981,6.8698-11.0623-3.738-1.3891-7.3497-3.1318-10.8098-5.1523.9092-.6567,1.7932-1.3386,2.6519-1.9953,20.281,9.547,43.7696,9.547,64.0758,0,.8587.7072,1.7427,1.3891,2.6519,1.9953-3.4601,2.0457-7.0718,3.7632-10.835,5.1776,1.97,3.8642,4.2683,7.5769,6.8698,11.0623,11.5419-3.4854,22.3769-8.9156,32.0509-16.0631,2.626-27.2771-4.496-50.9172-18.817-71.8548C98.9811,4.2684,90.1918,1.5659,81.1752.0505l-.0252-.0505ZM42.2802,65.4144c-6.2383,0-11.4159-5.6575-11.4159-12.6535s4.9755-12.6788,11.3907-12.6788,11.5169,5.708,11.4159,12.6788c-.101,6.9708-5.026,12.6535-11.3907,12.6535ZM84.3576,65.4144c-6.2637,0-11.3907-5.6575-11.3907-12.6535s4.9755-12.6788,11.3907-12.6788,11.4917,5.708,11.3906,12.6788c-.101,6.9708-5.026,12.6535-11.3906,12.6535Z"/>
-                    </svg>
-                  </span>
-                  <span data-i18n="settings.discord">Discord</span>
-                </button>
-                <button
-                  type="button"
-                  class="a2toolsButton"
-                  onclick="window.javaBridge?.openBrowser?.('https://A2Tools.app')">
-                  A2Tools.app
-                </button>
-                <button class="supportButton" type="button">
-                  <span class="supportIcon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M10 2v2"/>
-                      <path d="M14 2v2"/>
-                      <path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/>
-                      <path d="M6 2v2"/>
-                    </svg>
-                  </span>
-                  <span data-i18n="support.button">Support Me</span>
-                </button>
-              </div>
-              <button class="quitButton" type="button" data-i18n="settings.quit">Quit</button>
-            </div>
           </div>
         </div>
         <div class="historyPanel" role="dialog" aria-modal="true">
@@ -946,93 +916,6 @@
           </div>
         </div>
         <div class="updateStatusText" id="updateStatusText" style="display:none"></div>
-      </div>
-    </div>
-    <div class="supportModal" id="supportModal" aria-hidden="true">
-      <div
-        class="supportModalCard"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="supportModalTitle">
-        <button
-          class="supportModalClose"
-          type="button"
-          data-i18n-aria-label="support.aria.close"
-          aria-label="Close">
-          ×
-        </button>
-        <div class="supportModalTitle" id="supportModalTitle" data-i18n="support.title">
-          在爱发电支持作者
-        </div>
-        <div class="supportQrContainer">
-          <img
-            class="supportQrImage"
-            src="/src/assets/afdian.png"
-            alt="Afdian QR code" />
-        </div>
-        <div class="supportActions">
-          <button
-            class="supportIconButton supportPrimaryButton"
-            type="button"
-            data-support="afdian"
-            data-url="https://afdian.com/a/hiddencube"
-            data-i18n-aria-label="support.aria.afdian"
-            aria-label="Afdian">
-            <span class="supportLabel">爱发电</span>
-            <span class="supportIcon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13.5 2 5 13h5l-1.5 9L19 10h-5.5L13.5 2z" fill="currentColor"/></svg></span>
-          </button>
-          <button
-            class="supportIconButton"
-            type="button"
-            data-support="wechat"
-            data-qr="wechat"
-            data-i18n-aria-label="support.aria.wechat"
-            aria-label="WeChat">
-            <span class="supportLabel" data-i18n="support.label.wechat">微信</span>
-            <span class="supportIcon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 4c-3.87 0-7 2.69-7 6 0 1.9 1.03 3.59 2.62 4.69L4 19l3.66-1.85A8.4 8.4 0 0 0 9 17c3.87 0 7-2.69 7-6s-3.13-7-7-7z" fill="currentColor"/><path d="M16.5 10.5c3.04 0 5.5 2.01 5.5 4.5 0 1.42-.79 2.69-2.02 3.52L20.5 22l-2.79-1.41c-.39.08-.79.12-1.21.12-3.04 0-5.5-2.01-5.5-4.5s2.46-4.5 5.5-4.5z" fill="currentColor" opacity="0.78"/></svg></span>
-          </button>
-          <button
-            class="supportIconButton"
-            type="button"
-            data-support="paypal"
-            data-url="https://www.paypal.me/taengoo"
-            data-i18n-aria-label="support.aria.paypal"
-            aria-label="PayPal">
-            <span class="supportLabel">PayPal</span>
-            <span class="supportIcon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.2 3.2h7.2c3.2 0 5.3 1.9 4.9 4.7-.42 2.85-2.8 4.58-6.1 4.58h-2.4l-.75 4.35H5.9L7.2 3.2z" fill="currentColor"/><path d="M9.3 5.6h4.05c1.3 0 2.05.74 1.83 1.82-.22 1.13-1.2 1.84-2.49 1.84H8.55L9.3 5.6z" fill="currentColor" opacity="0.55"/><path d="M10.55 9.05h2.52c1.95 0 3.2 1.14 2.93 2.86-.3 1.92-1.95 3.12-4.19 3.12h-2.38l.56-3.18h2.2c.75 0 1.23-.4 1.33-1 .1-.56-.3-.93-1.02-.93h-2.15l.2-.87z" fill="#0b2f63" opacity="0.45"/></svg></span>
-          </button>
-          <button
-            class="supportIconButton"
-            type="button"
-            data-support="btc"
-            data-copy="1GexKhgVZPYRqpfCKydXLoNUXRRRUoAUwT"
-            data-i18n-aria-label="support.aria.btc"
-            aria-label="BTC">
-            <span class="supportLabel">BTC</span>
-            <span class="supportIcon">₿</span>
-          </button>
-          <button
-            class="supportIconButton"
-            type="button"
-            data-support="eth"
-            data-copy="0x38F0bc371A563A24eCa6034cFf77eB6173c7e3e7"
-            data-i18n-aria-label="support.aria.eth"
-            aria-label="ETH">
-            <span class="supportLabel">ETH</span>
-            <span class="supportIcon">Ξ</span>
-          </button>
-          <button
-            class="supportIconButton"
-            type="button"
-            data-support="usdc"
-            data-copy="0xA9571Fc95666350f6DFFB8Fb80ee27eE7db46b56"
-            data-i18n-aria-label="support.aria.usdc"
-            aria-label="USDC">
-            <span class="supportLabel">USDC</span>
-            <span class="supportIcon">＄</span>
-          </button>
-        </div>
-        <div class="supportCopyStatus" role="status" aria-live="polite"></div>
       </div>
     </div>
     <script src="/src/js/tauriBridge.js?v=202b2"></script>

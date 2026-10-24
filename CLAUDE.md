@@ -32,8 +32,8 @@ npm run tauri build      # production build; MSI lands in src-tauri/target/relea
 npm run rename-msi       # strip spaces from the built MSI filename (used post-build)
 npm run radar:dev        # radar-only app (same backend, no meter overlay)
 npm run radar:build      # radar-only build "A2Radar": A2Radar.exe + MSI (green radar icon)
-npm run hub:dev          # "A2Tools Hub": a Hub window that switches the widgets on/off
-npm run hub:build        # Hub build: A2Hub.exe + MSI
+npm run hub:dev          # "Abyss Hub": a Hub window that switches the widgets on/off
+npm run hub:build        # Hub build: AbyssHub.exe + MSI
 ```
 
 The Hub (`src-tauri/tauri.hub.conf.json`, recognised in `run()` by its product

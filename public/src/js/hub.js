@@ -1,4 +1,4 @@
-// The Hub window (A2_VIEW "hub", the A2Tools Hub build): switches each
+// The Hub window (A2_VIEW "hub", the Abyss Hub build): switches each
 // widget — the meter overlay, the Radar — on and off, and holds their
 // settings. The DPS Meter tab is the settings panel this bundle already has
 // (core.js enterHubWindowMode shows it); the Radar tab edits
@@ -28,9 +28,24 @@ window.A2Hub = (() => {
   let cards;
   let radarPane;
 
+  // The app icon (src-tauri/icons-hub/source.svg), inline: an <img> path
+  // would need the file in the build, where Vite renames assets.
+  const LOGO = `<svg viewBox="32 32 960 960" aria-hidden="true">
+    <defs><linearGradient id="hubRing" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7fd0ff"/><stop offset="0.5" stop-color="#7a6bff"/><stop offset="1" stop-color="#c04dff"/>
+    </linearGradient></defs>
+    <rect x="32" y="32" width="960" height="960" rx="210" fill="#10142a"/>
+    <circle cx="512" cy="512" r="262" fill="#0b0920" stroke="url(#hubRing)" stroke-width="72"/>
+    <g stroke="#cfe6ff" stroke-opacity="0.55" stroke-width="20" stroke-linecap="round">
+      <line x1="512" y1="512" x2="512" y2="374"/><line x1="512" y1="512" x2="392" y2="581"/><line x1="512" y1="512" x2="632" y2="581"/>
+    </g>
+    <circle cx="512" cy="512" r="58" fill="#fff"/><circle cx="512" cy="360" r="40" fill="#7fd0ff"/>
+    <circle cx="380" cy="588" r="40" fill="#ffcc33"/><circle cx="644" cy="588" r="40" fill="#3ddc84"/>
+  </svg>`;
+
   const shell = () => `
     <aside class="hubSide">
-      <div class="hubBrand"><img src="/src/assets/logo.png" alt="" /><span>A2Tools Hub</span></div>
+      <div class="hubBrand">${LOGO}<span>Abyss Hub</span></div>
       <nav class="hubNav">
         <button type="button" data-tab="widgets"><i data-lucide="layout-grid"></i><span data-i18n="hub.tabs.widgets">Widgets</span></button>
         ${WIDGETS.filter((w) => w.tab !== false).map((w) => `<button type="button" data-tab="${w.id}"><i data-lucide="${w.icon}"></i><span data-i18n="${w.name[0]}">${w.name[1]}</span></button>`).join("")}
