@@ -374,5 +374,47 @@
   },
   "radar": {
     "title": "Radar"
+  },
+  "hub": {
+    "tabs": {
+      "widgets": "Widgets"
+    },
+    "widgets": {
+      "hint": "Overlays affichés par-dessus le jeu. Activez-en un pour l'ouvrir ; ses réglages sont dans son onglet."
+    },
+    "meter": {
+      "name": "Compteur DPS",
+      "desc": "Dégâts par seconde pour vous et votre groupe, par-dessus le jeu."
+    },
+    "radar": {
+      "name": "Radar",
+      "desc": "Points de récolte, Hidden Cubes et joueurs autour de vous.",
+      "players": "Joueurs",
+      "party": "Membres du groupe",
+      "allies": "Alliés",
+      "enemies": "Ennemis",
+      "faction": "Votre faction (hors groupe)",
+      "factionUnset": "Non définie",
+      "view": "Vue",
+      "orientation": "Orientation",
+      "facingUp": "Direction du regard en haut",
+      "northUp": "Nord en haut",
+      "range": "Portée",
+      "mirrorFacing": "Miroir gauche/droite (regard en haut)",
+      "mirrorNorth": "Miroir gauche/droite (nord en haut)",
+      "rotate": "Rotation (nord en haut)",
+      "unknown": "Objets inconnus, avec leur code",
+      "objects": "Objets",
+      "all": "Tous",
+      "none": "Aucun",
+      "namesHint": "Nommez un objet en cliquant sur sa ligne dans la liste du radar ; les points enregistrés sont dans le panneau ⚙ du radar."
+    },
+    "settings": "Paramètres",
+    "turnOn": "Activer",
+    "turnOff": "Désactiver",
+    "earnings": {
+      "name": "Gains",
+      "desc": "Kinahs et points abyssaux gagnés, avec la moyenne par minute et la dernière minute."
+    }
   }
 }

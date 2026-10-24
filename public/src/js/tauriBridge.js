@@ -29,7 +29,7 @@
     // fallback for the singletons; the injected value is what identifies them.
     const label = window.__TAURI__?.window?.getCurrentWindow?.()?.label;
     const candidate = injected || fromUrl || label;
-    if (candidate === "details" || candidate === "settings" || candidate === "history") {
+    if (candidate === "details" || candidate === "settings" || candidate === "history" || candidate === "hub") {
       viewMode = candidate;
     }
   } catch {}
@@ -40,6 +40,10 @@
     document.documentElement.classList.add("settingsWindow");
   } else if (viewMode === "history") {
     document.documentElement.classList.add("historyWindow");
+  } else if (viewMode === "hub") {
+    // The Hub shows the settings panel as its DPS Meter tab, laid out as in
+    // the Settings window.
+    document.documentElement.classList.add("settingsWindow", "hubWindow");
   }
 
   // Tool-window bootstrap. This runs regardless of whether app startup
@@ -51,6 +55,7 @@
     // an unrelated part of it used to leave the tool window blank.
     const PANEL_FOR_VIEW = {
       settings: [".settingsPanel", "isOpen"],
+      hub: [".settingsPanel", "isOpen"],
       history: [".historyPanel", "open"],
       details: [".detailsPanel", "open"],
     };

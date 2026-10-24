@@ -3622,6 +3622,16 @@ class DpsApp {
     });
   }
 
+  // The Hub (A2Tools Hub build): the Settings window's panel as its DPS Meter
+  // tab, with hub.js adding the widget list and the Radar tab around it. It
+  // is the app's own window, so nothing here closes it.
+  enterHubWindowMode() {
+    document.body.classList.add("isSettingsWindow", "isHubWindow");
+    this.refreshMonitorList().then(() => this.initializeSettingsDropdowns());
+    this.settingsPanel?.classList.add("isOpen");
+    window.A2Hub?.init?.();
+  }
+
   // The Battle History window: this bundle again, showing only the history
   // panel. It is a browser the user leaves open — picking a fight opens that
   // fight in a window of its own and the list stays exactly as it was, so
@@ -4917,6 +4927,8 @@ const startApp = async ({ forced = false } = {}) => {
       dpsApp.enterSettingsWindowMode();
     } else if (window.A2_VIEW === "history") {
       dpsApp.enterHistoryWindowMode();
+    } else if (window.A2_VIEW === "hub") {
+      dpsApp.enterHubWindowMode();
     }
     window.javaBridge?.notifyUiReady?.();
 

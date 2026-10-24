@@ -1,0 +1,8 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "A2Tools Hub",
+  "mainBinaryName": "A2Hub",
+  "app": {
+    "windows": []
+  }
+}

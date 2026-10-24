@@ -374,5 +374,47 @@
   },
   "radar": {
     "title": "雷达"
+  },
+  "hub": {
+    "tabs": {
+      "widgets": "小组件"
+    },
+    "widgets": {
+      "hint": "显示在游戏上方的覆盖层。打开即可显示，设置在各自的标签页中。"
+    },
+    "meter": {
+      "name": "DPS 统计",
+      "desc": "在游戏上方显示你和队伍的每秒伤害。"
+    },
+    "radar": {
+      "name": "雷达",
+      "desc": "显示周围的采集点、Hidden Cube 和玩家。",
+      "players": "玩家",
+      "party": "队伍成员",
+      "allies": "友方",
+      "enemies": "敌方",
+      "faction": "你的种族（不在队伍中时）",
+      "factionUnset": "未设置",
+      "view": "视图",
+      "orientation": "朝向",
+      "facingUp": "面朝方向向上",
+      "northUp": "北方向上",
+      "range": "范围",
+      "mirrorFacing": "左右镜像（面朝方向向上）",
+      "mirrorNorth": "左右镜像（北方向上）",
+      "rotate": "旋转（北方向上）",
+      "unknown": "未知对象（显示代码）",
+      "objects": "对象",
+      "all": "全部",
+      "none": "无",
+      "namesHint": "在雷达列表中点击对象所在行即可命名；已保存的点位在雷达的 ⚙ 面板中。"
+    },
+    "settings": "设置",
+    "turnOn": "开启",
+    "turnOff": "关闭",
+    "earnings": {
+      "name": "收益",
+      "desc": "获得的基纳和深渊点数，显示每分钟平均值和最近一分钟。"
+    }
   }
 }

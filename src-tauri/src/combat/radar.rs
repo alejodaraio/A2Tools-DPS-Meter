@@ -551,6 +551,12 @@ impl RadarTracker {
         };
     }
 
+    /// The earnings alone, for the Earnings widget's poll (`snapshot` builds
+    /// the whole radar view).
+    pub fn earnings(&self) -> Earnings {
+        self.earnings.clone()
+    }
+
     /// Where an entity last moved to, and when (epoch ms), if lately.
     pub fn last_position(&self, id: u32) -> Option<(Vec3, i64)> {
         self.last_move.get(&id).copied()

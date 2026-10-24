@@ -374,5 +374,47 @@
   },
   "radar": {
     "title": "레이더"
+  },
+  "hub": {
+    "tabs": {
+      "widgets": "위젯"
+    },
+    "widgets": {
+      "hint": "게임 위에 표시되는 오버레이입니다. 켜면 열리고, 설정은 각 탭에 있습니다."
+    },
+    "meter": {
+      "name": "DPS 미터",
+      "desc": "나와 파티의 초당 피해량을 게임 위에 표시합니다."
+    },
+    "radar": {
+      "name": "레이더",
+      "desc": "주변의 채집물, Hidden Cube, 플레이어를 보여줍니다.",
+      "players": "플레이어",
+      "party": "파티원",
+      "allies": "아군",
+      "enemies": "적",
+      "faction": "내 종족 (파티가 아닐 때)",
+      "factionUnset": "미설정",
+      "view": "보기",
+      "orientation": "방향",
+      "facingUp": "바라보는 방향 위",
+      "northUp": "북쪽 위",
+      "range": "범위",
+      "mirrorFacing": "좌우 반전 (바라보는 방향 위)",
+      "mirrorNorth": "좌우 반전 (북쪽 위)",
+      "rotate": "회전 (북쪽 위)",
+      "unknown": "알 수 없는 오브젝트 (코드 표시)",
+      "objects": "오브젝트",
+      "all": "전체",
+      "none": "없음",
+      "namesHint": "레이더 목록에서 행을 클릭하면 이름을 붙일 수 있습니다. 저장된 지점은 레이더의 ⚙ 패널에 있습니다."
+    },
+    "settings": "설정",
+    "turnOn": "켜기",
+    "turnOff": "끄기",
+    "earnings": {
+      "name": "획득",
+      "desc": "획득한 키나와 어비스 포인트. 분당 평균과 최근 1분을 보여줍니다."
+    }
   }
 }

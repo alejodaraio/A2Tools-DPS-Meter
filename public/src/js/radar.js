@@ -20,28 +20,8 @@
 (() => {
   const invoke = window.__TAURI__?.core?.invoke;
 
-  // Objects worth showing, by `34 36` code. Anything else is only drawn with
-  // "all" on, labelled with its code, which is how new codes get found.
-  // `shape`: "dot" (default) or "square".
-  const KNOWN = {
-    1550020: { name: "Sapphire", color: "#5aa9ff" },
-    // Named by the user from the radar (2026-10-12).
-    1550000: { name: "Odyle", color: "#3ddc84" },
-    1550004: { name: "Orichalcum", color: "#ffcc33" },
-    1550012: { name: "Asvata", color: "#3ddc84" },
-    1550021: { name: "Diamond", color: "#e8f4ff" },
-    1550022: { name: "Ruby", color: "#ff3b3b" },
-    1550040: { name: "Raydam", color: "#ff3b3b" },
-    1550032: { name: "Azpha", color: "#c77dff" },
-    1550033: { name: "Calendula", color: "#3ddc84" },
-    1550041: { name: "Morfa", color: "#3ddc84" },
-    1550045: { name: "Ohkra", color: "#ff8a3d" },
-    // Confirmed 2026-10-12: stood 3–6 m from it for minutes (map 1013).
-    1301199: { name: "Hidden Cube", color: "#ff3b3b", shape: "square" },
-    // Named by the user in game (2026-10-22). Not a gather node.
-    1100035: { name: "Elyos Kisk", color: "#5aa9ff", shape: "square" },
-  };
-  const UNKNOWN_COLOR = "rgba(255,255,255,0.45)";
+  // Known codes, default prefs: radarCatalog.js, shared with the Hub.
+  const { KNOWN, UNKNOWN_COLOR } = window.A2RadarCatalog;
   const SWATCHES = ["#5aa9ff", "#ff3b3b", "#e8f4ff", "#3ddc84", "#ffcc33", "#c77dff", "#ff8a3d"];
 
   // Names the user gave codes from the radar (radar_labels.json, via the
@@ -65,22 +45,8 @@
   // (~1 Hz) or a skill cast, so the disc may point where we no longer look.
   const HEADING_STALE_MS = 10000;
 
-  // headingMirror defaults on: in-game, facing-up only matched with the
-  // mirror on. `v` bumps re-apply a changed default once over saved prefs.
-  const PREFS_VERSION = 2;
-  // `hidden`: codes unticked in the ⚙ panel.
-  const prefs = { range: 100, rotate: 0, mirror: false, all: false, headingUp: true, headingMirror: true, hidden: [], route: false, myFaction: null,
-    // Which players to draw (the ⚙ panel): party, allies (and anyone whose
-    // side is unknown), enemies.
-    showParty: true, showAllies: true, showEnemies: true };
-  const applySaved = (saved) => {
-    if (!saved || typeof saved !== "object") return;
-    if ((saved.v || 1) < 2) delete saved.headingMirror;
-    // One "players" box before the split: off meant all three off.
-    if (saved.players === false) Object.assign(saved, { showParty: false, showAllies: false, showEnemies: false });
-    delete saved.players;
-    Object.assign(prefs, saved, { v: PREFS_VERSION });
-  };
+  const prefs = structuredClone(window.A2RadarCatalog.DEFAULT_PREFS);
+  const applySaved = (saved) => Object.assign(prefs, window.A2RadarCatalog.upgradePrefs(saved));
   // Kept by the backend (radar_prefs.json) so the dev server and the
   // installed build — different origins, different localStorage — agree.
   // localStorage is only the first-run source and an offline fallback.
@@ -108,7 +74,6 @@
   const allBtn = document.getElementById("allBtn");
   const routeBtn = document.getElementById("routeBtn");
   const routeInfoEl = document.getElementById("routeInfo");
-  const earnEl = document.getElementById("earn");
 
   let snapshot = null;
   // Packet capture needs it; in the radar-only build nothing else would say so.
@@ -157,12 +122,6 @@
     zoom(e.deltaY < 0 ? -1 : 1);
   }, { passive: false });
   document.getElementById("zoomIn").addEventListener("click", () => zoom(-1));
-  document.getElementById("earnReset").addEventListener("click", async () => {
-    try {
-      await invoke("reset_radar_earnings");
-    } catch {}
-    poll();
-  });
   document.getElementById("zoomOut").addEventListener("click", () => zoom(1));
   rotateBtn.addEventListener("click", () => {
     prefs.rotate = (prefs.rotate + 90) % 360;
@@ -870,26 +829,6 @@
     }
   }
 
-  // Kinah / Abyss Points earned since the counter started, and the average
-  // per minute over that time.
-  const fmtNum = (n) => n.toLocaleString("en-US");
-  const fmtShort = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e4 ? `${Math.round(n / 1e3)}k` : String(Math.round(n)));
-  function renderEarnings() {
-    const e = snapshot?.earnings;
-    if (!e?.sinceMs) {
-      earnEl.hidden = true;
-      return;
-    }
-    earnEl.hidden = false;
-    const minutes = Math.max(Date.now() - e.sinceMs, 60_000) / 60_000;
-    document.getElementById("earnKinah").textContent = `+${fmtNum(e.kinah)}`;
-    document.getElementById("earnAp").textContent = `+${fmtNum(e.abyssPoints)}`;
-    document.getElementById("earnKinahRate").textContent = `(${fmtShort(e.kinah / minutes)}/min)`;
-    document.getElementById("earnApRate").textContent = `(${fmtShort(e.abyssPoints / minutes)}/min)`;
-    const min = Math.floor((Date.now() - e.sinceMs) / 60_000);
-    document.getElementById("earnSince").textContent = min >= 60 ? `${Math.floor(min / 60)} h ${min % 60} min` : `${min} min`;
-  }
-
   async function poll() {
     try {
       snapshot = await invoke("get_radar");
@@ -912,7 +851,6 @@
     lastTarget = target;
     updateRoute();
     draw();
-    renderEarnings();
   }
 
   // Facing interpolation (see poll): where the current turn started and how
@@ -1164,6 +1102,22 @@
     prefs.hidden = registered().map((m) => m.code);
     route = null;
     savePrefs(); renderFilter(); draw();
+  });
+
+  // The Hub's Radar tab edits the same prefs: apply its changes as they
+  // come. Our own saves echo back too, and are skipped — applying a stale
+  // echo while zooming would step the range back.
+  window.__TAURI__?.event?.listen?.("radar-prefs-changed", ({ payload }) => {
+    if (!payload?.prefs || payload.source === "radar") return;
+    const before = JSON.stringify([prefs.range, prefs.hidden, prefs.all]);
+    applySaved(payload.prefs);
+    try { localStorage.setItem("radar.prefs", JSON.stringify(prefs)); } catch {}
+    if (JSON.stringify([prefs.range, prefs.hidden, prefs.all]) !== before) {
+      route = null;
+      updateRoute();
+    }
+    syncButtons(); draw();
+    if (!filterPanel.hidden) renderFilter();
   });
 
   syncButtons();

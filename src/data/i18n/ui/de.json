@@ -374,5 +374,47 @@
   },
   "radar": {
     "title": "Radar"
+  },
+  "hub": {
+    "tabs": {
+      "widgets": "Widgets"
+    },
+    "widgets": {
+      "hint": "Overlays über dem Spiel. Schalte eines ein, um es zu öffnen; seine Einstellungen sind in seinem eigenen Tab."
+    },
+    "meter": {
+      "name": "DPS-Meter",
+      "desc": "Schaden pro Sekunde für dich und deine Gruppe, über dem Spiel."
+    },
+    "radar": {
+      "name": "Radar",
+      "desc": "Sammelpunkte, Hidden Cubes und Spieler um dich herum.",
+      "players": "Spieler",
+      "party": "Gruppenmitglieder",
+      "allies": "Verbündete",
+      "enemies": "Feinde",
+      "faction": "Deine Fraktion (ohne Gruppe)",
+      "factionUnset": "Nicht gesetzt",
+      "view": "Ansicht",
+      "orientation": "Ausrichtung",
+      "facingUp": "Blickrichtung oben",
+      "northUp": "Norden oben",
+      "range": "Reichweite",
+      "mirrorFacing": "Links/rechts spiegeln (Blickrichtung)",
+      "mirrorNorth": "Links/rechts spiegeln (Norden oben)",
+      "rotate": "Drehung (Norden oben)",
+      "unknown": "Unbekannte Objekte mit ihrem Code",
+      "objects": "Objekte",
+      "all": "Alle",
+      "none": "Keine",
+      "namesHint": "Benenne ein Objekt, indem du seine Zeile in der Radarliste anklickst; gespeicherte Punkte sind im ⚙-Bereich des Radars."
+    },
+    "settings": "Einstellungen",
+    "turnOn": "Einschalten",
+    "turnOff": "Ausschalten",
+    "earnings": {
+      "name": "Einnahmen",
+      "desc": "Verdiente Kinah und Abyss-Punkte, mit dem Schnitt pro Minute und der letzten Minute."
+    }
   }
 }

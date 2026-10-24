@@ -374,5 +374,47 @@
   },
   "radar": {
     "title": "雷達"
+  },
+  "hub": {
+    "tabs": {
+      "widgets": "小工具"
+    },
+    "widgets": {
+      "hint": "顯示在遊戲上方的覆蓋層。開啟即可顯示，設定在各自的分頁中。"
+    },
+    "meter": {
+      "name": "DPS 統計",
+      "desc": "在遊戲上方顯示你和隊伍的每秒傷害。"
+    },
+    "radar": {
+      "name": "雷達",
+      "desc": "顯示周圍的採集點、Hidden Cube 和玩家。",
+      "players": "玩家",
+      "party": "隊伍成員",
+      "allies": "友方",
+      "enemies": "敵方",
+      "faction": "你的種族（不在隊伍中時）",
+      "factionUnset": "未設定",
+      "view": "檢視",
+      "orientation": "朝向",
+      "facingUp": "面朝方向向上",
+      "northUp": "北方向上",
+      "range": "範圍",
+      "mirrorFacing": "左右鏡像（面朝方向向上）",
+      "mirrorNorth": "左右鏡像（北方向上）",
+      "rotate": "旋轉（北方向上）",
+      "unknown": "未知物件（顯示代碼）",
+      "objects": "物件",
+      "all": "全部",
+      "none": "無",
+      "namesHint": "在雷達清單中點選物件所在列即可命名；已儲存的點位在雷達的 ⚙ 面板中。"
+    },
+    "settings": "設定",
+    "turnOn": "開啟",
+    "turnOff": "關閉",
+    "earnings": {
+      "name": "收益",
+      "desc": "獲得的基納和深淵點數，顯示每分鐘平均值和最近一分鐘。"
+    }
   }
 }

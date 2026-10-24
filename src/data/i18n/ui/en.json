@@ -374,5 +374,47 @@
   },
   "radar": {
     "title": "Radar"
+  },
+  "hub": {
+    "tabs": {
+      "widgets": "Widgets"
+    },
+    "widgets": {
+      "hint": "Overlays shown over the game. Switch one on to open it; its settings are in its own tab."
+    },
+    "meter": {
+      "name": "DPS Meter",
+      "desc": "Damage per second for you and your party, over the game."
+    },
+    "radar": {
+      "name": "Radar",
+      "desc": "Gather nodes, Hidden Cubes and players around you.",
+      "players": "Players",
+      "party": "Party members",
+      "allies": "Allies",
+      "enemies": "Enemies",
+      "faction": "Your faction (when not in a party)",
+      "factionUnset": "Not set",
+      "view": "View",
+      "orientation": "Orientation",
+      "facingUp": "Facing up",
+      "northUp": "North up",
+      "range": "Range",
+      "mirrorFacing": "Mirror left/right (facing up)",
+      "mirrorNorth": "Mirror left/right (north up)",
+      "rotate": "Rotation (north up)",
+      "unknown": "Unknown objects, with their code",
+      "objects": "Objects",
+      "all": "All",
+      "none": "None",
+      "namesHint": "Name an object by clicking its row in the radar's list; saved points are in the radar's ⚙ panel."
+    },
+    "settings": "Settings",
+    "turnOn": "Turn on",
+    "turnOff": "Turn off",
+    "earnings": {
+      "name": "Earnings",
+      "desc": "Kinah and Abyss Points earned, with the average per minute and the last minute."
+    }
   }
 }

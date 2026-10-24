@@ -32,7 +32,25 @@ npm run tauri build      # production build; MSI lands in src-tauri/target/relea
 npm run rename-msi       # strip spaces from the built MSI filename (used post-build)
 npm run radar:dev        # radar-only app (same backend, no meter overlay)
 npm run radar:build      # radar-only build "A2Radar": A2Radar.exe + MSI (green radar icon)
+npm run hub:dev          # "A2Tools Hub": a Hub window that switches the widgets on/off
+npm run hub:build        # Hub build: A2Hub.exe + MSI
 ```
+
+The Hub (`src-tauri/tauri.hub.conf.json`, recognised in `run()` by its product
+name) keeps the meter's identifier, so it shares `%APPDATA%\com.a2tools.dps-meter`
+and the meter's WebView data; on its first run it imports A2Radar's radar files
+when newer (`import_radar_app_files`). It declares no windows: `run()` opens the
+`hub` window (this bundle's `hub` view, `public/src/js/hub.js`) and each widget
+left on (`hub.widget.<id>` settings; `HUB_WIDGETS` maps widget → window label,
+`build_main_window` builds the overlay the meter app gets from the config).
+The Hub's DPS Meter tab is the settings panel (the meter's ⚙ focuses it instead
+of opening a Settings window); its Radar tab edits `radar_prefs.json`, and
+`set_radar_prefs` emits `radar-prefs-changed` so the Radar window and the Hub
+apply each other's changes. Known radar codes and default prefs live in
+`radarCatalog.js`, shared by both. The Earnings widget (`public/earnings.html`,
+`earnings.js`) shows the kinah / AP the radar tracker counts (`get_earnings`);
+it has no settings tab. Closing the Hub quits; closing a widget
+(`close_tool_window`) switches it off.
 
 The radar-only app is this same codebase with `src-tauri/tauri.radar.conf.json`
 merged over `tauri.conf.json`: its own product name and binary (A2Radar),

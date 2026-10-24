@@ -151,12 +151,22 @@ fn get_radar_prefs(state: tauri::State<'_, AppState>) -> Option<serde_json::Valu
     serde_json::from_str(&text).ok()
 }
 
+/// The Radar window and the Hub's Radar tab both edit these: every change is
+/// sent to both, with the window it came from, so each applies the other's
+/// and skips its own echo.
 #[tauri::command]
-fn set_radar_prefs(state: tauri::State<'_, AppState>, prefs: serde_json::Value) -> Result<(), String> {
+fn set_radar_prefs(
+    app: tauri::AppHandle,
+    window: tauri::Window,
+    state: tauri::State<'_, AppState>,
+    prefs: serde_json::Value,
+) -> Result<(), String> {
     let path = state.app_data_dir.join("radar_prefs.json");
     let tmp = path.with_extension("json.tmp");
     std::fs::write(&tmp, prefs.to_string()).map_err(|e| e.to_string())?;
-    std::fs::rename(&tmp, &path).map_err(|e| e.to_string())
+    std::fs::rename(&tmp, &path).map_err(|e| e.to_string())?;
+    let _ = app.emit("radar-prefs-changed", serde_json::json!({ "prefs": prefs, "source": window.label() }));
+    Ok(())
 }
 
 #[tauri::command]
@@ -177,6 +187,12 @@ fn forget_radar_points(state: tauri::State<'_, AppState>, code: u32) -> usize {
 }
 
 /// Count kinah / Abyss Points earned from zero again.
+/// Kinah / Abyss Points earned, for the Earnings widget (`earnings.html`).
+#[tauri::command]
+fn get_earnings(state: tauri::State<'_, AppState>) -> combat::radar::Earnings {
+    state.data_storage.radar().earnings()
+}
+
 #[tauri::command]
 fn reset_radar_earnings(state: tauri::State<'_, AppState>) {
     state.data_storage.radar().reset_earnings(chrono::Utc::now().timestamp_millis());
@@ -896,6 +912,10 @@ fn restore_window_geometry(app: &tauri::AppHandle, window: &tauri::WebviewWindow
 /// See <https://docs.rs/tauri/latest/tauri/webview/struct.WebviewWindowBuilder.html>.
 #[tauri::command]
 async fn open_settings_window(app: tauri::AppHandle) -> Result<(), String> {
+    // In the Hub the meter's settings are its DPS Meter tab.
+    if is_hub(&app) {
+        return show_hub(&app, "meter");
+    }
     if let Some(existing) = app.get_webview_window("settings") {
         let _ = existing.show();
         let _ = existing.unminimize();
@@ -1206,12 +1226,204 @@ async fn open_radar_window(app: tauri::AppHandle) -> Result<(), String> {
         let _ = existing.show();
         return Ok(());
     }
-    build_radar_window(&app)
+    build_radar_window(&app)?;
+    // Opened from the meter's header: in the Hub that switches the widget on.
+    if is_hub(&app) {
+        remember_hub_widget(&app, "radar", true);
+    }
+    Ok(())
 }
 
 /// Identifier of the radar-only build (`tauri.radar.conf.json`): the same
 /// backend, no meter overlay, the Radar as its only window.
 const RADAR_ONLY_IDENTIFIER: &str = "com.a2tools.radar";
+
+/// Product name of the Hub build (`tauri.hub.conf.json`). It keeps the meter's
+/// identifier — the same `%APPDATA%` folder, settings, history and WebView
+/// data — and differs in what it opens: the Hub window, from which each widget
+/// (the meter overlay, the Radar) is switched on and configured.
+const HUB_PRODUCT_NAME: &str = "A2Tools Hub";
+
+fn is_hub(app: &tauri::AppHandle) -> bool {
+    app.config().product_name.as_deref() == Some(HUB_PRODUCT_NAME)
+}
+
+/// The Hub's widgets, id → window label. Whether each is on is remembered as
+/// `hub.widget.<id>` and restored on the next start.
+const HUB_WIDGETS: [(&str, &str); 3] = [("meter", "main"), ("radar", "radar"), ("earnings", "earnings")];
+
+fn hub_widget_enabled(app: &tauri::AppHandle, id: &str) -> bool {
+    let saved = app.try_state::<AppState>().and_then(|s| s.settings.get(&format!("hub.widget.{id}")));
+    match saved {
+        Some(v) => v.trim() == "true",
+        // A first run shows the meter, as the meter app did.
+        None => id == "meter",
+    }
+}
+
+fn remember_hub_widget(app: &tauri::AppHandle, id: &str, enabled: bool) {
+    if let Some(state) = app.try_state::<AppState>() {
+        state.settings.set(&format!("hub.widget.{id}"), if enabled { "true" } else { "false" });
+    }
+    let _ = app.emit("hub-widgets-changed", ());
+}
+
+fn build_widget_window(app: &tauri::AppHandle, id: &str) -> Result<(), String> {
+    match id {
+        "meter" => build_main_window(app),
+        "radar" => build_radar_window(app),
+        "earnings" => build_earnings_window(app),
+        _ => Err(format!("unknown widget {id}")),
+    }
+}
+
+#[derive(serde::Serialize)]
+struct HubWidget {
+    id: &'static str,
+    enabled: bool,
+}
+
+#[tauri::command]
+fn get_hub_widgets(app: tauri::AppHandle) -> Vec<HubWidget> {
+    HUB_WIDGETS
+        .iter()
+        .map(|&(id, _)| HubWidget { id, enabled: hub_widget_enabled(&app, id) })
+        .collect()
+}
+
+/// Switch a widget on (open its window, or bring it back) or off (close it).
+/// `async`: it builds a window, see `open_settings_window`.
+#[tauri::command]
+async fn set_hub_widget(app: tauri::AppHandle, id: String, enabled: bool) -> Result<(), String> {
+    let Some(&(id, label)) = HUB_WIDGETS.iter().find(|(w, _)| *w == id) else {
+        return Err(format!("unknown widget {id}"));
+    };
+    match (enabled, app.get_webview_window(label)) {
+        (true, Some(window)) => {
+            let _ = window.unminimize();
+            let _ = window.show();
+        }
+        (true, None) => build_widget_window(&app, id)?,
+        (false, Some(window)) => {
+            let _ = window.close();
+        }
+        (false, None) => {}
+    }
+    remember_hub_widget(&app, id, enabled);
+    Ok(())
+}
+
+/// Bring the Hub forward on one of its tabs (`widgets`, `meter`, `radar`).
+fn show_hub(app: &tauri::AppHandle, tab: &str) -> Result<(), String> {
+    match app.get_webview_window("hub") {
+        Some(window) => {
+            let _ = window.unminimize();
+            let _ = window.show();
+            let _ = window.set_focus();
+        }
+        None => build_hub_window(app)?,
+    }
+    let _ = app.emit_to("hub", "hub-show-tab", tab);
+    Ok(())
+}
+
+/// The Hub: this bundle's `hub` view (`hub.js`). An ordinary window on the
+/// taskbar — the widgets are not — so closing it quits the app (see
+/// `on_window_event` in `run`).
+fn build_hub_window(app: &tauri::AppHandle) -> Result<(), String> {
+    let window = tauri::WebviewWindowBuilder::new(
+        app,
+        "hub",
+        tauri::WebviewUrl::App("index.html".into()),
+    )
+    .initialization_script("window.__A2_VIEW__ = 'hub';")
+    .title("A2Tools Hub")
+    .resizable(true)
+    .inner_size(940.0, 720.0)
+    .min_inner_size(640.0, 460.0)
+    // Built visible, see build_settings_window.
+    .background_color(tauri::window::Color(10, 14, 22, 255))
+    .build()
+    .map_err(|e| e.to_string())?;
+    if !restore_window_geometry(app, &window, "hub") {
+        let _ = window.center();
+    }
+    Ok(())
+}
+
+/// The meter overlay as `tauri.conf.json` declares it for the meter app. The
+/// Hub declares no windows and builds it here while the widget is on.
+fn build_main_window(app: &tauri::AppHandle) -> Result<(), String> {
+    let window = tauri::WebviewWindowBuilder::new(
+        app,
+        "main",
+        tauri::WebviewUrl::App("index.html".into()),
+    )
+    .title("A2Tools DPS Meter")
+    .inner_size(400.0, 300.0)
+    .decorations(false)
+    .transparent(true)
+    .always_on_top(true)
+    .resizable(true)
+    .shadow(false)
+    .build()
+    .map_err(|e| e.to_string())?;
+    restore_main_position(app, &window);
+    Ok(())
+}
+
+fn restore_main_position(app: &tauri::AppHandle, window: &tauri::WebviewWindow) {
+    let state_ref = app.state::<AppState>();
+    if let (Some(x), Some(y)) = (state_ref.settings.get("window.x"), state_ref.settings.get("window.y")) {
+        if let (Ok(x), Ok(y)) = (x.parse::<i32>(), y.parse::<i32>()) {
+            // Don't restore minimized positions (Windows uses -32000,-32000)
+            if x > -10000 && y > -10000 {
+                let _ = window.set_position(tauri::Position::Physical(tauri::PhysicalPosition { x, y }));
+            }
+        }
+    }
+    let _ = window.set_always_on_top(true);
+}
+
+/// On the Hub's first run, what the A2Radar app learnt — spawn points, names,
+/// view preferences, where its window was — comes over from its own folder.
+/// The meter's copies are older when they exist at all (A2Radar copied them
+/// once and kept learning), so a radar file wins when it is newer; the one it
+/// replaces is kept as `.json.bak`.
+fn import_radar_app_files(app_data_dir: &std::path::Path) {
+    let marker = app_data_dir.join("hub_radar_imported");
+    if marker.exists() {
+        return;
+    }
+    let Some(radar_dir) = app_data_dir.parent().map(|p| p.join(RADAR_ONLY_IDENTIFIER)) else { return };
+    let modified = |p: &std::path::Path| std::fs::metadata(p).and_then(|m| m.modified()).ok();
+    for file in ["radar_points.json", "radar_labels.json", "radar_prefs.json"] {
+        let (from, to) = (radar_dir.join(file), app_data_dir.join(file));
+        let Some(from_time) = modified(&from) else { continue };
+        if modified(&to).is_some_and(|t| t >= from_time) {
+            continue;
+        }
+        if to.exists() {
+            let _ = std::fs::copy(&to, to.with_extension("json.bak"));
+        }
+        match std::fs::copy(&from, &to) {
+            Ok(_) => tracing::info!("hub: imported {} from A2Radar", file),
+            Err(e) => tracing::warn!("hub: importing {} failed: {}", file, e),
+        }
+    }
+    let radar_settings = std::fs::read_to_string(radar_dir.join("settings.json"))
+        .ok()
+        .and_then(|text| serde_json::from_str::<std::collections::HashMap<String, String>>(&text).ok());
+    if let Some(radar_settings) = radar_settings {
+        let settings = Settings::new(app_data_dir.to_path_buf());
+        for key in ["window.radar.x", "window.radar.y", "window.radar.w", "window.radar.h"] {
+            if let (None, Some(value)) = (settings.get(key), radar_settings.get(key)) {
+                settings.set(key, value);
+            }
+        }
+    }
+    let _ = std::fs::write(&marker, "");
+}
 
 /// The party roster as last seen (`party_roster.json`). The server sends it
 /// only when the party changes, so without this a restarted meter or radar
@@ -1261,6 +1473,33 @@ fn import_meter_radar_files(app_data_dir: &std::path::Path) {
     }
 }
 
+/// The Earnings widget: kinah and Abyss Points earned (counted by the radar
+/// tracker from the inventory totals, `1B 56`), with averages per minute. A
+/// small transparent always-on-top bar, like the Radar.
+fn build_earnings_window(app: &tauri::AppHandle) -> Result<(), String> {
+    let window = tauri::WebviewWindowBuilder::new(
+        app,
+        "earnings",
+        tauri::WebviewUrl::App("earnings.html".into()),
+    )
+    .title("A2Tools Hub — Earnings")
+    .decorations(false)
+    .transparent(true)
+    .shadow(false)
+    .always_on_top(true)
+    .resizable(true)
+    .skip_taskbar(true)
+    .inner_size(260.0, 112.0)
+    .min_inner_size(200.0, 90.0)
+    .build()
+    .map_err(|e| e.to_string())?;
+
+    if !restore_window_geometry(app, &window, "earnings") {
+        center_on_overlay_monitor(app, &window);
+    }
+    Ok(())
+}
+
 fn build_radar_window(app: &tauri::AppHandle) -> Result<(), String> {
     // As the A2Radar app it is the only window: name it after the app and put
     // it on the taskbar, or there would be no way back to it.
@@ -1292,6 +1531,14 @@ fn build_radar_window(app: &tauri::AppHandle) -> Result<(), String> {
 /// be several, so each closes itself rather than the overlay guessing which.
 #[tauri::command]
 fn close_tool_window(window: tauri::Window) {
+    // In the Hub, closing a widget switches it off; it would reopen on the
+    // next start otherwise.
+    let app = window.app_handle();
+    if is_hub(app) {
+        if let Some(&(id, _)) = HUB_WIDGETS.iter().find(|(_, label)| *label == window.label()) {
+            remember_hub_widget(app, id, false);
+        }
+    }
     let _ = window.close();
 }
 
@@ -1610,6 +1857,10 @@ pub fn run() {
             if radar_only {
                 import_meter_radar_files(&app_data_dir);
             }
+            let hub = is_hub(app.handle());
+            if hub {
+                import_radar_app_files(&app_data_dir);
+            }
 
             // Load resources — try multiple paths (dev vs production)
             let skill_lookup = SkillLookup::new();
@@ -1711,6 +1962,20 @@ pub fn run() {
                 }
             }
 
+            if hub {
+                tracing::info!("hub build: opening the Hub and the widgets left on");
+                if let Err(e) = build_hub_window(app.handle()) {
+                    tracing::error!("hub window failed: {}", e);
+                }
+                for (id, _) in HUB_WIDGETS {
+                    if hub_widget_enabled(app.handle(), id) {
+                        if let Err(e) = build_widget_window(app.handle(), id) {
+                            tracing::error!("{} widget failed: {}", id, e);
+                        }
+                    }
+                }
+            }
+
             // Reopen the Details window if it was left enabled. Done here rather
             // than from JS because the backend already has settings loaded — the
             // frontend reads them asynchronously and would race the first paint.
@@ -1736,16 +2001,7 @@ pub fn run() {
 
             // Restore saved window position and ensure always-on-top
             if let Some(window) = app.get_webview_window("main") {
-                let state_ref = app.state::<AppState>();
-                if let (Some(x), Some(y)) = (state_ref.settings.get("window.x"), state_ref.settings.get("window.y")) {
-                    if let (Ok(x), Ok(y)) = (x.parse::<i32>(), y.parse::<i32>()) {
-                        // Don't restore minimized positions (Windows uses -32000,-32000)
-                        if x > -10000 && y > -10000 {
-                            let _ = window.set_position(tauri::Position::Physical(tauri::PhysicalPosition { x, y }));
-                        }
-                    }
-                }
-                let _ = window.set_always_on_top(true);
+                restore_main_position(app.handle(), &window);
             }
 
             // Check if Npcap is available before starting capture
@@ -1974,7 +2230,7 @@ pub fn run() {
                             // (details-*) are deliberately absent: they are
                             // opened to be read and closed, and keying geometry
                             // by fight id would grow settings without bound.
-                            for label in ["details", "settings", "history", "radar"] {
+                            for label in ["details", "settings", "history", "radar", "hub", "earnings"] {
                                 // While Details is pinned to a monitor its rect
                                 // comes from the setting, not from the user.
                                 // Saving it poisons the windowed geometry: turn
@@ -2048,8 +2304,17 @@ pub fn run() {
 
             Ok(())
         })
+        .on_window_event(|window, event| {
+            // The Hub is the app: the widgets have no taskbar entry to get
+            // back to, so closing it quits.
+            if window.label() == "hub" && matches!(event, tauri::WindowEvent::CloseRequested { .. }) {
+                window.app_handle().exit(0);
+            }
+        })
         .invoke_handler(tauri::generate_handler![
             get_app_version,
+            get_hub_widgets,
+            set_hub_widget,
             get_dps_snapshot,
             get_skill_details,
             get_details_context,
@@ -2060,6 +2325,7 @@ pub fn run() {
             forget_radar_points,
             set_radar_live_only,
             reset_radar_earnings,
+            get_earnings,
             get_radar_prefs,
             set_radar_prefs,
             open_radar_window,
