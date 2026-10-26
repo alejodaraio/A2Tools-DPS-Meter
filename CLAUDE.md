@@ -50,7 +50,14 @@ apply each other's changes. Known radar codes and default prefs live in
 `radarCatalog.js`, shared by both. The Earnings widget (`public/earnings.html`,
 `earnings.js`) shows the kinah / AP the radar tracker counts (`get_earnings`);
 it has no settings tab. Closing the Hub quits; closing a widget
-(`close_tool_window`) switches it off.
+(`close_tool_window`) switches it off. Its icons are `src-tauri/icons-hub/`
+(regenerate with `npx tauri icon src-tauri/icons-hub/source.svg -o
+src-tauri/icons-hub`); the Hub's sidebar logo is an inline SVG in `hub.js`,
+because Vite hashes `/src/assets/*` in a build and the path breaks.
+
+The settings panel no longer has upstream's footer (Discord, A2Tools.app,
+Support Me, Quit) nor its `#supportModal`: both were deleted from
+`index.html`. Expect conflicts there on upstream merges, and keep them out.
 
 The radar-only app is this same codebase with `src-tauri/tauri.radar.conf.json`
 merged over `tauri.conf.json`: its own product name and binary (A2Radar),
@@ -288,8 +295,9 @@ or the power scalar.
 There is **one** `index.html`/JS bundle shared by every window. Which "view"
 a window renders is decided at window-creation time in `lib.rs`, which injects
 `window.__A2_VIEW__ = '<view>'` via `initialization_script` (`main`, `details`,
-`settings`, `history`; per-fight windows are `details-<id>` and also render as
-`details`). `public/src/js/tauriBridge.js` reads that value first thing and
+`settings`, `history`, `hub`; per-fight windows are `details-<id>` and also render as
+`details`). The Radar and Earnings widgets are pages of their own
+(`radar.html`, `earnings.html`), not views. `public/src/js/tauriBridge.js` reads that value first thing and
 sets `window.A2_VIEW`, which the rest of the frontend (`core.js`, `meter.js`,
 `details.js`, `history.js`, ...) branches on to show/hide the right panel.
 
